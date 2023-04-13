@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="홈"
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"/>
+    <item android:title="채용정보"
+        android:id="@+id/recruit"
+        android:icon="@drawable/compass"/>
+    <item android:title="즐겨찾기"
+        android:id="@+id/favorite"
+        android:icon="@drawable/baseline_star_outline_24"/>
+</menu>
