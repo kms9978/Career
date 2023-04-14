@@ -3,23 +3,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".HomeFragment">
 
+
     <LinearLayout
+        android:id="@+id/home_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:background="@drawable/home_header"
         android:orientation="horizontal">
         <TextView
+            android:layout_weight="1"
             android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:layout_width="wrap_content"
+            android:gravity="left"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="JOBHUNT"
             android:textSize="30sp"
             android:textColor="#6B66FF"
             android:fontFamily="@font/jalan"/>
+
+        <ImageButton
+            android:background="@null"
+            android:layout_weight="9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/baseline_person_outline_24"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="★최신 공고★"
+            android:textSize="20sp"
+            android:fontFamily="@font/jalan"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="70dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_recentRecruit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_recent"/>
+
+    </LinearLayout>
 
 </FrameLayout>
