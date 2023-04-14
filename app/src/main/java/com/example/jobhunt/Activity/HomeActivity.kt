@@ -1,9 +1,13 @@
-package com.example.jobhunt
+package com.example.jobhunt.Activity
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.jobhunt.Fragment.FavoriteFragment
+import com.example.jobhunt.Fragment.HomeFragment
+import com.example.jobhunt.Fragment.RecruitFragment
+import com.example.jobhunt.R
 import com.example.jobhunt.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {

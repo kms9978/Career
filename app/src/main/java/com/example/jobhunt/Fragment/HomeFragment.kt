@@ -1,4 +1,4 @@
-package com.example.jobhunt
+package com.example.jobhunt.Fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.data.RecentRecruitData
-import com.example.jobhunt.model.RecentRecruitAdapter
+import com.example.jobhunt.Adapter.RecentRecruitAdapter
+import com.example.jobhunt.R
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView

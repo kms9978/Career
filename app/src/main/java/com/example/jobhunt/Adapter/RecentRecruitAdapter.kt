@@ -1,13 +1,11 @@
-package com.example.jobhunt.model
+package com.example.jobhunt.Adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.jobhunt.HomeFragment
+import com.example.jobhunt.Fragment.HomeFragment
 import com.example.jobhunt.R
 import com.example.jobhunt.data.RecentRecruitData
 
