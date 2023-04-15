@@ -1,3 +1,3 @@
-package com.example.jobhunt.data
+package com.example.jobhunt.dataModel
 
 data class RecentRecruit(val content: String, val position: String)
