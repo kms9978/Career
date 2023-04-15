@@ -1,6 +1,3 @@
 package com.example.jobhunt.data
 
-data class RecentRecruitData (
-    val title : String,
-    val name : String
-)
+data class RecentRecruit(val content: String, val position: String)

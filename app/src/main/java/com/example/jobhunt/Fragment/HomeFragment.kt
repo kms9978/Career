@@ -1,45 +1,56 @@
 package com.example.jobhunt.Fragment
 
+import RecentRecruitAdapter
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jobhunt.data.RecentRecruitData
-import com.example.jobhunt.Adapter.RecentRecruitAdapter
 import com.example.jobhunt.R
+import com.example.jobhunt.data.RecentRecruit
+import org.json.JSONObject
+import java.io.IOException
+import java.io.InputStream
 
 class HomeFragment : Fragment() {
+
     private lateinit var recyclerView: RecyclerView
-    private lateinit var recentRecruitAdapter : RecentRecruitAdapter
-    private val datas = mutableListOf<RecentRecruitData>()
+    private lateinit var recentRecruitList: MutableList<RecentRecruit>
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
         recyclerView = view.findViewById(R.id.rv_recentRecruit)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recentRecruitAdapter = RecentRecruitAdapter(this)
-        recyclerView.adapter = recentRecruitAdapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
 
-        datas.apply {
-            add(RecentRecruitData(name="테스트1", title = "테스트입니다1"))
-            add(RecentRecruitData(name="테스트2", title = "테스트입니다2"))
-            add(RecentRecruitData(name="테스트3", title = "테스트입니다3"))
-            add(RecentRecruitData(name="테스트4", title = "테스트입니다4"))
-            add(RecentRecruitData(name="테스트5", title = "테스트입니다5"))
-        }
+        recentRecruitList = readRecentRecruitData()
+        recyclerView.adapter = RecentRecruitAdapter(recentRecruitList)
 
-        recentRecruitAdapter.datas = datas
-        recentRecruitAdapter.notifyDataSetChanged()
+        return view
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+    private fun readRecentRecruitData(): MutableList<RecentRecruit> {
+        val recentRecruitList = mutableListOf<RecentRecruit>()
+
+        try {
+            val inputStream: InputStream = resources.openRawResource(R.raw.news)
+            val jsonString = inputStream.bufferedReader().use { it.readText() }
+            val jsonObject = JSONObject(jsonString)
+
+            for (key in jsonObject.keys()) {
+                val innerJsonObject = jsonObject.getJSONObject(key)
+
+                val companyName = key
+                val content = innerJsonObject.getString("content")
+
+                recentRecruitList.add(RecentRecruit(companyName, content))
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return recentRecruitList
     }
 }
