@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.RecentRecruit
 import java.util.*
@@ -29,8 +31,11 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
         val recentRecruit = recentRecruitList[position]
         holder.recruitName.text = recentRecruit.content
         holder.recruitTitle.text = recentRecruit.position
-
-
+        // 이미지 로드하기
+        Glide.with(holder.itemView.context)
+            .load(recentRecruit.imgUrl) // RecentRecruit 객체에서 이미지 URL 가져오기
+            .placeholder(R.drawable.baseline_feedback_24)
+            .into(holder.recruitImage)
 
     }
     //onBindViewHolder 메소드를 오버라이드하여, 뷰 홀더와 데이터를 바인딩한다.
@@ -71,11 +76,23 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
                 filteredList = results?.values as MutableList<RecentRecruit>
                 notifyDataSetChanged()
             }
+
+
         }
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
         val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
+        val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img) // ImageView 추가
+        init {
+            recruitImage.setOnClickListener {
+                val url = filteredList[adapterPosition].url // 클릭한 항목의 링크 가져오기
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url")) // 링크를 열기 위한 인텐트 생성
+                it.context.startActivity(intent) // 인텐트 실행
+            }
+        }
+
+
     }
 }

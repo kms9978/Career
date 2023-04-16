@@ -37,6 +37,10 @@ class HomeFragment : Fragment() {
         // 최근 채용 정보 데이터를 읽어온다
         recentRecruitList = readRecentRecruitData()
 
+        // 어댑터를 리사이클러뷰에 설정한다
+        recyclerView.adapter = RecentRecruitAdapter(recentRecruitList)
+
+
         // 검색어를 입력할 때마다 RecyclerView 갱신
         searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -57,8 +61,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // 어댑터를 리사이클러뷰에 설정한다
-        recyclerView.adapter = RecentRecruitAdapter(recentRecruitList)
+
 
 
         return view
@@ -79,11 +82,11 @@ class HomeFragment : Fragment() {
             // JSON 객체를 반복하며 최근 채용 정보 데이터를 파싱하여 리스트에 추가한다
             for (key in jsonObject.keys()) {
                 val innerJsonObject = jsonObject.getJSONObject(key)
-
                 val companyName = key
                 val content = innerJsonObject.getString("content")
-
-                recentRecruitList.add(RecentRecruit(companyName, content))
+                val imageUrl = innerJsonObject.getString("img")
+                val link = innerJsonObject.getString("link")
+                recentRecruitList.add(RecentRecruit(companyName, content,imageUrl,link))
             }
         } catch (e: IOException) {
             e.printStackTrace()
