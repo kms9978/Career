@@ -2,9 +2,12 @@ package com.example.jobhunt.Fragment
 
 import RecentRecruitAdapter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,7 +22,7 @@ class HomeFragment : Fragment() {
     // Declare properties for the RecyclerView and list of recent recruit items
     private lateinit var recyclerView: RecyclerView
     private lateinit var recentRecruitList: MutableList<RecentRecruit>
-
+    private lateinit var searchEditText: EditText
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         // fragment_home.xml 레이아웃을 inflate하여 view 객체를 생성한다
@@ -29,8 +32,31 @@ class HomeFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rv_recentRecruit)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
+        searchEditText = view.findViewById(R.id.search_company)
+
         // 최근 채용 정보 데이터를 읽어온다
         recentRecruitList = readRecentRecruitData()
+
+        // 검색어를 입력할 때마다 RecyclerView 갱신
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // 검색어를 이용하여 리스트에 검색 결과를 담는다
+                val filteredList = mutableListOf<RecentRecruit>()
+                for (recentRecruit in recentRecruitList) {
+                    if (recentRecruit.content.contains(s.toString())) {
+                        filteredList.add(recentRecruit)
+                    }
+                }
+
+                // 어댑터를 갱신한다
+                recyclerView.adapter = RecentRecruitAdapter(filteredList)
+            }
+        })
+
         // 어댑터를 리사이클러뷰에 설정한다
         recyclerView.adapter = RecentRecruitAdapter(recentRecruitList)
 

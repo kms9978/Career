@@ -6,12 +6,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment">
 
-
+    <LinearLayout
+        android:background="#6B66FF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <LinearLayout
         android:id="@+id/home_header"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@drawable/home_header"
         android:orientation="horizontal">
         <TextView
             android:layout_weight="1"
@@ -21,7 +24,7 @@
             android:layout_height="match_parent"
             android:text="JOBHUNT"
             android:textSize="30sp"
-            android:textColor="#6B66FF"
+            android:textColor="#ffffff"
             android:fontFamily="@font/jalan"/>
 
         <ImageButton
@@ -35,20 +38,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp">
-        <TextView
+        android:layout_marginBottom="70dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/search_company"
+            android:layout_marginHorizontal="20dp"
+            android:background="@drawable/home_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="★최신 공고★"
-            android:textSize="20sp"
-            android:fontFamily="@font/jalan"/>
+            android:layout_height="50dp"
+            android:fontFamily="@font/jalan"
+            android:textColorHint="@color/white"
+            android:drawableStart="@drawable/baseline_search_24"
+            android:hint="기업명 입력"/>
     </LinearLayout>
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="70dp">
+        android:layout_marginTop="120dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recentRecruit"
