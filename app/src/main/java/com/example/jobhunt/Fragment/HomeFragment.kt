@@ -1,24 +1,30 @@
 package com.example.jobhunt.Fragment
 
 import RecentRecruitAdapter
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.RecentRecruit
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
 
 class HomeFragment : Fragment() {
-
     // Declare properties for the RecyclerView and list of recent recruit items
     private lateinit var recyclerView: RecyclerView
     private lateinit var recentRecruitList: MutableList<RecentRecruit>
@@ -27,6 +33,8 @@ class HomeFragment : Fragment() {
 
         // fragment_home.xml 레이아웃을 inflate하여 view 객체를 생성한다
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+
 
         // 리사이클러뷰 초기화
         recyclerView = view.findViewById(R.id.rv_recentRecruit)
@@ -64,6 +72,7 @@ class HomeFragment : Fragment() {
                 recyclerView.adapter = RecentRecruitAdapter(filteredList)
             }
         })
+
 
 
 

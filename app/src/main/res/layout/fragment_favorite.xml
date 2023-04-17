@@ -21,15 +21,6 @@
                     android:textSize="30sp"
                     android:gravity="center"/>
 
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:rowCount="2"
-                android:columnCount="2"
-                >
-
-
-            </GridLayout>
         </LinearLayout>
 
 

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="400dp"
-    android:layout_height="300dp"
+    android:layout_height="220dp"
     android:id="@+id/item_recent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -15,35 +15,68 @@
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-            <ImageView
-                android:layout_gravity="center"
-                android:id="@+id/recruit_img"
-                android:layout_width="250dp"
-                android:layout_height="140dp"
-                android:src="@drawable/baseline_feedback_24"/>
+            android:padding="8dp"
+            android:orientation="vertical">
+                <LinearLayout
 
-            <TextView
-                android:id="@+id/recruit_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="기업 명"
-                android:textSize="15sp"
-                android:fontFamily="@font/jalan" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/recruit_img"
+                    android:contentDescription="@string/item_img_description"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:paddingBottom="10dp"
+                    android:src="@drawable/baseline_feedback_24"/>
+                </LinearLayout>
+                            <LinearLayout
+                                android:layout_marginTop="10dp"
+                                android:baselineAligned="false"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/recruit_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="공고 TItle"
-                android:textSize="15sp"
-                android:layout_gravity="bottom"
-                android:fontFamily="@font/jalan"
-                android:layout_marginTop="16dp" />
+                                <LinearLayout
+                                    android:layout_weight="1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+                            <TextView
+                                android:layout_marginTop="5dp"
+                                android:id="@+id/recruit_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/company_name"
+                                android:textSize="18sp"
+                                android:fontFamily="@font/chosunbg"
+                                />
+                            <TextView
+                                android:id="@+id/recruit_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/company_title"
+                                android:textSize="16sp"
+                                android:layout_gravity="bottom"
+                                android:fontFamily="@font/chosunbg"
+                                android:layout_marginTop="16dp" />
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_weight="6"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal">
+                                 <CheckBox
+                                     android:layout_width="match_parent"
+                                     android:layout_height="match_parent"
+                                     android:button="@drawable/selector_favorite_item" />
+
+                                </LinearLayout>
+                            </LinearLayout>
 
         </LinearLayout>
 

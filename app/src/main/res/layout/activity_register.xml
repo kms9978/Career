@@ -22,7 +22,7 @@
                 android:background="@null" />
             </LinearLayout>
                         <LinearLayout
-                            android:background="#6B66FF"
+                            android:background="@drawable/header_radius"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
