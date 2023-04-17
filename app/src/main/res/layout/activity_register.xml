@@ -3,40 +3,129 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".Activity.RegisterActivity">
 
-    <LinearLayout
-        android:background="#6B66FF"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:orientation="vertical">
             <LinearLayout
-
+                android:background="#6B66FF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
             <ImageButton
-                android:layout_marginLeft="10dp"
+                android:id="@+id/back_btn"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/baseline_arrow_back_ios_24"
-                android:contentDescription="back"
-                android:background="@null"/>
+                android:contentDescription="@string/back"
+                android:background="@null" />
             </LinearLayout>
                         <LinearLayout
+                            android:background="#6B66FF"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <TextView
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:text="회원가입"
-                                android:gravity="center|bottom"
+                                android:layout_height="wrap_content"
+                                android:text="@string/register"
+                                android:gravity="center"
                                 android:textColor="@color/white"
                                 android:fontFamily="@font/jalan"
-                                android:textSize="25sp" />
+                                android:textSize="25sp"/>
                         </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/input_id"
+            android:fontFamily="@font/jalan"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"
+            android:textSize="20sp"/>
+        <EditText
+            tools:ignore="SpeakableTextPresentCheck"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="5dp"
+            android:importantForAutofill="no"
+            android:textColor="@color/black"
+            android:hint="@string/edit_id"
+            android:inputType="text"
+            android:background="@drawable/custom_edittext"/>
+    </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/input_pass"
+                    android:fontFamily="@font/jalan"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="10dp"
+                    android:textSize="20sp"/>
+                <EditText
+                    tools:ignore="SpeakableTextPresentCheck"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:importantForAutofill="no"
+                    android:textColor="@color/black"
+                    android:hint="@string/edit_pass"
+                    android:inputType="text"
+                    android:background="@drawable/custom_edittext"/>
+            </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/input_nick"
+                            android:fontFamily="@font/jalan"
+                            android:textColor="@color/black"
+                            android:layout_marginStart="10dp"
+                            android:textSize="20sp"/>
+                        <EditText
+                            tools:ignore="SpeakableTextPresentCheck"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginHorizontal="5dp"
+                            android:importantForAutofill="no"
+                            android:textColor="@color/black"
+                            android:hint="@string/edit_nick"
+                            android:inputType="text"
+                            android:background="@drawable/custom_edittext"/>
+                    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/Register_Btn"
+            android:layout_marginHorizontal="14dp"
+            android:padding="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Register_OK"
+            android:fontFamily="@font/jalan"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:backgroundTint="#6B66FF"/>
     </LinearLayout>
 </LinearLayout>

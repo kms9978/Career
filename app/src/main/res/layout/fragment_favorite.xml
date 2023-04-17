@@ -5,13 +5,34 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.FavoriteFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test Page (Favorite)"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/black"/>
+        <LinearLayout
+            android:background="@drawable/header_radius"
+            android:id="@+id/favorite_header"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/star"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/jalan"
+
+                    android:textSize="30sp"
+                    android:gravity="center"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:rowCount="2"
+                android:columnCount="2"
+                >
+
+
+            </GridLayout>
+        </LinearLayout>
+
+
 
 </FrameLayout>
+
