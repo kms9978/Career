@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.jobhunt.R
 
@@ -20,6 +21,13 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = Color.parseColor("#ffffff")
 
         val login_Btn = findViewById<Button>(R.id.Login_Btn)
+        val go_Register = findViewById<TextView>(R.id.go_Register)
+
+        //Register intent
+        fun moveToRegisterPage(){
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         //intent
         fun moveToHomePage(){
@@ -29,6 +37,9 @@ class MainActivity : AppCompatActivity() {
         //함수 호출
         login_Btn.setOnClickListener{
             moveToHomePage()
+        }
+        go_Register.setOnClickListener {
+            moveToRegisterPage()
         }
 
 

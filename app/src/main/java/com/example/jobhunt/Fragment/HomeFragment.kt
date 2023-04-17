@@ -43,9 +43,13 @@ class HomeFragment : Fragment() {
 
         // 검색어를 입력할 때마다 RecyclerView 갱신
         searchEditText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // 검색어를 이용하여 리스트에 검색 결과를 담는다
@@ -89,7 +93,9 @@ class HomeFragment : Fragment() {
                 recentRecruitList.add(RecentRecruit(companyName, content,imageUrl,link))
             }
         } catch (e: IOException) {
+
             e.printStackTrace()
+
         }
 
         return recentRecruitList

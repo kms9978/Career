@@ -19,7 +19,9 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
 
     // Declare properties for the filtered list and list of company names
     private var filteredList = recentRecruitList
-    private var companyNameList = recentRecruitList.map { it.content }
+    private var companyNameList = recentRecruitList.map {
+        it.content
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -46,13 +48,12 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
     override fun getItemCount(): Int {
         return recentRecruitList.size
     }
-
     // Return the filter object
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredResults = mutableListOf<RecentRecruit>()
-                val searchQuery = constraint.toString().toLowerCase(Locale.getDefault())
+                val searchQuery = constraint.toString().lowercase(Locale.getDefault()) // toLowercase() 에서 변경
 
                 if (searchQuery.isEmpty()) {
                     // If the search query is empty, show all items
@@ -61,23 +62,19 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
                     // Otherwise, show only the items whose company name matches the search query
                     for (i in 0 until recentRecruitList.size) {
                         val companyName = companyNameList[i]
-                        if (companyName.toLowerCase(Locale.getDefault()).contains(searchQuery)) {
+                        if (companyName.lowercase(Locale.getDefault()).contains(searchQuery)) { // toLowercase() 에서 변경
                             filteredResults.add(recentRecruitList[i])
                         }
                     }
                 }
-
                 val filterResults = FilterResults()
                 filterResults.values = filteredResults
                 return filterResults
             }
-
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 filteredList = results?.values as MutableList<RecentRecruit>
                 notifyDataSetChanged()
             }
-
-
         }
     }
 
@@ -86,11 +83,13 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
         val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
         val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img) // ImageView 추가
         init {
+
             recruitImage.setOnClickListener {
                 val url = filteredList[adapterPosition].url // 클릭한 항목의 링크 가져오기
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url")) // 링크를 열기 위한 인텐트 생성
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url")) // 링크intent domain+
                 it.context.startActivity(intent) // 인텐트 실행
             }
+
         }
 
 

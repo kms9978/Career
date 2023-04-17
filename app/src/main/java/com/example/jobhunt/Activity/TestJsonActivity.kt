@@ -38,9 +38,7 @@ class TestJsonActivity : AppCompatActivity() {
             val link = company.getString("link")
 
             val previousData = textView.text
-
             var data:String = "$state\n$content\n$position\n$plan\n$link\n"
-
             textView.text = previousData.toString() + data
         }
     }

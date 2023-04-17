@@ -93,6 +93,7 @@
                                 android:textSize="16sp"
                                 android:fontFamily="@font/jalan"/>
                             <TextView
+                                android:id="@+id/go_Register"
                                 android:gravity="center"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
