@@ -6,6 +6,5 @@
     <item
         android:drawable="@drawable/baseline_favorite_24"
         android:state_checked="true"/>
-
     <item android:drawable="@drawable/baseline_favorite_border_24"/>
 </selector>

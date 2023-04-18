@@ -7,7 +7,6 @@
     android:padding="16dp">
 
     <!-- 헤더 뷰 내용을 정의합니다. -->
-
 <Button
         android:id="@+id/btn_close_nav_drawer"
         android:layout_width="wrap_content"
