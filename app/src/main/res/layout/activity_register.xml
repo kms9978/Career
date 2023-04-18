@@ -51,6 +51,7 @@
             android:layout_marginStart="10dp"
             android:textSize="20sp"/>
         <EditText
+            android:id="@+id/edt_id"
             tools:ignore="SpeakableTextPresentCheck"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -75,6 +76,7 @@
                     android:layout_marginStart="10dp"
                     android:textSize="20sp"/>
                 <EditText
+                    android:id="@+id/edt_pass"
                     tools:ignore="SpeakableTextPresentCheck"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -99,6 +101,7 @@
                             android:layout_marginStart="10dp"
                             android:textSize="20sp"/>
                         <EditText
+                            android:id="@+id/edt_nick"
                             tools:ignore="SpeakableTextPresentCheck"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"

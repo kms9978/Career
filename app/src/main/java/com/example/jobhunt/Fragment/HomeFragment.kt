@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
 import java.io.IOException
 import java.io.InputStream
+import java.net.URL
 
 class HomeFragment : Fragment() {
     // Declare properties for the RecyclerView and list of recent recruit items
@@ -81,6 +82,7 @@ class HomeFragment : Fragment() {
     }
 
 
+    // 최근 채용 정보 데이터를 읽어오는 함수
     // 최근 채용 정보 데이터를 읽어오는 함수
     private fun readRecentRecruitData(): MutableList<RecentRecruit> {
         // 최근 채용 정보 데이터 리스트 생성

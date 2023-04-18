@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.example.jobhunt.R
-import com.example.jobhunt.Activity.TestJsonActivity
 
 class RecruitFragment : Fragment() {
 
@@ -20,11 +19,7 @@ class RecruitFragment : Fragment() {
 
 
         val view = inflater.inflate(R.layout.fragment_recruit, container, false)
-        val testButton = view.findViewById<Button>(R.id.testJson)
-        testButton.setOnClickListener {
-            val intent = Intent(activity, TestJsonActivity::class.java)
-            startActivity(intent)
-        }
+
         return view
     }
 

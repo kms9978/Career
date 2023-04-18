@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment">
-
     <LinearLayout
         android:background="@drawable/header_radius"
         android:layout_width="match_parent"
