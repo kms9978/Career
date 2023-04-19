@@ -24,4 +24,6 @@
     <string name="close_nav">네비바 닫기</string>
     <string name="logo_main">로고 이미지</string>
     <string name="input_company">기업명 입력</string>
+    <string name="certificate">학력무관</string>
+    <string name="expire_date">만료기간</string>
 </resources>

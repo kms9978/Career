@@ -32,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         // Retrofit 객체 생성
         val retrofit = Retrofit.Builder()
             // 서버 URL 지정
-            .baseUrl("http://54.196.120.136:8888")
+            .baseUrl("http://52.91.68.139:8888")
             // JSON 데이터를 파싱하기 위한 GsonConverter 지정
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -70,9 +70,9 @@ class RegisterActivity : AppCompatActivity() {
                     // 응답 받았을 때 호출되는 메서드
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         if (response.isSuccessful) { // 응답 성공 시 토스트 메시지 출력
-                            Toast.makeText(applicationContext, "Registration Successful!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "회원가입 성공!", Toast.LENGTH_SHORT).show()
                         } else { // 응답 실패 시 토스트 메시지 출력
-                            Toast.makeText(applicationContext, "Registration Failed.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
 

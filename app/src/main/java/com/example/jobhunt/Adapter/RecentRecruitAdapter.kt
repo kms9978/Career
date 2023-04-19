@@ -19,10 +19,17 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
 
     // Declare properties for the filtered list and list of company names
     private var filteredList = recentRecruitList
+
     private var companyNameList = recentRecruitList.map {
-        it.content
+        it.companyName
     }
 
+    init {
+        // Initialize the companyNameList
+        companyNameList = recentRecruitList.map {
+            it.companyName
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent, parent, false)//item_recent 레이아웃을 inflate하여 사용한다.
@@ -31,8 +38,10 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val recentRecruit = recentRecruitList[position]
-        holder.recruitName.text = recentRecruit.content
-        holder.recruitTitle.text = recentRecruit.position
+        holder.recruitName.text = recentRecruit.companyName
+        holder.recruitTitle.text = recentRecruit.content
+        holder.recruitPosition.text = recentRecruit.position
+        holder.recruitPlan.text = recentRecruit.plan
         // 이미지 로드하기
         Glide.with(holder.itemView.context)
             .load(recentRecruit.imgUrl) // RecentRecruit 객체에서 이미지 URL 가져오기
@@ -62,7 +71,7 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
                     // Otherwise, show only the items whose company name matches the search query
                     for (i in 0 until recentRecruitList.size) {
                         val companyName = companyNameList[i]
-                        if (companyName.lowercase(Locale.getDefault()).contains(searchQuery)) { // toLowercase() 에서 변경
+                        if (companyName.lowercase(Locale.getDefault()).contains(searchQuery)) {
                             filteredResults.add(recentRecruitList[i])
                         }
                     }
@@ -82,6 +91,8 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
         val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
         val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
         val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img) // ImageView 추가
+        val recruitPosition: TextView = itemView.findViewById(R.id.ability)
+        val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
         init {
 
             recruitImage.setOnClickListener {
@@ -91,7 +102,5 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
             }
 
         }
-
-
     }
 }

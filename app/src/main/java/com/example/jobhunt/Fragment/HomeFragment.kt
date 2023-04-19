@@ -101,7 +101,10 @@ class HomeFragment : Fragment() {
                 val content = innerJsonObject.getString("content")
                 val imageUrl = innerJsonObject.getString("img")
                 val link = innerJsonObject.getString("link")
-                recentRecruitList.add(RecentRecruit(companyName, content,imageUrl,link))
+                val position = innerJsonObject.getString("position")
+                val plan = innerJsonObject.getString("plan")
+
+                recentRecruitList.add(RecentRecruit(companyName, content,position,plan,link,imageUrl))
             }
         } catch (e: IOException) {
 
