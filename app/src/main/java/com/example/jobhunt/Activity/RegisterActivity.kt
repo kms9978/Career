@@ -4,6 +4,7 @@ import com.example.jobhunt.Service.ApiService
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobhunt.R
@@ -45,6 +46,12 @@ class RegisterActivity : AppCompatActivity() {
         val edt_id: EditText = findViewById(R.id.edt_id)
         val edt_nick: EditText = findViewById(R.id.edt_nick)
         val edt_pass: EditText = findViewById(R.id.edt_pass)
+        val back_btn: ImageButton = findViewById(R.id.back_btn)
+
+        back_btn.setOnClickListener{
+            onBackPressedDispatcher.onBackPressed()
+        }
+
 
         // Register_Btn 버튼이 클릭되었을 때 실행될 동작 정의
         Register_Btn.setOnClickListener {
@@ -84,4 +91,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
+
+
+    
 }

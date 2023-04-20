@@ -1,5 +1,6 @@
 package com.example.jobhunt.Service
 
+import com.example.jobhunt.dataModel.RecentRecruit
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -19,6 +20,8 @@ interface ApiService {
 // RequestBody 타입의 userData 파라미터를 받고, ResponseBody 타입의 Call 객체를 반환하는 postData 메소드 생성
     fun postData(@Body userData: RequestBody): Call<ResponseBody>
 
-//    @GET("/jobhunting-page/jobhunt/d8d9ed7aab4fc2b6cf4a7b9f42e787912a334b75/companyInfo/news.json")
-//    fun getRecentRecruitData(): Call<Map<String,>>
+
+    // 채용정보 읽기여기서 GET 요청을 수행하고, "recentRecruits"는 요청할 엔드포인트의 경로를 나타냄. suspend 키워드는 코루틴에서 사용될 것을 나타낸다.
+//    @GET("recent_recruit")
+//    suspend fun getRecentRecruit(): MutableList<RecentRecruit>
 }

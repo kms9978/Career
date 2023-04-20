@@ -25,16 +25,6 @@
             android:textSize="30sp"
             android:textColor="#ffffff"
             android:fontFamily="@font/jalan"/>
-
-        <ImageButton
-            android:id="@+id/myPage_Btn"
-            android:contentDescription="@string/mypage"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:background="@null"
-            android:layout_weight="9"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/baseline_person_outline_24"/>
     </LinearLayout>
 
     <LinearLayout
