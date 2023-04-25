@@ -8,6 +8,4 @@ data class RecentRecruit(
     val plan: String,
     val url: String,
     val imgUrl: String,
-
-
 )
