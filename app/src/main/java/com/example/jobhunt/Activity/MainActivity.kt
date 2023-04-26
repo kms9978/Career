@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         Log.d("TOKEN", "Token: $token")
-                        Log.d("REFRESHTOKEN", "Refresh Token: $refreshToken")
+                        Log.d("REFRESHTOKEN", "RefreshToken: $refreshToken")
 
                         // HomeActivity로 이동하기
                         moveToHomePage()
