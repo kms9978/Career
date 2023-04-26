@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://52.91.68.139:8888")
+        .baseUrl("http://54.172.136.87:8080")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             val refreshTokenRequest = RefreshTokenRequest(refreshToken)
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("http://52.91.68.139:8888")
+                .baseUrl("http://54.172.136.87:8080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

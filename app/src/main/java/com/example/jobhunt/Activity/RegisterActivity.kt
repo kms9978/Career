@@ -1,6 +1,5 @@
 package com.example.jobhunt.Activity
 
-import com.example.jobhunt.Service.ApiService
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -8,8 +7,10 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.jobhunt.R
+import com.example.jobhunt.Service.ApiService
 import com.example.jobhunt.dataModel.UserJsonData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -17,7 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import java.util.concurrent.TimeUnit
 
 
 // RegisterActivity 클래스 선언, AppCompatActivity 상속
@@ -30,11 +31,10 @@ class RegisterActivity : AppCompatActivity() {
         // activity_register 레이아웃 파일을 화면에 띄움
         setContentView(R.layout.activity_register)
 
-        // Retrofit 객체 생성
+
+
         val retrofit = Retrofit.Builder()
-            // 서버 URL 지정
-            .baseUrl("http://52.91.68.139:8888")
-            // JSON 데이터를 파싱하기 위한 GsonConverter 지정
+            .baseUrl("http://54.172.136.87:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
