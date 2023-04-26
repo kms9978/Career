@@ -15,7 +15,7 @@
     <string name="edit_pass">비밀번호를 입력하세요</string>
     <string name="edit_nick">닉네임을 입력하세요</string>
     <string name="Register_OK">회원가입 완료</string>
-    <string name="star">즐겨찾기</string>
+    <string name="star">마이페이지</string>
     <string name="item_img_description">아이템 이미지</string>
     <string name="company_name">기업명</string>
     <string name="company_title">공고 TItle</string>

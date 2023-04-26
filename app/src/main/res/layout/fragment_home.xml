@@ -1,75 +1,99 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment">
-
     <FrameLayout
-        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:background="@drawable/header_radius"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <LinearLayout
-        android:id="@+id/home_header"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_weight="1"
-            android:layout_marginStart="5dp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/app_name"
-            android:textSize="30sp"
-            android:textColor="#ffffff"
-            android:fontFamily="@font/jalan"/>
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/search_company"
-            android:layout_marginHorizontal="20dp"
-            android:background="@drawable/home_header"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:importantForAutofill="no"
-            android:fontFamily="@font/jalan"
-            android:textColorHint="@color/white"
-            android:textColor="@color/white"
-            android:drawableStart="@drawable/baseline_search_24"
-            android:hint="@string/input_company"/>
-    </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="120dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_recentRecruit"
+        <LinearLayout
+            android:background="@drawable/header_radius"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            tools:listitem="@layout/item_recent"/>
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/home_header"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/app_name"
+                    android:textSize="26sp"
+                    android:textColor="#ffffff"
+                    android:fontFamily="@font/jalan"/>
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/search_company"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@drawable/home_header"
+                    android:inputType="text"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:importantForAutofill="no"
+                    android:fontFamily="@font/jalan"
+                    android:textSize="14sp"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:drawableStart="@drawable/baseline_search_24"
+                    android:hint="@string/input_company"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/r1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_recentRecruit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_recent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/r2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:text="신입 채용 정보"
+                android:textColor="@color/black"
+                android:fontFamily="@font/chosunbg"
+                android:textSize="20sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_newComeRecruit"
+                android:layout_marginBottom="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_newcom"/>
+        </LinearLayout>
+        </LinearLayout>
     </FrameLayout>
 </ScrollView>
