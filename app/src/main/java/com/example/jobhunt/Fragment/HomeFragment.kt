@@ -14,6 +14,7 @@ import android.widget.ImageButton
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.R
@@ -30,16 +31,19 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var recentRecruitList: MutableList<RecentRecruit>
     private lateinit var searchEditText: EditText
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         // fragment_home.xml 레이아웃을 inflate하여 view 객체를 생성한다
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-
-
         // 리사이클러뷰 초기화
         recyclerView = view.findViewById(R.id.rv_recentRecruit)
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = GridLayoutManager(context, 4, RecyclerView.HORIZONTAL, false)
 
         searchEditText = view.findViewById(R.id.search_company)
 
@@ -48,7 +52,6 @@ class HomeFragment : Fragment() {
 
         // 어댑터를 리사이클러뷰에 설정한다
         recyclerView.adapter = RecentRecruitAdapter(recentRecruitList)
-
 
         // 검색어를 입력할 때마다 RecyclerView 갱신
         searchEditText.addTextChangedListener(object : TextWatcher {
@@ -73,10 +76,6 @@ class HomeFragment : Fragment() {
                 recyclerView.adapter = RecentRecruitAdapter(filteredList)
             }
         })
-
-
-
-
 
         return view
     }

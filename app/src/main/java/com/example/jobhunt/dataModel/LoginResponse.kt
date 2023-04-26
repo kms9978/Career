@@ -3,8 +3,8 @@ package com.example.jobhunt.dataModel
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-    @SerializedName("access_token")
+    @SerializedName("token")
     val token: String,
-    @SerializedName("refresh_token")
+    @SerializedName("refresh_token") // Json 객체의 refresh_token 필드와 매핑
     val refreshToken: String
 )
