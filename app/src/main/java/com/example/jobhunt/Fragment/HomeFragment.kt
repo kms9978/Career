@@ -114,7 +114,7 @@ class HomeFragment : Fragment() {
                 val position = innerJsonObject.getString("position")
                 val plan = innerJsonObject.getString("plan")
 
-                // "신입"만 해당되는 데이터를 추가합니다.
+                // "신입"만 해당되는 데이터를 추가. 데이터에 전부 신입이므로 임시로 인턴 삽입
                 if (position.contains("인턴")) {
                     newcomRecruitList.add(RecentRecruit(companyName, content,position,plan,link,imageUrl))
                 }
