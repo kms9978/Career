@@ -93,7 +93,6 @@ class HomeFragment : Fragment() {
 
         return view
     }
-
     private fun readnewcomRecruitData(): MutableList<RecentRecruit> {
         // 최근 채용 정보 데이터 리스트 생성
         val newcomRecruitList = mutableListOf<RecentRecruit>()
@@ -127,8 +126,6 @@ class HomeFragment : Fragment() {
 
     }
 
-
-    // 최근 채용 정보 데이터를 읽어오는 함수
     // 최근 채용 정보 데이터를 읽어오는 함수
     private fun readRecentRecruitData(): MutableList<RecentRecruit> {
         // 최근 채용 정보 데이터 리스트 생성

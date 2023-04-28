@@ -28,7 +28,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     // Retrofit configuration
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://34.201.163.116:8080") // Retrofit baseURL 설정
+        .baseUrl("http://54.227.205.92:8080") // Retrofit baseURL 설정
         .addConverterFactory(GsonConverterFactory.create()) // JSON 파싱 설정
         .build()
 

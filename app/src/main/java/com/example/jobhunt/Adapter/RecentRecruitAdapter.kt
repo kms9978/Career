@@ -93,6 +93,7 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
         val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img) // ImageView 추가
         val recruitPosition: TextView = itemView.findViewById(R.id.ability)
         val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
+
         init {
 
             recruitImage.setOnClickListener {
