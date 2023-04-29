@@ -2,13 +2,16 @@ package com.example.jobhunt.Fragment
 
 import RecentRecruitAdapter
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.core.view.GravityCompat
@@ -20,20 +23,36 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.R
+import com.example.jobhunt.Service.BookMarkService
+import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.RecentRecruit
+import com.example.jobhunt.databinding.FragmentHomeBinding
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.io.InputStream
 import java.net.URL
 
 class HomeFragment : Fragment() {
     // Declare properties for the RecyclerView and list of recent recruit items
-    private lateinit var recyclerView: RecyclerView
     private lateinit var recentRecruitList: MutableList<RecentRecruit>
     private lateinit var newcomRecruitList: MutableList<RecentRecruit>
     private lateinit var searchEditText: EditText
+
+    // Retrofit 객체 생성
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://54.227.205.92:8080/") // 서버 주소 입력
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         // fragment_home.xml 레이아웃을 inflate하여 view 객체를 생성한다
@@ -126,6 +145,7 @@ class HomeFragment : Fragment() {
 
     }
 
+
     // 최근 채용 정보 데이터를 읽어오는 함수
     private fun readRecentRecruitData(): MutableList<RecentRecruit> {
         // 최근 채용 정보 데이터 리스트 생성
@@ -157,4 +177,8 @@ class HomeFragment : Fragment() {
 
         return recentRecruitList
     }
+
+
+
+
 }

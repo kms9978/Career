@@ -1,11 +1,11 @@
 package com.example.jobhunt.dataModel
 
 
-data class Bookmark(
-    val userBookmarkId: Long,
-    val bookmarkImg: String,
-    val bookmarkName: String,
-    val bookmarkEndDate: String,
-    val bookmarkStartDate: String,
-    val companyLink: String
+data class BookMarkData(
+    val user_bookmark_id: Long,
+    val bookMarkImg: String,
+    val bookMarkName: String,
+    val bookMark_End_Date: String,
+    val bookMark_Start_Date: String,
+    val company_link: String
 )
