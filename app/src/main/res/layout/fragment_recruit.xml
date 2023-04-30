@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.RecruitFragment">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:background="@drawable/header_radius"
+        android:id="@+id/favorite_header"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="기술블로그"
+            android:textColor="@color/white"
+            android:fontFamily="@font/jalan"
+            android:textSize="22sp"
+            android:gravity="center"/>
+    </LinearLayout>
 
-<Button
-    android:id="@+id/testJson"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Test JSON"/>
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Codenary_rc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_codenary"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    </FrameLayout>
+
+</ScrollView>

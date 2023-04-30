@@ -97,11 +97,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:orientation="horizontal">
-                                 <CheckBox
-                                     android:id="@+id/add_bookmark"
-                                     android:layout_width="match_parent"
-                                     android:layout_height="48dp"
-                                     android:button="@drawable/selector_favorite_item" />
+
+                                    <include layout="@layout/recent_list_item" />
 
                                 </LinearLayout>
                             </LinearLayout>

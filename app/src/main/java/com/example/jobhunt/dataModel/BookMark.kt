@@ -2,7 +2,7 @@ package com.example.jobhunt.dataModel
 
 
 data class BookMarkData(
-    val user_bookmark_id: Long,
+    val user_bookmark_id: Long = 0,
     val bookMarkImg: String,
     val bookMarkName: String,
     val bookMark_End_Date: String,

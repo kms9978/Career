@@ -3,10 +3,7 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jobhunt.R
@@ -22,6 +19,8 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
 
     private var companyNameList = recentRecruitList.map {
         it.companyName
+
+
     }
 
     init {
@@ -33,10 +32,14 @@ class RecentRecruitAdapter(private val recentRecruitList: MutableList<RecentRecr
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent, parent, false)//item_recent 레이아웃을 inflate하여 사용한다.
+
+
+
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val recentRecruit = recentRecruitList[position]
         holder.recruitName.text = recentRecruit.companyName
         holder.recruitTitle.text = recentRecruit.content
