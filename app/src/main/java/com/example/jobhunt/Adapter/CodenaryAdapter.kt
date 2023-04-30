@@ -12,13 +12,11 @@ import com.example.jobhunt.dataModel.CodenaryData
 import retrofit2.Call
 import retrofit2.Response
 
-class CodenaryAdapter(private val newsList: List<CodenaryData>) :
+class CodenaryAdapter(private var dataList: CodenaryData) :
     RecyclerView.Adapter<CodenaryAdapter.ViewHolder>() {
-    private var dataList = ArrayList<CodenaryData>()
 
-
-    fun setData(newsList: List<CodenaryData>) {
-        dataList = ArrayList(newsList)
+    fun setData(newsList: CodenaryData) {
+        dataList = newsList
         notifyDataSetChanged()
     }
 
@@ -28,9 +26,8 @@ class CodenaryAdapter(private val newsList: List<CodenaryData>) :
         return ViewHolder(view)
     }
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val news = newsList[position]
+        val news = dataList
         holder.title.text = news.preview
         holder.content.text = news.date
         holder.date.text = news.info
@@ -40,7 +37,7 @@ class CodenaryAdapter(private val newsList: List<CodenaryData>) :
     }
 
     override fun getItemCount(): Int {
-        return newsList.size
+        return 1
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
