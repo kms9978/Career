@@ -1,7 +1,10 @@
 package com.example.jobhunt.Activity
 
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
@@ -17,6 +20,11 @@ class DetailcodenaryActivity : AppCompatActivity() {
         // Intent로 전달받은 CodenaryData 객체 가져오기
         val data = intent.getParcelableExtra<CodenaryData>("codenary_data")
 
+        // 뒤로 가기 버튼 클릭 이벤트
+        findViewById<ImageButton>(R.id.detail_back_btn).setOnClickListener {
+            finish()
+        }
+
         // 각 뷰에 데이터 설정
         findViewById<TextView>(R.id.detail_title_text).text = data?.title ?: ""
         Glide.with(this)
@@ -25,4 +33,5 @@ class DetailcodenaryActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.detail_info_text).text = data?.info ?: ""
         findViewById<TextView>(R.id.detail_date_text).text = data?.date ?: ""
     }
+
 }

@@ -9,8 +9,6 @@ import com.example.jobhunt.R
 
 class FavoriteFragment : Fragment() {
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
