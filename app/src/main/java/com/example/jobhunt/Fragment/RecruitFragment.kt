@@ -20,6 +20,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import com.example.jobhunt.dataModel.ResponseData
+import com.google.gson.GsonBuilder
 
 
 class RecruitFragment : Fragment() {
@@ -42,17 +43,17 @@ class RecruitFragment : Fragment() {
         codenaryAdapter = CodenaryAdapter()
         recyclerView.adapter = codenaryAdapter
 
-        // 데이터 로드 및 어댑터에 설정
+        val gson = GsonBuilder().setLenient().create()
         val retrofit = Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
         val codenaryService = retrofit.create(CodenaryService::class.java)
         codenaryService.getNews().enqueue(object : Callback<CodenaryResponse> {
             override fun onResponse(call: Call<CodenaryResponse>, response: Response<CodenaryResponse>) {
                 if (response.isSuccessful && response.body() != null) {
-// response.body()가 CodenaryResponse
+                    // response.body()가 CodenaryResponse
                     val data = response.body()?.data
                     if (data != null && data.isNotEmpty()) {
                         val dataList = mutableListOf<CodenaryData>()
@@ -73,6 +74,7 @@ class RecruitFragment : Fragment() {
                     Log.e(TAG, "Failed to get data")
                 }
             }
+
             override fun onFailure(call: Call<CodenaryResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to get data", t)
             }
