@@ -1,8 +1,9 @@
 ### 1. Initial Screen
-<img src="https://user-images.githubusercontent.com/85223787/235450226-02335876-c7ec-473e-beb9-874b43359482.png" width="400" height="600"/>
+<img src="https://user-images.githubusercontent.com/85223787/235450227-bda748fa-f293-486f-9050-75354b385d28.png" width="400" height="600"/>
+
 
 ### 2. Login Screen
-<img src="https://user-images.githubusercontent.com/85223787/235450227-bda748fa-f293-486f-9050-75354b385d28.png" width="400" height="600"/>
+<img src="https://user-images.githubusercontent.com/85223787/235450226-02335876-c7ec-473e-beb9-874b43359482.png" width="400" height="600"/>
 
 ### 3. Register Screen
 <img src="https://user-images.githubusercontent.com/85223787/235450230-65797ea3-7003-4723-9e2f-639d90b167a8.png" width="400" height="600"/>
