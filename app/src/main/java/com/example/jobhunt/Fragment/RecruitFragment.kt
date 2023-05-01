@@ -1,7 +1,7 @@
 package com.example.jobhunt.Fragment
 
 import android.content.ContentValues.TAG
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,10 +11,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.CodenaryAdapter
+import com.example.jobhunt.DetailcodenaryActivity
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.CodenaryService
 import com.example.jobhunt.dataModel.CodenaryData
-import com.example.jobhunt.dataModel.CodenaryResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Call
@@ -22,10 +22,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 import com.google.gson.GsonBuilder
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
-import java.nio.charset.Charset
 
 
 class RecruitFragment : Fragment() {
@@ -39,6 +35,7 @@ class RecruitFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // 레이아웃 파일 연결
         val rootView = inflater.inflate(R.layout.fragment_recruit, container, false)
 
         // RecyclerView 초기화
@@ -50,6 +47,7 @@ class RecruitFragment : Fragment() {
 
         // 어댑터 초기화
         codenaryAdapter = CodenaryAdapter()
+
         recyclerView.adapter = codenaryAdapter
 
         // Retrofit 객체 생성
@@ -63,18 +61,19 @@ class RecruitFragment : Fragment() {
         val codenaryService = retrofit.create(CodenaryService::class.java)
 
         // 데이터 읽어오기
-        codenaryService.getNews().enqueue(object : Callback<CodenaryResponse> {
+        codenaryService.getNews().enqueue(object : Callback<Map<String, CodenaryData>?> {
             override fun onResponse(
-                call: Call<CodenaryResponse>,
-                response: Response<CodenaryResponse>
+                call: Call<Map<String, CodenaryData>?>,
+                response: Response<Map<String, CodenaryData>?>
             ) {
                 if (response.isSuccessful && response.body() != null) {
-                    val data = response.body()?.data ?: emptyList()
-                    if (data != null && data.isNotEmpty()) {
+                    // 데이터가 있는 경우 어댑터에 전달
+                    val data = response.body()!!.values.toList()
+                    if (data.isNotEmpty()) {
                         val dataList = mutableListOf<CodenaryData>()
                         for (item in data) {
                             val news = CodenaryData(
-                                item.preview ?: "",
+                                item.title ?: "",
                                 item.logo ?: "",
                                 item.info ?: "",
                                 item.date ?: ""
@@ -83,79 +82,30 @@ class RecruitFragment : Fragment() {
                         }
                         codenaryAdapter.setData(dataList)
                     } else {
-                        Log.e(TAG, "Data is empty or null: ${response.message()}")
+                        Log.e(TAG, "데이터가 비어있거나 Null: ${response.message()}")
                     }
                 } else {
-                    Log.e(TAG, "Failed to get data")
+                    Log.e(TAG, "get Data 실패")
                 }
             }
 
-            override fun onFailure(call: Call<CodenaryResponse>, t: Throwable) {
-                Log.e(TAG, "Failed to get data", t)
+            override fun onFailure(call: Call<Map<String, CodenaryData>?>, t: Throwable) {
+                Log.e(TAG, "get Data 실패2", t)
             }
         })
 
-        return rootView
-    }
-
-    private fun getDataList(): List<CodenaryData> {
-        val jsonStr = getJsonDataFromAsset(requireActivity(), "codenary.json")
-        return parseJsonData(jsonStr)
-    }
-
-    private fun getJsonDataFromAsset(context: Context, fileName: String): String? {
-        val jsonString: String
-        try {
-            jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
-            return null
-        }
-        return jsonString
-    }
-
-    private fun parseJsonData(jsonStr: String?): List<CodenaryData> {
-        val dataList = mutableListOf<CodenaryData>()
-        try {
-            val jsonObj = JSONObject(jsonStr)
-            val jsonArray = jsonObj.getJSONArray("data")
-            for (i in 0 until jsonArray.length()) {
-                val obj = jsonArray.getJSONObject(i)
-                val preview = obj.getString("preview")
-                val logo = obj.getString("logo")
-                val info = obj.getString("info")
-                val date = obj.getString("date")
-                val data = CodenaryData(preview, logo, info, date)
-                dataList.add(data)
+        // 아이템 클릭 리스너 등록
+        codenaryAdapter.setOnItemClickListener(object : CodenaryAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                // 클릭한 아이템에 해당하는 "info" 데이터를 가져와서 전달
+                val clickedItem = codenaryAdapter.getDataList()[position]
+                val info = clickedItem.info
+                val intent = Intent(activity, DetailcodenaryActivity::class.java)
+                intent.putExtra("info", info)
+                startActivity(intent)
             }
-        } catch (e: JSONException) {
-            Log.e(TAG, "Failed to parse JSON data", e)
-        }
-        return dataList
-    }
 
-    private fun readJsonDataFromAsset(): String? {
-        var json: String? = null
-        try {
-            val inputStream = requireContext().assets.open("codenary_data.json")
-            val size = inputStream.available()
-            val buffer = ByteArray(size)
-            inputStream.read(buffer)
-            inputStream.close()
-            json = String(buffer, Charset.defaultCharset())
-        } catch (e: IOException) {
-            Log.e(TAG, "Failed to read JSON data from asset file", e)
-        }
-        return json
-    }
-
-    private fun loadData() {
-        val jsonStr = readJsonDataFromAsset()
-        if (jsonStr != null) {
-            val dataList = parseJsonData(jsonStr)
-            codenaryAdapter.setData(dataList)
-        } else {
-            Log.e(TAG, "Failed to load data")
-        }
+        })
+        return rootView
     }
 }
