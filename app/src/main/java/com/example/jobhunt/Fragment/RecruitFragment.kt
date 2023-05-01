@@ -53,9 +53,8 @@ class RecruitFragment : Fragment() {
         codenaryService.getNews().enqueue(object : Callback<CodenaryResponse> {
             override fun onResponse(call: Call<CodenaryResponse>, response: Response<CodenaryResponse>) {
                 if (response.isSuccessful && response.body() != null) {
-                    // response.body()가 CodenaryResponse
-                    val data = response.body()?.data
-                    if (data != null && data.isNotEmpty()) {
+                    val data = response.body()?.data ?: emptyList()
+                    if (data.isNotEmpty()) {
                         val dataList = mutableListOf<CodenaryData>()
                         for (item in data) {
                             val news = CodenaryData(
@@ -68,13 +67,12 @@ class RecruitFragment : Fragment() {
                         }
                         codenaryAdapter.setData(dataList)
                     } else {
-                        Log.e(TAG, "Data is empty or null")
+                        Log.e(TAG, "Data is empty")
                     }
                 } else {
                     Log.e(TAG, "Failed to get data")
                 }
             }
-
             override fun onFailure(call: Call<CodenaryResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to get data", t)
             }

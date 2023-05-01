@@ -6,6 +6,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface CodenaryService {
-    @GET("withcareer/backend_jobhunt/main/codenary/news.json")
+    @GET("kms9978/kms9978/main/news.json")
     fun getNews(): Call<CodenaryResponse>
 }
