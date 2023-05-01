@@ -9,14 +9,15 @@
 <img src="https://user-images.githubusercontent.com/85223787/235450230-65797ea3-7003-4723-9e2f-639d90b167a8.png" width="400" height="600"/>
 
 ### 4. Home(Recruit) Screen
-<img src="https://user-images.githubusercontent.com/85223787/235450230-65797ea3-7003-4723-9e2f-639d90b167a8.png" width="400" height="600"/>
-
-### 5. Search Screen
 <img src="https://user-images.githubusercontent.com/85223787/235450232-94d5a2d6-49fc-41cd-850a-d5d6aa63c984.png" width="400" height="600"/>
 
-### 6. Info(Codenary) Screen
-<img src="https://user-images.githubusercontent.com/85223787/235450235-02551a68-dd9e-444b-bf5f-60c2bcbb5c58.png" width="400" height="600"/>
 
+### 5. Search Screen
+
+<img src="https://user-images.githubusercontent.com/85223787/235450235-02551a68-dd9e-444b-bf5f-60c2bcbb5c58.png" width="400" height="600"/>
+### 6. Info(Codenary) Screen
+
+<img src="https://user-images.githubusercontent.com/85223787/235451635-ddc054c8-4c7f-4ea4-a156-f9f323c28256.png" width="400" height="600"/>
 ### 7. Info Detail Screen
 <img src="https://user-images.githubusercontent.com/85223787/235450236-300b7b33-0d2a-4c20-a564-5c811c3508c8.png" width="400" height="600"/>
 
