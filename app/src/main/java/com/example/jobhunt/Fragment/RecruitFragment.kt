@@ -1,7 +1,6 @@
 package com.example.jobhunt.Fragment
 
 import android.content.ContentValues.TAG
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.CodenaryAdapter
-import com.example.jobhunt.DetailcodenaryActivity
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.CodenaryService
 import com.example.jobhunt.dataModel.CodenaryData
@@ -94,18 +92,6 @@ class RecruitFragment : Fragment() {
             }
         })
 
-        // 아이템 클릭 리스너 등록
-        codenaryAdapter.setOnItemClickListener(object : CodenaryAdapter.OnItemClickListener {
-            override fun onItemClick(view: View, position: Int) {
-                // 클릭한 아이템에 해당하는 "info" 데이터를 가져와서 전달
-                val clickedItem = codenaryAdapter.getDataList()[position]
-                val info = clickedItem.info
-                val intent = Intent(activity, DetailcodenaryActivity::class.java)
-                intent.putExtra("info", info)
-                startActivity(intent)
-            }
-
-        })
         return rootView
     }
 }

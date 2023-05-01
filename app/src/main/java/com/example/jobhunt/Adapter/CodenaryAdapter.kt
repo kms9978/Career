@@ -15,15 +15,12 @@ import retrofit2.Response
 class CodenaryAdapter(private var dataList: List<CodenaryData> = listOf()) :
     RecyclerView.Adapter<CodenaryAdapter.ViewHolder>() {
 
-    private var itemClickListener: OnItemClickListener? = null
 
     fun setData(newsList: List<CodenaryData>) {
         dataList = newsList
         notifyDataSetChanged()
     }
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        itemClickListener = listener
-    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_codenary, parent, false)
@@ -40,18 +37,12 @@ class CodenaryAdapter(private var dataList: List<CodenaryData> = listOf()) :
         Glide.with(holder.itemView.context)
             .load(news.logo)
             .into(holder.image)
-        holder.itemView.setOnClickListener {
-            itemClickListener?.onItemClick(news)
-        }
     }
 
     override fun getItemCount(): Int {
         return dataList.size
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(item: CodenaryData)
-    }
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.codenary_title)
         val content: TextView = view.findViewById(R.id.codenary_content)
