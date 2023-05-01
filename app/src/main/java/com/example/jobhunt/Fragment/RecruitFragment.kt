@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.CodenaryAdapter
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.CodenaryService
+import com.example.jobhunt.dataModel.CodenaryResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Call
@@ -26,10 +27,7 @@ class RecruitFragment : Fragment() {
     private lateinit var codenaryAdapter: CodenaryAdapter
     private lateinit var layoutManager: LinearLayoutManager
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_recruit, container, false)
 
         // RecyclerView 초기화
@@ -45,16 +43,16 @@ class RecruitFragment : Fragment() {
 
         // 데이터 로드 및 어댑터에 설정
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/withcareer/backend_jobhunt/98d10c3f13faf884ba249ae58a2bac9dbdac6f1e/codenary/")
+            .baseUrl("https://withcareer.net/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val codenaryService = retrofit.create(CodenaryService::class.java)
-        codenaryService.getNews().enqueue(object : Callback<ResponseData> {
-            override fun onResponse(call: Call<ResponseData>, response: Response<ResponseData>) {
+        codenaryService.getNews().enqueue(object : Callback<CodenaryResponse> {
+            override fun onResponse(call: Call<CodenaryResponse>, response: Response<CodenaryResponse>) {
                 if (response.isSuccessful && response.body() != null) {
-                    // response.body()가 ResponseData 타입으로 반환됩니다.
-                    val data = response.body()?.data
+                    // response.body()가 CodenaryResponse 타입으로 반환됩니다.
+                    val data = response.body()?.dataList
                     if (data != null && data.isNotEmpty()) {
                         codenaryAdapter.setData(data)
                     } else {
@@ -65,11 +63,15 @@ class RecruitFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<ResponseData>, t: Throwable) {
-                Log.e("RecruitFragment", "Failed to get data", t)
+            override fun onFailure(call: Call<CodenaryResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to get data", t)
             }
         })
 
         return rootView
+    }
+
+    companion object {
+        private const val TAG = "RecruitFragment"
     }
 }
