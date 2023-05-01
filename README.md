@@ -1,5 +1,5 @@
 ### 1. Initial Screen
-![Screenshot_1682943180](https://user-images.githubusercontent.com/85223787/235450226-02335876-c7ec-473e-beb9-874b43359482.png)
+<img src="https://user-images.githubusercontent.com/85223787/235450226-02335876-c7ec-473e-beb9-874b43359482.png" width="200" height="200"/>
 
 ### 2. Login Screen
 ![Screenshot_1682943101](https://user-images.githubusercontent.com/85223787/235450227-bda748fa-f293-486f-9050-75354b385d28.png)
