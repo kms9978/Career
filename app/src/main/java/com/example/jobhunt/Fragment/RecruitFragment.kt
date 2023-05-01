@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.CodenaryAdapter
-import com.example.jobhunt.DetailcodenaryActivity
+import com.example.jobhunt.Activity.DetailcodenaryActivity
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.CodenaryService
 import com.example.jobhunt.dataModel.CodenaryData
@@ -47,7 +47,6 @@ class RecruitFragment : Fragment() {
 
         // 어댑터 초기화
         codenaryAdapter = CodenaryAdapter()
-
         recyclerView.adapter = codenaryAdapter
 
         // Retrofit 객체 생성
