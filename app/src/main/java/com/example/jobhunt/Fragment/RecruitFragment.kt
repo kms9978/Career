@@ -1,6 +1,7 @@
 package com.example.jobhunt.Fragment
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.CodenaryAdapter
+import com.example.jobhunt.DetailcodenaryActivity
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.CodenaryService
 import com.example.jobhunt.dataModel.CodenaryData
@@ -57,6 +59,22 @@ class RecruitFragment : Fragment() {
 
         // CodenaryService 인터페이스 구현체 생성
         val codenaryService = retrofit.create(CodenaryService::class.java)
+
+        // RecyclerView 아이템 클릭 리스너 설정
+        codenaryAdapter.setOnItemClickListener(object : CodenaryAdapter.OnItemClickListener {
+            override fun onItemClick(view: View, position: Int) {
+                // 선택한 아이템의 데이터 가져오기
+                val item = codenaryAdapter.dataList[position]
+
+                // DetailcodenaryActivity로 데이터 전달하기
+                val intent = Intent(activity, DetailcodenaryActivity::class.java)
+                intent.putExtra("title", item.title)
+                intent.putExtra("logo", item.logo)
+                intent.putExtra("info", item.info)
+                intent.putExtra("date", item.date)
+                startActivity(intent)
+            }
+        })
 
         // 데이터 읽어오기
         codenaryService.getNews().enqueue(object : Callback<Map<String, CodenaryData>?> {
