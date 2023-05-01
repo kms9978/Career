@@ -67,11 +67,8 @@ class RecruitFragment : Fragment() {
                 val item = codenaryAdapter.dataList[position]
 
                 // DetailcodenaryActivity로 데이터 전달하기
-                val intent = Intent(activity, DetailcodenaryActivity::class.java)
-                intent.putExtra("title", item.title)
-                intent.putExtra("logo", item.logo)
-                intent.putExtra("info", item.info)
-                intent.putExtra("date", item.date)
+                val intent = Intent(context, DetailcodenaryActivity::class.java)
+                intent.putExtra("codenary_data", item)
                 startActivity(intent)
             }
         })

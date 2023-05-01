@@ -42,11 +42,12 @@ class CodenaryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val news = dataList[position]
         holder.title.text = news.title
-        holder.content.text = news.info
-        holder.date.text = news.date
         Glide.with(holder.itemView.context)
             .load(news.logo)
             .into(holder.image)
+
+        holder.content.text = news.info
+        holder.date.text = news.date
 
         holder.itemView.setOnClickListener {
             listener?.onItemClick(holder.itemView, position)

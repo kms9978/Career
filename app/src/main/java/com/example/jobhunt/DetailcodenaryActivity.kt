@@ -2,26 +2,29 @@ package com.example.jobhunt
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.jobhunt.dataModel.CodenaryData
 import com.example.jobhunt.databinding.ActivityDetailcodenaryBinding
 
 class DetailcodenaryActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDetailcodenaryBinding
+    private val TAG = DetailcodenaryActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_detailcodenary)
 
-        binding = ActivityDetailcodenaryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        // CodenaryData 객체 가져오기
+        val data = intent.getParcelableExtra<CodenaryData>("codenary_data")
 
-        val codenaryData = intent.getParcelableExtra<CodenaryData>("codenary_data")
-
-        binding.detailTitleText.text = codenaryData?.title
-        binding.detailInfoText.text = codenaryData?.info
-        binding.detailDateText.text = codenaryData?.date
+        // 뷰에 데이터 설정
+        findViewById<TextView>(R.id.detail_title_text).text = data?.title ?: ""
         Glide.with(this)
-            .load(codenaryData?.logo)
-            .into(binding.detailImage)
+            .load(data?.logo)
+            .into(findViewById<ImageView>(R.id.detail_image))
+        findViewById<TextView>(R.id.detail_info_text).text = data?.info ?: ""
+        findViewById<TextView>(R.id.detail_date_text).text = data?.date ?: ""
+
     }
 }

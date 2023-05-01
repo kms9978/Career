@@ -12,17 +12,18 @@ data class CodenaryData(
     val date: String?
     ): Parcelable {
     constructor(parcel: Parcel) : this(
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString(),
-        parcel.readString()
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
+        parcel.writeString(logo)
         parcel.writeString(info)
         parcel.writeString(date)
-        parcel.writeString(logo)
+
     }
 
     override fun describeContents(): Int {

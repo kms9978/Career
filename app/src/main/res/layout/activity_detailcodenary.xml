@@ -12,27 +12,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
-    <TextView
-        android:id="@+id/detail_info_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="안녕"/>
+        <TextView
+            android:id="@+id/detail_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="제목"/>
+        <TextView
+            android:id="@+id/detail_date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="안녕"/>
+        <ImageView
+            android:id="@+id/detail_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                            <TextView
+                            android:id="@+id/detail_info_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="안녕"/>
 
-    <TextView
-        android:id="@+id/detail_date_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="안녕"/>
+                    </ScrollView>
 
-    <TextView
-        android:id="@+id/detail_title_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="안녕"/>
 
-    <ImageView
-        android:id="@+id/detail_image"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
