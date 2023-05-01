@@ -79,7 +79,6 @@ class RecruitFragment : Fragment() {
                 Log.e(TAG, "Failed to get data", t)
             }
         })
-
         return rootView
     }
 
