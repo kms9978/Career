@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.CodenaryAdapter
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.CodenaryService
+import com.example.jobhunt.dataModel.CodenaryData
 import com.example.jobhunt.dataModel.CodenaryResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -43,7 +44,7 @@ class RecruitFragment : Fragment() {
 
         // 데이터 로드 및 어댑터에 설정
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://withcareer.net/")
+            .baseUrl("https://raw.githubusercontent.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -51,10 +52,20 @@ class RecruitFragment : Fragment() {
         codenaryService.getNews().enqueue(object : Callback<CodenaryResponse> {
             override fun onResponse(call: Call<CodenaryResponse>, response: Response<CodenaryResponse>) {
                 if (response.isSuccessful && response.body() != null) {
-                    // response.body()가 CodenaryResponse 타입으로 반환됩니다.
-                    val data = response.body()?.dataList
+// response.body()가 CodenaryResponse
+                    val data = response.body()?.data
                     if (data != null && data.isNotEmpty()) {
-                        codenaryAdapter.setData(data)
+                        val dataList = mutableListOf<CodenaryData>()
+                        for (item in data) {
+                            val news = CodenaryData(
+                                item.preview ?: "",
+                                item.logo ?: "",
+                                item.info ?: "",
+                                item.date ?: ""
+                            )
+                            dataList.add(news)
+                        }
+                        codenaryAdapter.setData(dataList)
                     } else {
                         Log.e(TAG, "Data is empty or null")
                     }
@@ -62,7 +73,6 @@ class RecruitFragment : Fragment() {
                     Log.e(TAG, "Failed to get data")
                 }
             }
-
             override fun onFailure(call: Call<CodenaryResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to get data", t)
             }
