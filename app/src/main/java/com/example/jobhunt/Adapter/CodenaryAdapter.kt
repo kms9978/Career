@@ -28,9 +28,9 @@ class CodenaryAdapter(private var dataList: List<CodenaryData> = listOf()) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val news = dataList[position]
-        holder.title.text = news.preview
-        holder.content.text = news.date
-        holder.date.text = news.info
+        holder.title.text = news.title
+        holder.content.text = news.info
+        holder.date.text = news.date
         Glide.with(holder.itemView.context)
             .load(news.logo)
             .into(holder.image)

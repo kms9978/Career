@@ -7,5 +7,5 @@ import retrofit2.http.GET
 
 interface CodenaryService {
     @GET("kms9978/kms9978/main/news.json")
-    fun getNews(): Call<CodenaryResponse>
+    fun getNews(): Call<Map<String, CodenaryData>>
 }

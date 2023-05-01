@@ -4,11 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class CodenaryData(
     @SerializedName("preview")
-    val preview: String?,
-    @SerializedName("logo")
-    val logo: String?,
-    @SerializedName("info")
-    val info: String?,
-    @SerializedName("date")
-    val date: String?
+    val title: String,
+    val logo: String,
+    val info: String,
+    val date: String
     )
