@@ -6,3 +6,6 @@
 #2023-04-18 MainPage Navigation Drawer 제거(추후 추가 예정), Retrofit2를 이용하여 입력받은 데이터 Json형식으로 넘기기.(회원가입기능 추가), XML파일 전체적인 Warnings 제거. 
 
 #2023-04-26 JWT TOKEN 인증 방식 로그인 기능 구현. 신입 채용 정보 추가. 전반적인 디자인 수정.
+
+#2023-05-01 Codenary json 데이터 Retrofit2를 이용해 실시간 가져오기 및 상세보기 페이지 추가.(기술블로그 페이지)
+
