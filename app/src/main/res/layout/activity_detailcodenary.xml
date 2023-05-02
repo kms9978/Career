@@ -65,8 +65,11 @@
                             android:id="@+id/detail_info_text"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                                android:textColor="@color/black"
+                                android:textSize="18sp"
+                                android:lineSpacingExtra ="5dp"
+                                android:letterSpacing="0.2"
                             android:text="안녕"/>
-
                     </ScrollView>
 
 

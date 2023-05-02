@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
     <LinearLayout
-        android:background="@drawable/header_radius"
+        android:background="@color/white"
         android:id="@+id/favorite_header"
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="기술블로그"
-            android:textColor="@color/white"
+            android:textColor="#6B66FF"
             android:fontFamily="@font/jalan"
             android:textSize="22sp"
             android:gravity="center"/>
