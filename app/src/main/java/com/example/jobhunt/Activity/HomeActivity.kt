@@ -4,11 +4,13 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.jobhunt.Fragment.BoardFragment
 import com.example.jobhunt.Fragment.FavoriteFragment
 import com.example.jobhunt.Fragment.HomeFragment
 import com.example.jobhunt.Fragment.RecruitFragment
 import com.example.jobhunt.R
 import com.example.jobhunt.databinding.ActivityHomeBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
 
@@ -21,11 +23,13 @@ class HomeActivity : AppCompatActivity() {
         replaceFragment(HomeFragment())
         window.statusBarColor = Color.parseColor("#000000")
 
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.home -> replaceFragment(HomeFragment())
                 R.id.recruit -> replaceFragment(RecruitFragment())
                 R.id.favorite -> replaceFragment(FavoriteFragment())
+                R.id.board -> replaceFragment(BoardFragment())
 
             else ->{
 

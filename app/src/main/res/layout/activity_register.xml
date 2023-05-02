@@ -7,22 +7,22 @@
     tools:context=".Activity.RegisterActivity">
 
             <LinearLayout
-                android:background="#6B66FF"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/back_btn"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/baseline_arrow_back_ios_24"
-                android:contentDescription="@string/back"
-                android:background="@null" />
+                <ImageButton
+                    android:id="@+id/back_btn"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_arrow_back_ios_24"
+                    android:contentDescription="@string/back"
+                    android:background="@null" />
             </LinearLayout>
                         <LinearLayout
-                            android:background="@drawable/header_radius"
+                            android:background="@drawable/home_header_underline"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
@@ -31,7 +31,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/register"
                                 android:gravity="center"
-                                android:textColor="@color/white"
+                                android:textColor="#6B66FF"
                                 android:fontFamily="@font/jalan"
                                 android:textSize="25sp"/>
                         </LinearLayout>
@@ -46,10 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/input_id"
-            android:fontFamily="@font/jalan"
+            android:fontFamily="@font/chosunbg"
             android:textColor="@color/black"
             android:layout_marginStart="10dp"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
         <EditText
             android:id="@+id/edt_id"
             tools:ignore="SpeakableTextPresentCheck"
@@ -60,7 +60,7 @@
             android:textColor="@color/black"
             android:hint="@string/edit_id"
             android:inputType="text"
-            android:background="@drawable/custom_edittext"/>
+            android:background="@drawable/edit_radius_round"/>
     </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -71,10 +71,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/input_pass"
-                    android:fontFamily="@font/jalan"
+                    android:fontFamily="@font/chosunbg"
                     android:textColor="@color/black"
                     android:layout_marginStart="10dp"
-                    android:textSize="20sp"/>
+                    android:textSize="18sp"/>
                 <EditText
                     android:id="@+id/edt_pass"
                     tools:ignore="SpeakableTextPresentCheck"
@@ -85,7 +85,7 @@
                     android:textColor="@color/black"
                     android:hint="@string/edit_pass"
                     android:inputType="text"
-                    android:background="@drawable/custom_edittext"/>
+                    android:background="@drawable/edit_radius_round"/>
             </LinearLayout>
                     <LinearLayout
                         android:layout_marginTop="10dp"
@@ -96,10 +96,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/input_nick"
-                            android:fontFamily="@font/jalan"
+                            android:fontFamily="@font/chosunbg"
                             android:textColor="@color/black"
                             android:layout_marginStart="10dp"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"/>
                         <EditText
                             android:id="@+id/edt_nick"
                             tools:ignore="SpeakableTextPresentCheck"
@@ -110,7 +110,42 @@
                             android:textColor="@color/black"
                             android:hint="@string/edit_nick"
                             android:inputType="text"
-                            android:background="@drawable/custom_edittext"/>
+                            android:background="@drawable/edit_radius_round"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="이메일*"
+                            android:fontFamily="@font/chosunbg"
+                            android:textColor="@color/black"
+                            android:layout_marginStart="10dp"
+                            android:textSize="18sp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <EditText
+                            android:layout_weight="1"
+                            android:id="@+id/edt_email"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="5dp"
+                            android:importantForAutofill="no"
+                            android:textColor="@color/black"
+                            android:hint="이메일을 입력하세요."
+                            android:inputType="text"
+                            android:background="@drawable/edit_radius_round"/>
+                            <Button
+                                android:layout_weight="3"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:layout_marginHorizontal="3dp"
+                                android:fontFamily="@font/chosunbg"
+                                android:textColor="@color/white"
+                                android:text="인증"/>
+                        </LinearLayout>
                     </LinearLayout>
 
     <LinearLayout
