@@ -6,7 +6,6 @@ import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,8 +18,6 @@ import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.RecentRecruit
 import org.json.JSONObject
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.io.InputStream
 
@@ -30,11 +27,6 @@ class HomeFragment : Fragment() {
     private lateinit var newcomRecruitList: MutableList<RecentRecruit>
     private lateinit var searchEditText: EditText
 
-    // Retrofit 객체 생성
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("http://54.227.205.92:8080/") // 서버 주소 입력
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
 
 
 
@@ -49,6 +41,7 @@ class HomeFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
         val recyclerView2 = view.findViewById<RecyclerView>(R.id.rv_newComeRecruit)
 
+        // 객체 단위로 넘기기
         val snapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(recyclerView)
 
@@ -91,10 +84,6 @@ class HomeFragment : Fragment() {
             }
         })
 
-
-
-
-
         return view
     }
     private fun readnewcomRecruitData(): MutableList<RecentRecruit> {
@@ -130,7 +119,7 @@ class HomeFragment : Fragment() {
 
     }
 
-
+    // 이 부분을 내부 말고 Retrofit2를 이용해서 가져오기.
     // 최근 채용 정보 데이터를 읽어오는 함수
     private fun readRecentRecruitData(): MutableList<RecentRecruit> {
         // 최근 채용 정보 데이터 리스트 생성
