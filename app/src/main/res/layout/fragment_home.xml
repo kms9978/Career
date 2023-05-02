@@ -14,7 +14,7 @@
             android:orientation="vertical">
 
         <LinearLayout
-            android:background="@drawable/header_radius"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -30,7 +30,7 @@
                     android:layout_height="match_parent"
                     android:text="@string/app_name"
                     android:textSize="26sp"
-                    android:textColor="#ffffff"
+                    android:textColor="#6B66FF"
                     android:fontFamily="@font/jalan"/>
             </LinearLayout>
 
@@ -41,28 +41,26 @@
                 android:orientation="horizontal">
                 <EditText
                     android:id="@+id/search_company"
-                    android:layout_marginHorizontal="20dp"
-                    android:background="@drawable/home_header"
-                    android:inputType="text"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:importantForAutofill="no"
-                    android:fontFamily="@font/jalan"
-                    android:textSize="14sp"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/edit_radius_round"
                     android:drawableStart="@drawable/baseline_search_24"
-                    android:hint="@string/input_company"/>
+                    android:fontFamily="@font/jalan"
+                    android:hint="@string/input_company"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="#5D5D5D"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
             android:id="@+id/r1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:orientation="vertical">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recentRecruit"
                 android:layout_width="match_parent"

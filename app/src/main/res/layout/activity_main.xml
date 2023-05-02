@@ -14,7 +14,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:contentDescription="@string/logo_main"
-            android:src="@drawable/johunt_logo"/>
+            android:src="@drawable/career_main2"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
