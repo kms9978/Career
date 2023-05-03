@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.Service.RecruitService
+import com.example.jobhunt.dataModel.CodenaryData
 import com.example.jobhunt.dataModel.RecentRecruit
 import com.example.jobhunt.databinding.FragmentHomeBinding
 import retrofit2.Call
@@ -88,31 +89,35 @@ class HomeFragment : Fragment() {
                     call: Call<Map<String, RecentRecruit>>,
                     response: Response<Map<String, RecentRecruit>>
                 ) {
-                    if (response.isSuccessful) {
-                        response.body()?.let {
-                            recentRecruits.clear()
-                            newComeRecruits.clear()
-                            it.values.forEach { recruit ->
-                                when (recruit.type) {
-                                    "recent" -> {
-                                        recentRecruits.addAll(recruit.data)
-                                        recentRecruitAdapter.submitList(recentRecruits)
-                                    }
-                                    "newcome" -> {
-                                        if (recruit.data.any { it.position == "신입" }) {
-                                            newComeRecruits.addAll(recruit.data.filter { it.position == "신입" })
-                                            newComeRecruitAdapter.submitList(newComeRecruits)
-                                        }
-                                    }
-                                }
+                    if (response.isSuccessful && response.body() != null) {
+                        // 데이터가 있는 경우 어댑터에 전달
+                        val data = response.body()!!.values.toList()
+                        if (data.isNotEmpty()) {
+                            val dataList = mutableListOf<RecentRecruit>()
+                            for (item in data) {
+                                val news = RecentRecruit(
+                                    item.companyName ?: "",
+                                    item.content ?: "",
+                                    item.position ?: "",
+                                    item.plan ?: "",
+                                    item.url ?: "",
+                                    item.imgUrl ?: ""
+                                )
+                                dataList.add(news)
                             }
+                            RecentRecruitAdapter.setData(dataList)
+                        } else {
+                            Log.e(TAG, "데이터가 비어있거나 Null: ${response.message()}")
                         }
+                    } else {
+                        Log.e(TAG, "get Data 실패")
                     }
                 }
-                override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
-                    Log.e(TAG, "Failed to fetch data: ${t.message}")
-                    Toast.makeText(activity, "Failed to fetch data: ${t.message}", Toast.LENGTH_SHORT).show()
+
+                override fun onFailure(call: Call<Map<String, RecentRecruit>?>, t: Throwable) {
+                    Log.e(TAG, "get Data 실패2", t)
                 }
             })
+
         }
     }

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 
 data class RecentRecruit(
-    @SerializedName("companyName")
     val companyName: String,
     @SerializedName("content")
     val content: String,
