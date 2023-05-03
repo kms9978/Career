@@ -11,17 +11,37 @@ import com.example.jobhunt.dataModel.RecentRecruit
 import java.util.*
 
 class RecentRecruitAdapter(
-    private val recentRecruitList: List<RecentRecruit>) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(),
-    Filterable {
+    private val recentRecruitList: List<RecentRecruit>
+) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
     private var companyNameList = recentRecruitList.map {
         it.companyName
     }
 
-    init {
-        companyNameList = recentRecruitList.map {
-            it.companyName
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
+        private val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
+        private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
+        private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
+        private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
+
+        fun bind(recentRecruit: RecentRecruit) {
+            recruitName.text = recentRecruit.companyName
+            recruitTitle.text = recentRecruit.content
+            recruitPosition.text = recentRecruit.position
+            recruitPlan.text = recentRecruit.plan
+
+            Glide.with(itemView.context)
+                .load(recentRecruit.imgUrl)
+                .placeholder(R.drawable.baseline_feedback_24)
+                .into(recruitImage)
+
+            itemView.setOnClickListener {
+                val url = recentRecruit.url
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
+                itemView.context.startActivity(intent)
+            }
         }
     }
 
@@ -31,16 +51,7 @@ class RecentRecruitAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val recentRecruit = filteredList[position]
-        holder.recruitName.text = recentRecruit.companyName
-        holder.recruitTitle.text = recentRecruit.content
-        holder.recruitPosition.text = recentRecruit.position
-        holder.recruitPlan.text = recentRecruit.plan
-
-        Glide.with(holder.itemView.context)
-            .load(recentRecruit.imgUrl)
-            .placeholder(R.drawable.baseline_feedback_24)
-            .into(holder.recruitImage)
+        holder.bind(filteredList[position])
     }
 
     override fun getItemCount(): Int {
@@ -72,24 +83,6 @@ class RecentRecruitAdapter(
                 filteredList = results?.values as List<RecentRecruit>
                 notifyDataSetChanged()
             }
-        }
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
-        val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
-        val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img) // ImageView 추가
-        val recruitPosition: TextView = itemView.findViewById(R.id.ability)
-        val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
-
-        init {
-
-            recruitImage.setOnClickListener {
-                val url = filteredList[adapterPosition].url // 클릭한 항목의 링크 가져오기
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url")) // 링크intent domain+
-                it.context.startActivity(intent) // 인텐트 실행
-            }
-
         }
     }
 }

@@ -70,54 +70,54 @@ class HomeFragment : Fragment() {
         }
     }
 
-        private fun setupSearchView() {
-            binding.searchCompany.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    return false
-                }
+    private fun setupSearchView() {
+        binding.searchCompany.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    recentRecruitAdapter.filter.filter(newText)
-                    return false
-                }
-            })
-        }
-
-        private fun fetchData() {
-            recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
-                override fun onResponse(
-                    call: Call<Map<String, RecentRecruit>>,
-                    response: Response<Map<String, RecentRecruit>>
-                ) {
-                    if (response.isSuccessful && response.body() != null) {
-                        // 데이터가 있는 경우 어댑터에 전달
-                        val data = response.body()!!.values.toList()
-                        if (data.isNotEmpty()) {
-                            val dataList = mutableListOf<RecentRecruit>()
-                            for (item in data) {
-                                val news = RecentRecruit(
-                                    item.companyName ?: "",
-                                    item.content ?: "",
-                                    item.position ?: "",
-                                    item.plan ?: "",
-                                    item.url ?: "",
-                                    item.imgUrl ?: ""
-                                )
-                                dataList.add(news)
-                            }
-                            RecentRecruitAdapter.setData(dataList)
-                        } else {
-                            Log.e(TAG, "데이터가 비어있거나 Null: ${response.message()}")
-                        }
-                    } else {
-                        Log.e(TAG, "get Data 실패")
-                    }
-                }
-
-                override fun onFailure(call: Call<Map<String, RecentRecruit>?>, t: Throwable) {
-                    Log.e(TAG, "get Data 실패2", t)
-                }
-            })
-
-        }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                recentRecruitAdapter.filter.filter(newText)
+                return false
+            }
+        })
     }
+
+    private fun fetchData() {
+        recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
+            override fun onResponse(
+                call: Call<Map<String, RecentRecruit>>,
+                response: Response<Map<String, RecentRecruit>>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    // 데이터가 있는 경우 어댑터에 전달
+                    val data = response.body()!!.values.toList()
+                    if (data.isNotEmpty()) {
+                        val dataList = mutableListOf<RecentRecruit>()
+                        for (item in data) {
+                            val news = RecentRecruit(
+                                item.companyName ?: "",
+                                item.content ?: "",
+                                item.position ?: "",
+                                item.plan ?: "",
+                                item.url ?: "",
+                                item.imgUrl ?: ""
+                            )
+                            dataList.add(news)
+                        }
+                        RecentRecruitAdapter.setData(dataList)
+                    } else {
+                        Log.e(TAG, "데이터가 비어있거나 Null: ${response.message()}")
+                    }
+                } else {
+                    Log.e(TAG, "get Data 실패")
+                }
+            }
+
+            override fun onFailure(call: Call<Map<String, RecentRecruit>?>, t: Throwable) {
+                Log.e(TAG, "get Data 실패2", t)
+            }
+        })
+
+    }
+}
