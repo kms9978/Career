@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.RecentRecruit
 
-class NewComeRecruitAdapter(private val itemList: List<RecentRecruit> = emptyList()) : RecyclerView.Adapter<NewComeRecruitAdapter.ViewHolder>() {
+class NewComeRecruitAdapter(private var itemList: List<RecentRecruit> = emptyList()) : RecyclerView.Adapter<NewComeRecruitAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val companyNameView: TextView = itemView.findViewById(R.id.recruit_name)
@@ -26,6 +26,11 @@ class NewComeRecruitAdapter(private val itemList: List<RecentRecruit> = emptyLis
         }
     }
 
+    fun setNewComeRecruitDataList(newItemList: List<RecentRecruit>) {
+        itemList = newItemList
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_newcom, parent, false)
         return ViewHolder(view)
@@ -33,7 +38,6 @@ class NewComeRecruitAdapter(private val itemList: List<RecentRecruit> = emptyLis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
-
 
         if (item.position == "신입") {
             holder.companyNameView.text = item.companyName
@@ -45,4 +49,5 @@ class NewComeRecruitAdapter(private val itemList: List<RecentRecruit> = emptyLis
     override fun getItemCount(): Int {
         return itemList.size
     }
+
 }

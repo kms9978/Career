@@ -13,6 +13,12 @@ data class RecentRecruit(
     val plan: String,
     @SerializedName("url")
     val url: String,
-    @SerializedName("imgUrl")
+    @SerializedName("img")
     val imgUrl: String,
-)
+) {
+    companion object {
+        fun Map<String, RecentRecruit>.toObject(): List<RecentRecruit> {
+            return this.values.toList()
+        }
+    }
+}
