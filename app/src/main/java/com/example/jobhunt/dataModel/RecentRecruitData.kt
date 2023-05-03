@@ -1,12 +1,19 @@
 package com.example.jobhunt.dataModel
 
-import org.jetbrains.annotations.NotNull
+import com.google.gson.annotations.SerializedName
+
 
 data class RecentRecruit(
+    @SerializedName("companyName")
     val companyName: String,
+    @SerializedName("content")
     val content: String,
+    @SerializedName("position")
     val position: String,
+    @SerializedName("plan")
     val plan: String,
+    @SerializedName("url")
     val url: String,
+    @SerializedName("imgUrl")
     val imgUrl: String,
 )

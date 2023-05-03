@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/Linene"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -19,21 +19,24 @@
         tools:ignore="SpeakableTextPresentCheck"
         android:background="@null"
         android:src="@drawable/baseline_arrow_back_24"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <ImageView
+                android:id="@+id/detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                app:cardUseCompatPadding="true">
-            <ImageView
-                android:id="@+id/detail_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"/>
-            </androidx.cardview.widget.CardView>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,38 +44,35 @@
                 android:orientation="vertical">
                     <TextView
                         android:layout_marginTop="10dp"
-                        android:layout_weight="1"
                         android:id="@+id/detail_title_text"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/chosunbg"
                         android:textColor="@color/black"
                         android:text="제목"/>
                     <TextView
-                        android:layout_weight="1"
                         android:layout_marginTop="10dp"
                         android:id="@+id/detail_date_text"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="bottom"
                         android:text="안녕"/>
+                <TextView
+                    android:id="@+id/detail_info_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra ="3dp"
+                    android:letterSpacing="0.2"
+                    android:text="안녕"/>
             </LinearLayout>
-        </LinearLayout>
 
-                    <ScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                            <TextView
-                            android:id="@+id/detail_info_text"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                                android:textColor="@color/black"
-                                android:textSize="18sp"
-                                android:lineSpacingExtra ="5dp"
-                                android:letterSpacing="0.2"
-                            android:text="안녕"/>
-                    </ScrollView>
+
+        </LinearLayout>
 
 
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
