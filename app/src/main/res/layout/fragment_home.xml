@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
                 android:orientation="horizontal">
-                <EditText
+                <SearchView
                     android:id="@+id/search_company"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
@@ -47,7 +47,6 @@
                     android:background="@drawable/edit_radius_round"
                     android:drawableStart="@drawable/baseline_search_24"
                     android:fontFamily="@font/jalan"
-                    android:hint="@string/input_company"
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:textColor="@color/black"
