@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.RecentRecruit
 
-class NewComeRecruitAdapter(private val itemList: List<RecentRecruit>) : RecyclerView.Adapter<NewComeRecruitAdapter.ViewHolder>() {
+class NewComeRecruitAdapter(private val itemList: List<RecentRecruit> = emptyList()) : RecyclerView.Adapter<NewComeRecruitAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val companyNameView: TextView = itemView.findViewById(R.id.recruit_name)
@@ -34,10 +34,12 @@ class NewComeRecruitAdapter(private val itemList: List<RecentRecruit>) : Recycle
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
 
-        holder.companyNameView.text = item.companyName
-        holder.contentView.text = item.content
-        holder.companydate.text = item.plan
 
+        if (item.position == "신입") {
+            holder.companyNameView.text = item.companyName
+            holder.contentView.text = item.content
+            holder.companydate.text = item.plan
+        }
     }
 
     override fun getItemCount(): Int {

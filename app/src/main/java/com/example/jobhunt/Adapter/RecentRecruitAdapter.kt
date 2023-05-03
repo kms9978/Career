@@ -11,7 +11,7 @@ import com.example.jobhunt.dataModel.RecentRecruit
 import java.util.*
 
 class RecentRecruitAdapter(
-    private val recentRecruitList: List<RecentRecruit>
+    private var recentRecruitList: List<RecentRecruit> = emptyList()
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
@@ -84,5 +84,14 @@ class RecentRecruitAdapter(
                 notifyDataSetChanged()
             }
         }
+    }
+
+    fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>) {
+        this.recentRecruitList = recentRecruitList
+        this.filteredList = recentRecruitList
+        this.companyNameList = recentRecruitList.map {
+            it.companyName
+        }
+        notifyDataSetChanged()
     }
 }
