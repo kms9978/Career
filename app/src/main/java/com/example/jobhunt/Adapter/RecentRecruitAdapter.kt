@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.dataModel.BookMarkData
+import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,8 +21,10 @@ import java.util.*
 
 class RecentRecruitAdapter(
     private var recentRecruitList: List<RecentRecruit> = emptyList(),
-    private val onBookmarkClick: (position: Int) -> Unit
+    private val onBookmarkClick: (position: Int) -> Unit,
+    private val bookmarkList: List<BookMarkResponse>
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
+
 
     private var filteredList = recentRecruitList
 
@@ -29,6 +32,7 @@ class RecentRecruitAdapter(
         .baseUrl("http://54.227.205.92:8080")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
 
     private val bookmarkService = retrofit.create(BookMarkService::class.java)
 
@@ -52,12 +56,12 @@ class RecentRecruitAdapter(
                 .into(recruitImage)
 
             bookmarkSwitch.isChecked = recentRecruit.isBookmarked
-            bookmarkSwitch.setOnClickListener {
+            bookmarkSwitch.setOnCheckedChangeListener { _, isChecked ->
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val item = filteredList[position]
-                    item.isBookmarked = !item.isBookmarked
-                    if (item.isBookmarked) {
+                    item.isBookmarked = isChecked
+                    if (isChecked) {
                         val bookmarkData = BookMarkData(
                             user_bookmark_id = 0L, // user_bookmark_id는 서버에서 할당되므로 일단 0으로 설정합니다.
                             bookMarkImg = item.imgUrl,
@@ -66,19 +70,48 @@ class RecentRecruitAdapter(
                             bookMark_End_Date = item.plan.split("~")[1].trim(),
                             company_link = item.url
                         )
-                        val call = bookmarkService.saveBookmark(bookmarkData)
+                        val call = bookmarkService.saveBookMark(bookmarkData)
                         call.enqueue(object : Callback<Void> {
                             override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                                // 전송 성공시 처리할 코드
+                                if (response.isSuccessful) {
+                                    // 북마크 추가 성공시 처리할 코드
+                                    onBookmarkClick(position)
+                                }
                             }
 
                             override fun onFailure(call: Call<Void>, t: Throwable) {
-                                // 전송 실패시 처리할 코드
+                                // 북마크 추가 실패시 처리할 코드
+                                bookmarkSwitch.isChecked = false
+                                val item = filteredList[position]
+                                item.isBookmarked = false
+                                Toast.makeText(
+                                    itemView.context,
+                                    "북마크 추가에 실패하였습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         })
                     } else {
                         // 북마크를 해제하는 경우에는 서버에서 해당 북마크를 삭제해야 합니다.
                         // 이 부분은 서버에서 DELETE 메소드를 이용해서 북마크를 삭제하는 로직을 작성해야 합니다.
+                        val bookmarkId = filteredList[position].bookmarkId
+                        val call = bookmarkService.deleteBookMark(bookmarkId)
+                        call.enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                // 북마크 삭제 성공시 처리할 코드
+                            }
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                // 북마크 삭제 실패시 처리할 코드
+                                bookmarkSwitch.isChecked = true
+                                val item = filteredList[position]
+                                item.isBookmarked = true
+                                Toast.makeText(
+                                    itemView.context,
+                                    "북마크 삭제에 실패하였습니다.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        })
                     }
                     onBookmarkClick(position)
                 }
