@@ -13,6 +13,7 @@ import java.util.*
 
 class RecentRecruitAdapter(
     private var recentRecruitList: List<RecentRecruit> = emptyList(),
+    private val onBookmarkClick: (position: Int) -> Unit
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
@@ -37,8 +38,10 @@ class RecentRecruitAdapter(
                 .into(recruitImage)
 
 
-
-
+            bookmarkSwitch.isChecked = recentRecruit.isBookmarked
+            bookmarkSwitch.setOnClickListener {
+                onBookmarkClick(adapterPosition)
+            }
 
             itemView.setOnClickListener {
                 val url = recentRecruit.url
@@ -106,5 +109,11 @@ class RecentRecruitAdapter(
             }
         }
         notifyDataSetChanged()
+    }
+    fun updateBookmark(position:Int, isBookmarked: Boolean, bookmarkId: Long?) {
+        val recentRecruit = recentRecruitList[position]
+        recentRecruit.isBookmarked = isBookmarked
+        recentRecruit.bookmarkId = bookmarkId
+        notifyItemChanged(position)
     }
 }

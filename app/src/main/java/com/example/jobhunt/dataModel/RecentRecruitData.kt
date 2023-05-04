@@ -15,6 +15,8 @@ data class RecentRecruit(
     val url: String,
     @SerializedName("img")
     val imgUrl: String,
+    var isBookmarked: Boolean = false, // 북마크 여부를 나타내는 프로퍼티
+    var bookmarkId: Long? = null // 북마크 ID를 나타내는 프로퍼티
 ) {
     companion object {
         fun List<RecentRecruit>.toBookMarkDataList(): List<BookMarkData> {
