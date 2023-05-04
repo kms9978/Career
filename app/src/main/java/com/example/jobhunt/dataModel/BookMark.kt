@@ -8,8 +8,4 @@ data class BookMarkData(
     val bookMark_End_Date: String?,
     val bookMark_Start_Date: String?,
     val company_link: String?
-) {
-    init {
-        requireNotNull(bookMarkName) { "bookMarkName must not be null" }
-    }
-}
+)
