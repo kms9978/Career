@@ -14,3 +14,4 @@
 
 #2023-05-03 Recruit json 데이터 내부경로에서 Retrofit2를 이용해 실시간 가져오기로 수정. (HomeFragment)
 
+#2023-05-04 검색기능 수정
