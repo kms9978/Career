@@ -1,3 +1,4 @@
+
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import com.example.jobhunt.dataModel.RecentRecruit
 import java.util.*
 
 class RecentRecruitAdapter(
-    private var recentRecruitList: List<RecentRecruit> = emptyList()
+    private var recentRecruitList: List<RecentRecruit> = emptyList(),
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
@@ -22,6 +23,7 @@ class RecentRecruitAdapter(
         private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
         private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
         private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
+        private val bookmarkSwitch: Switch = itemView.findViewById(R.id.add_bookmark)
 
         fun bind(recentRecruit: RecentRecruit) {
             recruitName.text = recentRecruit.companyName
@@ -34,10 +36,17 @@ class RecentRecruitAdapter(
                 .placeholder(R.drawable.baseline_feedback_24)
                 .into(recruitImage)
 
+
+
+
+
             itemView.setOnClickListener {
                 val url = recentRecruit.url
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
                 itemView.context.startActivity(intent)
+
+
+
             }
         }
     }
