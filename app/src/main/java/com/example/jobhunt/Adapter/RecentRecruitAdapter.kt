@@ -15,9 +15,6 @@ class RecentRecruitAdapter(
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
-    private var companyNameList = recentRecruitList.map {
-        it.companyName
-    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
@@ -68,14 +65,15 @@ class RecentRecruitAdapter(
                     filteredResults.addAll(recentRecruitList)
                 } else {
                     for (i in 0 until recentRecruitList.size) {
-                        val companyName = companyNameList[i]
-                        if (companyName.lowercase(Locale.getDefault()).contains(searchQuery)) {
+                        val content = recentRecruitList[i].content
+                        if (content?.lowercase(Locale.getDefault())?.contains(searchQuery) == true) {
                             filteredResults.add(recentRecruitList[i])
                         }
                     }
                 }
                 val filterResults = FilterResults()
                 filterResults.values = filteredResults
+                filterResults.count = filteredResults.size
                 return filterResults
             }
 
@@ -91,14 +89,11 @@ class RecentRecruitAdapter(
 
     fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>, searchQuery: String = "") {
         this.recentRecruitList = recentRecruitList
-        this.companyNameList = recentRecruitList.map {
-            it.companyName
-        }
         filteredList = if (searchQuery.isEmpty()) {
             recentRecruitList
         } else {
             recentRecruitList.filter {
-                it.companyName.lowercase(Locale.getDefault()).contains(searchQuery.lowercase(Locale.getDefault()))
+                it.content?.lowercase(Locale.getDefault())?.contains(searchQuery.lowercase(Locale.getDefault())) == true
             }
         }
         notifyDataSetChanged()

@@ -30,19 +30,20 @@ class HomeFragment : Fragment() {
     private lateinit var newComeRecruitAdapter: NewComeRecruitAdapter
     private lateinit var recruitService: RecruitService
     private lateinit var searchView: SearchView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-// Set up recent recruit recyclerview
+        // Set up recent recruit recyclerview
         val recentRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
         val pagerSnapHelper = PagerSnapHelper()
         pagerSnapHelper.attachToRecyclerView(recentRecruitRecyclerView)
-        recentRecruitRecyclerView.layoutManager = GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
+        recentRecruitRecyclerView.layoutManager =
+            GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
         recentRecruitAdapter = RecentRecruitAdapter()
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
@@ -82,9 +83,6 @@ class HomeFragment : Fragment() {
         // Fetch new come recruit data
         fetchNewComeRecruitData()
 
-
-
-
         return view
     }
 
@@ -99,16 +97,7 @@ class HomeFragment : Fragment() {
                     val recentRecruitDataList = response.body()?.values?.toList()
                     recentRecruitDataList?.let {
                         recentRecruitAdapter.setRecentRecruitDataList(it)
-                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                            override fun onQueryTextSubmit(query: String?): Boolean {
-                                return false
-                            }
-
-                            override fun onQueryTextChange(newText: String?): Boolean {
-                                recentRecruitAdapter.filter.filter(newText)
-                                return true
-                            }
-                        })
+                        recentRecruitAdapter.filter.filter(searchView.query)
                     }
                 } else {
                     Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
@@ -120,7 +109,6 @@ class HomeFragment : Fragment() {
             }
         })
     }
-
 
     private fun fetchNewComeRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
