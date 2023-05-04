@@ -20,27 +20,25 @@ import java.util.*
 
 class RecentRecruitAdapter(
     private var recentRecruitList: List<RecentRecruit> = emptyList(),
-    private val onBookmarkClick: (position: Int) -> Unit,
-
-
-    ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
+    private val onBookmarkClick: (position: Int) -> Unit
+) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl("http://54.227.205.92:8080")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    private val bookmarkService = retrofit.create(BookMarkService::class.java)
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
         private val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
         private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
         private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
-        private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
+        private val recruitPlan: TextView = itemView.findViewById(R.id.expire_date)
         private val bookmarkSwitch: Switch = itemView.findViewById(R.id.add_bookmark)
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val bookmarkService = retrofit.create(BookMarkService::class.java)
 
         fun bind(recentRecruit: RecentRecruit) {
             recruitName.text = recentRecruit.companyName
@@ -53,9 +51,7 @@ class RecentRecruitAdapter(
                 .placeholder(R.drawable.baseline_feedback_24)
                 .into(recruitImage)
 
-
             bookmarkSwitch.isChecked = recentRecruit.isBookmarked
-
             bookmarkSwitch.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
@@ -93,8 +89,6 @@ class RecentRecruitAdapter(
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
                 itemView.context.startActivity(intent)
             }
-
-
         }
     }
 
@@ -102,7 +96,6 @@ class RecentRecruitAdapter(
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent, parent, false)
         return ViewHolder(view)
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(filteredList[position])
     }
@@ -140,6 +133,16 @@ class RecentRecruitAdapter(
                 }
             }
         }
-
+    }
+    fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>, searchQuery: String = "") {
+        this.recentRecruitList = recentRecruitList
+        filteredList = if (searchQuery.isEmpty()) {
+            recentRecruitList
+        } else {
+            recentRecruitList.filter {
+                it.content?.lowercase(Locale.getDefault())?.contains(searchQuery.lowercase(Locale.getDefault())) == true
+            }
+        }
+        notifyDataSetChanged()
     }
 }

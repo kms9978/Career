@@ -104,6 +104,7 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val recentRecruitDataList = response.body()?.values?.toList()
                     recentRecruitDataList?.let {
+                        recentRecruitAdapter.setRecentRecruitDataList(it)
                         recentRecruitAdapter.filter.filter(searchView.query)
                     }
                 } else {
@@ -116,7 +117,6 @@ class HomeFragment : Fragment() {
             }
         })
     }
-
     private fun fetchNewComeRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
             override fun onResponse(
