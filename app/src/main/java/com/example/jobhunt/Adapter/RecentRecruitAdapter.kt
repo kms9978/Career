@@ -80,17 +80,26 @@ class RecentRecruitAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as List<RecentRecruit>
-                notifyDataSetChanged()
+                results?.let {
+                    @Suppress("UNCHECKED_CAST")
+                    filteredList = results.values as? List<RecentRecruit> ?: emptyList()
+                    notifyDataSetChanged()
+                }
             }
         }
     }
 
-    fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>) {
+    fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>, searchQuery: String = "") {
         this.recentRecruitList = recentRecruitList
-        this.filteredList = recentRecruitList
         this.companyNameList = recentRecruitList.map {
             it.companyName
+        }
+        filteredList = if (searchQuery.isEmpty()) {
+            recentRecruitList
+        } else {
+            recentRecruitList.filter {
+                it.companyName.lowercase(Locale.getDefault()).contains(searchQuery.lowercase(Locale.getDefault()))
+            }
         }
         notifyDataSetChanged()
     }

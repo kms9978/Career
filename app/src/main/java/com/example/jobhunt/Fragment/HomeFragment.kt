@@ -5,9 +5,8 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import com.example.jobhunt.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,7 +29,7 @@ class HomeFragment : Fragment() {
     private lateinit var recentRecruitAdapter: RecentRecruitAdapter
     private lateinit var newComeRecruitAdapter: NewComeRecruitAdapter
     private lateinit var recruitService: RecruitService
-
+    private lateinit var searchView: SearchView
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,14 +62,32 @@ class HomeFragment : Fragment() {
 
         recruitService = retrofit.create(RecruitService::class.java)
 
+        // Set up search view
+        searchView = view.findViewById<SearchView>(R.id.search_company)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                recentRecruitAdapter.filter.filter(newText)
+                return true
+            }
+        })
+
+
         // Fetch recent recruit data
         fetchRecentRecruitData()
 
         // Fetch new come recruit data
         fetchNewComeRecruitData()
 
+
+
+
         return view
     }
+
 
     private fun fetchRecentRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
@@ -82,6 +99,16 @@ class HomeFragment : Fragment() {
                     val recentRecruitDataList = response.body()?.values?.toList()
                     recentRecruitDataList?.let {
                         recentRecruitAdapter.setRecentRecruitDataList(it)
+                        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                            override fun onQueryTextSubmit(query: String?): Boolean {
+                                return false
+                            }
+
+                            override fun onQueryTextChange(newText: String?): Boolean {
+                                recentRecruitAdapter.filter.filter(newText)
+                                return true
+                            }
+                        })
                     }
                 } else {
                     Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
@@ -93,6 +120,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
     private fun fetchNewComeRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
