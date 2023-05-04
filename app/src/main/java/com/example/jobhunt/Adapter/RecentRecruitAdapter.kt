@@ -8,13 +8,22 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jobhunt.R
+import com.example.jobhunt.Service.BookMarkService
+import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.RecentRecruit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
 class RecentRecruitAdapter(
     private var recentRecruitList: List<RecentRecruit> = emptyList(),
-    private val onBookmarkClick: (position: Int) -> Unit
-) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
+    private val onBookmarkClick: (position: Int) -> Unit,
+
+
+    ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
 
@@ -25,6 +34,13 @@ class RecentRecruitAdapter(
         private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
         private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
         private val bookmarkSwitch: Switch = itemView.findViewById(R.id.add_bookmark)
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://54.227.205.92:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val bookmarkService = retrofit.create(BookMarkService::class.java)
 
         fun bind(recentRecruit: RecentRecruit) {
             recruitName.text = recentRecruit.companyName
@@ -39,18 +55,46 @@ class RecentRecruitAdapter(
 
 
             bookmarkSwitch.isChecked = recentRecruit.isBookmarked
+
             bookmarkSwitch.setOnClickListener {
-                onBookmarkClick(adapterPosition)
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    val item = filteredList[position]
+                    item.isBookmarked = !item.isBookmarked
+                    if (item.isBookmarked) {
+                        val bookmarkData = BookMarkData(
+                            user_bookmark_id = 0L, // user_bookmark_id는 서버에서 할당되므로 일단 0으로 설정합니다.
+                            bookMarkImg = item.imgUrl,
+                            bookMarkName = item.companyName,
+                            bookMark_Start_Date = item.plan.split("~")[0].trim(),
+                            bookMark_End_Date = item.plan.split("~")[1].trim(),
+                            company_link = item.url
+                        )
+                        val call = bookmarkService.saveBookmark(bookmarkData)
+                        call.enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                // 전송 성공시 처리할 코드
+                            }
+
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                // 전송 실패시 처리할 코드
+                            }
+                        })
+                    } else {
+                        // 북마크를 해제하는 경우에는 서버에서 해당 북마크를 삭제해야 합니다.
+                        // 이 부분은 서버에서 DELETE 메소드를 이용해서 북마크를 삭제하는 로직을 작성해야 합니다.
+                    }
+                    onBookmarkClick(position)
+                }
             }
 
             itemView.setOnClickListener {
                 val url = recentRecruit.url
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
                 itemView.context.startActivity(intent)
-
-
-
             }
+
+
         }
     }
 
@@ -88,7 +132,6 @@ class RecentRecruitAdapter(
                 filterResults.count = filteredResults.size
                 return filterResults
             }
-
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 results?.let {
                     @Suppress("UNCHECKED_CAST")
@@ -97,23 +140,6 @@ class RecentRecruitAdapter(
                 }
             }
         }
-    }
 
-    fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>, searchQuery: String = "") {
-        this.recentRecruitList = recentRecruitList
-        filteredList = if (searchQuery.isEmpty()) {
-            recentRecruitList
-        } else {
-            recentRecruitList.filter {
-                it.content?.lowercase(Locale.getDefault())?.contains(searchQuery.lowercase(Locale.getDefault())) == true
-            }
-        }
-        notifyDataSetChanged()
-    }
-    fun updateBookmark(position:Int, isBookmarked: Boolean, bookmarkId: Long?) {
-        val recentRecruit = recentRecruitList[position]
-        recentRecruit.isBookmarked = isBookmarked
-        recentRecruit.bookmarkId = bookmarkId
-        notifyItemChanged(position)
     }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
+import android.widget.Toast
 import com.example.jobhunt.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,7 +31,6 @@ class HomeFragment : Fragment() {
     private lateinit var recentRecruitAdapter: RecentRecruitAdapter
     private lateinit var newComeRecruitAdapter: NewComeRecruitAdapter
     private lateinit var recruitService: RecruitService
-    private lateinit var bookMarkService: BookMarkService
     private lateinit var searchView: SearchView
 
     override fun onCreateView(
@@ -47,7 +47,11 @@ class HomeFragment : Fragment() {
         pagerSnapHelper.attachToRecyclerView(recentRecruitRecyclerView)
         recentRecruitRecyclerView.layoutManager =
             GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
-        recentRecruitAdapter = RecentRecruitAdapter()
+        recentRecruitAdapter = RecentRecruitAdapter(onBookmarkClick = { position ->
+            // 북마크 버튼 클릭시 처리 로직 작성
+            // 예시: Toast 메시지 출력
+            Toast.makeText(context, "북마크가 클릭되었습니다. position: $position", Toast.LENGTH_SHORT).show()
+        })
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
 
@@ -64,13 +68,7 @@ class HomeFragment : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         // Set up retrofit to make API call and fetch data
-        val retrofit2 = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080")
-            .addConverterFactory(GsonConverterFactory.create())
 
-            .build()
-
-        bookMarkService = retrofit2.create(BookMarkService::class.java)
         recruitService = retrofit.create(RecruitService::class.java)
 
         // Set up search view
@@ -106,7 +104,6 @@ class HomeFragment : Fragment() {
                 if (response.isSuccessful) {
                     val recentRecruitDataList = response.body()?.values?.toList()
                     recentRecruitDataList?.let {
-                        recentRecruitAdapter.setRecentRecruitDataList(it)
                         recentRecruitAdapter.filter.filter(searchView.query)
                     }
                 } else {
