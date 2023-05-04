@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
+import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
 import com.example.jobhunt.dataModel.RecentRecruit
 import retrofit2.Call
@@ -29,6 +30,7 @@ class HomeFragment : Fragment() {
     private lateinit var recentRecruitAdapter: RecentRecruitAdapter
     private lateinit var newComeRecruitAdapter: NewComeRecruitAdapter
     private lateinit var recruitService: RecruitService
+    private lateinit var bookMarkService: BookMarkService
     private lateinit var searchView: SearchView
 
     override fun onCreateView(
@@ -37,6 +39,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+
 
         // Set up recent recruit recyclerview
         val recentRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
@@ -60,7 +63,14 @@ class HomeFragment : Fragment() {
             .baseUrl("https://raw.githubusercontent.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+        // Set up retrofit to make API call and fetch data
+        val retrofit2 = Retrofit.Builder()
+            .baseUrl("http://54.227.205.92:8080")
+            .addConverterFactory(GsonConverterFactory.create())
 
+            .build()
+
+        bookMarkService = retrofit2.create(BookMarkService::class.java)
         recruitService = retrofit.create(RecruitService::class.java)
 
         // Set up search view
