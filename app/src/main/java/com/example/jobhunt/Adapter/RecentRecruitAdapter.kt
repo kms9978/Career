@@ -22,11 +22,11 @@ import java.util.*
 
 class RecentRecruitAdapter(
                            private var recentRecruitList: List<RecentRecruit> = emptyList(),
-
+                           private var bookmarkService: BookMarkService
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
-    private lateinit var bookmarkService: BookMarkService
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
