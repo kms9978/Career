@@ -91,43 +91,10 @@ class HomeFragment : Fragment() {
         // Fetch new come recruit data
         fetchNewComeRecruitData()
 
-        sendBookmarkToServer()
-
-        deleteBookmarkFromServer()
 
         return view
     }
 
-    private fun sendBookmarkToServer(bookMarkData: BookMarkData) {
-        bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
-            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
-                if (response.isSuccessful) {
-                    // BookMark sent successfully
-                } else {
-                    Log.e(TAG, "Failed to send bookmark to server: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
-                Log.e(TAG, "Failed to send bookmark to server", t)
-            }
-        })
-    }
-    private fun deleteBookmarkFromServer(bookMarkId: Long) {
-        bookmarkService.deleteBookMark(bookMarkId).enqueue(object : Callback<BookMarkResponse> {
-            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
-                if (response.isSuccessful) {
-                    Log.d(TAG, "Deleted bookmark successfully")
-                } else {
-                    Log.e(TAG, "Failed to delete bookmark: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
-                Log.e(TAG, "Failed to delete bookmark", t)
-            }
-        })
-    }
 
 
     private fun fetchRecentRecruitData() {

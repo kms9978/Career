@@ -23,6 +23,7 @@ class RecentRecruitAdapter(
         private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
         private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
         private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
+        private val bookmarkSwitch : Switch = itemView.findViewById(R.id.add_bookmark)
 
         fun bind(recentRecruit: RecentRecruit) {
             recruitName.text = recentRecruit.companyName
