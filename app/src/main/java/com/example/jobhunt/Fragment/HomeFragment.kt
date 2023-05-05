@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
+import android.widget.Toast
 import com.example.jobhunt.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
+import com.example.jobhunt.dataModel.AddBookmarkRequest
 import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
@@ -35,12 +37,16 @@ class HomeFragment : Fragment() {
     private lateinit var bookmarkService: BookMarkService
     private lateinit var searchView: SearchView
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        // 프로퍼티 초기화
+
+
 
         // Set up recent recruit recyclerview
         val recentRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
@@ -48,7 +54,7 @@ class HomeFragment : Fragment() {
         pagerSnapHelper.attachToRecyclerView(recentRecruitRecyclerView)
         recentRecruitRecyclerView.layoutManager =
             GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
-        recentRecruitAdapter = RecentRecruitAdapter()
+        recentRecruitAdapter = RecentRecruitAdapter(requireContext(), emptyList(), bookmarkService)
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
         // Set up new come recruit recyclerview
@@ -57,6 +63,7 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         newComeRecruitAdapter = NewComeRecruitAdapter()
         newComeRecruitRecyclerView.adapter = newComeRecruitAdapter
+
 
         // Set up retrofit to make API call and fetch data
         val retrofit = Retrofit.Builder()
@@ -71,14 +78,12 @@ class HomeFragment : Fragment() {
             .build()
         bookmarkService = retrofit2.create(BookMarkService::class.java)
 
-
         // Set up search view
         searchView = view.findViewById<SearchView>(R.id.search_company)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 recentRecruitAdapter.filter.filter(newText)
                 return true
@@ -87,11 +92,9 @@ class HomeFragment : Fragment() {
 
         // Fetch recent recruit data
         fetchRecentRecruitData()
-
         // Fetch new come recruit data
         fetchNewComeRecruitData()
-
-
+        // Fetch bookmark data
         return view
     }
 
@@ -113,7 +116,6 @@ class HomeFragment : Fragment() {
                     Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
                 }
             }
-
             override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
                 Log.e(ContentValues.TAG, "Failed to fetch recent recruit data", t)
             }
@@ -134,7 +136,6 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
                 Log.e(TAG, "Failed to fetch new come recruit data", t)
             }

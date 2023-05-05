@@ -1,6 +1,9 @@
 
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,11 +11,18 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jobhunt.R
+import com.example.jobhunt.Service.BookMarkService
+import com.example.jobhunt.dataModel.BookMarkData
+import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
-class RecentRecruitAdapter(
-    private var recentRecruitList: List<RecentRecruit> = emptyList(),
+class RecentRecruitAdapter(private val context: Context,
+                           private var recentRecruitList: List<RecentRecruit> = emptyList(),
+                           private var bookmarkService: BookMarkService,
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
@@ -36,17 +46,20 @@ class RecentRecruitAdapter(
                 .placeholder(R.drawable.baseline_feedback_24)
                 .into(recruitImage)
 
+            bookmarkSwitch.setOnCheckedChangeListener(null)
 
-
-
-
+            bookmarkSwitch.isChecked = recentRecruit.bookmarked
+            bookmarkSwitch.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    addBookmark(recentRecruit)
+                } else {
+                    deleteBookmark(0L)
+                }
+            }
             itemView.setOnClickListener {
                 val url = recentRecruit.url
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
                 itemView.context.startActivity(intent)
-
-
-
             }
         }
     }
@@ -95,7 +108,6 @@ class RecentRecruitAdapter(
             }
         }
     }
-
     fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>, searchQuery: String = "") {
         this.recentRecruitList = recentRecruitList
         filteredList = if (searchQuery.isEmpty()) {
@@ -106,5 +118,38 @@ class RecentRecruitAdapter(
             }
         }
         notifyDataSetChanged()
+    }
+    private fun addBookmark(recentRecruit: RecentRecruit) {
+        val bookMarkData = BookMarkService.BookMark(recentRecruit)
+        bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark", t)
+            }
+        })
+    }
+
+    private fun deleteBookmark(user_bookmark_id: Long) {
+        bookmarkService.deleteBookMark(user_bookmark_id).enqueue(object :
+            Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "북마크 삭제 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(ContentValues.TAG, "북마크 삭제 실패: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "북마크 삭제 실패", t)
+            }
+        })
     }
 }

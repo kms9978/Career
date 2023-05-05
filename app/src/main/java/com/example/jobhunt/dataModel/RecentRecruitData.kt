@@ -14,5 +14,6 @@ data class RecentRecruit(
     @SerializedName("url")
     val url: String,
     @SerializedName("img")
-    val imgUrl: String
+    val imgUrl: String,
+    var bookmarked: Boolean = false
 )
