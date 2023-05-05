@@ -6,9 +6,9 @@ import retrofit2.http.*
 
 interface BookMarkService {
 
-    @Headers("Content-Type: application/json")
-    @POST("/bookmark/")
-    suspend fun saveBookMark(@Body bookMark: BookMarkData): BookMarkResponse
-    @DELETE("/api/bookmark/delete/{user_bookmark_id}")
-    suspend fun deleteBookMark(@Path("user_bookmark_id") user_bookmark_id: Long): BookMarkResponse
+    @POST("api/bookmark/save")
+    suspend fun saveBookmark(@Body bookmarkData: BookMarkData): BookMarkResponse
+
+    @DELETE("api/bookmark/delete/{user_bookmark_id}")
+    suspend fun deleteBookmark(@Path("user_bookmark_id") userBookmarkId: Long): BookMarkResponse
 }

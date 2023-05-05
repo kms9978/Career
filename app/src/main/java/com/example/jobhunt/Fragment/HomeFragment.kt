@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import com.example.jobhunt.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
-import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
 import com.example.jobhunt.dataModel.RecentRecruit
 import retrofit2.Call
@@ -40,18 +38,13 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-
         // Set up recent recruit recyclerview
         val recentRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
         val pagerSnapHelper = PagerSnapHelper()
         pagerSnapHelper.attachToRecyclerView(recentRecruitRecyclerView)
         recentRecruitRecyclerView.layoutManager =
             GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
-        recentRecruitAdapter = RecentRecruitAdapter(onBookmarkClick = { position ->
-            // 북마크 버튼 클릭시 처리 로직 작성
-            // 예시: Toast 메시지 출력
-            Toast.makeText(context, "북마크가 클릭되었습니다. position: $position", Toast.LENGTH_SHORT).show()
-        })
+        recentRecruitAdapter = RecentRecruitAdapter()
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
 
@@ -68,7 +61,10 @@ class HomeFragment : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         // Set up retrofit to make API call and fetch data
-
+        val retrofit2 = Retrofit.Builder()
+            .baseUrl("https://raw.githubusercontent.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
         recruitService = retrofit.create(RecruitService::class.java)
 
         // Set up search view
@@ -117,6 +113,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
     private fun fetchNewComeRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
             override fun onResponse(
