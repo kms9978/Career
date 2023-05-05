@@ -44,7 +44,6 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        // 프로퍼티 초기화
 
 
 
@@ -54,7 +53,7 @@ class HomeFragment : Fragment() {
         pagerSnapHelper.attachToRecyclerView(recentRecruitRecyclerView)
         recentRecruitRecyclerView.layoutManager =
             GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
-        recentRecruitAdapter = RecentRecruitAdapter(requireContext(), emptyList(), bookmarkService)
+        recentRecruitAdapter = RecentRecruitAdapter()
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
         // Set up new come recruit recyclerview
@@ -63,8 +62,6 @@ class HomeFragment : Fragment() {
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         newComeRecruitAdapter = NewComeRecruitAdapter()
         newComeRecruitRecyclerView.adapter = newComeRecruitAdapter
-
-
         // Set up retrofit to make API call and fetch data
         val retrofit = Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/")
@@ -89,7 +86,6 @@ class HomeFragment : Fragment() {
                 return true
             }
         })
-
         // Fetch recent recruit data
         fetchRecentRecruitData()
         // Fetch new come recruit data
@@ -98,7 +94,39 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    private fun addBookmark(recentRecruit: RecentRecruit) {
+        val bookMarkData = BookMarkService.BookMark(recentRecruit)
+        bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()}")
+                }
+            }
 
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark", t)
+            }
+        })
+    }
+
+    private fun deleteBookmark(user_bookmark_id: Long) {
+        bookmarkService.deleteBookMark(user_bookmark_id).enqueue(object :
+            Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "북마크 삭제 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(ContentValues.TAG, "북마크 삭제 실패: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "북마크 삭제 실패", t)
+            }
+        })
+    }
 
     private fun fetchRecentRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
