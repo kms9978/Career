@@ -14,7 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
+import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
+import com.example.jobhunt.dataModel.BookMarkData
+import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var recentRecruitAdapter: RecentRecruitAdapter
     private lateinit var newComeRecruitAdapter: NewComeRecruitAdapter
     private lateinit var recruitService: RecruitService
+    private lateinit var bookmarkService: BookMarkService
     private lateinit var searchView: SearchView
 
     override fun onCreateView(
@@ -47,7 +51,6 @@ class HomeFragment : Fragment() {
         recentRecruitAdapter = RecentRecruitAdapter()
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
-
         // Set up new come recruit recyclerview
         val newComeRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_newComeRecruit)
         newComeRecruitRecyclerView.layoutManager =
@@ -60,12 +63,14 @@ class HomeFragment : Fragment() {
             .baseUrl("https://raw.githubusercontent.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        // Set up retrofit to make API call and fetch data
+        recruitService = retrofit.create(RecruitService::class.java)
+
         val retrofit2 = Retrofit.Builder()
-            .baseUrl("https://raw.githubusercontent.com/")
+            .baseUrl("http://54.227.205.92:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        recruitService = retrofit.create(RecruitService::class.java)
+        bookmarkService = retrofit2.create(BookMarkService::class.java)
+
 
         // Set up search view
         searchView = view.findViewById<SearchView>(R.id.search_company)
@@ -80,14 +85,48 @@ class HomeFragment : Fragment() {
             }
         })
 
-
         // Fetch recent recruit data
         fetchRecentRecruitData()
 
         // Fetch new come recruit data
         fetchNewComeRecruitData()
 
+        sendBookmarkToServer()
+
+        deleteBookmarkFromServer()
+
         return view
+    }
+
+    private fun sendBookmarkToServer(bookMarkData: BookMarkData) {
+        bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    // BookMark sent successfully
+                } else {
+                    Log.e(TAG, "Failed to send bookmark to server: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to send bookmark to server", t)
+            }
+        })
+    }
+    private fun deleteBookmarkFromServer(bookMarkId: Long) {
+        bookmarkService.deleteBookMark(bookMarkId).enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, "Deleted bookmark successfully")
+                } else {
+                    Log.e(TAG, "Failed to delete bookmark: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(TAG, "Failed to delete bookmark", t)
+            }
+        })
     }
 
 
