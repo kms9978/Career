@@ -17,20 +17,22 @@ interface BookMarkService {
 
     companion object {
         fun BookMark(recentRecruit: RecentRecruit): BookMarkData {
+            val companyName = recentRecruit.companyName
+            val company_link = recentRecruit.link // 수정된 부분
             val bookmarkImg = recentRecruit.imgUrl
-            val bookmarkName = recentRecruit.companyName
             val bookmarkDates = recentRecruit.plan.split("~")
             val bookmarkStartDate = bookmarkDates[0].trim()
             val bookmarkEndDate = bookmarkDates[1].trim()
-            val companyLink = recentRecruit.url
+
 
             return BookMarkData(
-                user_bookmark_id = 0L, // 새로운 북마크를 추가할 때는 ID 값을 자동 생성해야 합니다.
                 bookMarkImg = bookmarkImg,
-                bookMarkName = bookmarkName,
-                bookMark_Start_Date = bookmarkStartDate,
-                bookMark_End_Date = bookmarkEndDate,
-                company_link = companyLink
+                bookMarkName = companyName,
+                bookMarkStartDate = bookmarkStartDate,
+                bookMarkEndDate = bookmarkEndDate,
+                company_link = company_link,
+                user_bookmark_id = 0L,
+
             )
         }
     }

@@ -11,8 +11,8 @@ data class RecentRecruit(
     val position: String,
     @SerializedName("plan")
     val plan: String,
-    @SerializedName("url")
-    val url: String,
+    @SerializedName("link")
+    val link: String,
     @SerializedName("img")
-    val imgUrl: String,
+    val imgUrl: String
 )

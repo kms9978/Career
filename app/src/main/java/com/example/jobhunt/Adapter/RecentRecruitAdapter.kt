@@ -58,7 +58,7 @@ class RecentRecruitAdapter(
             }
 
             itemView.setOnClickListener {
-                val url = recentRecruit.url
+                val url = recentRecruit.link
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
                 itemView.context.startActivity(intent)
             }
@@ -128,6 +128,7 @@ class RecentRecruitAdapter(
             }
         })
     }
+
 
     private fun deleteBookmark(bookmarkData: BookMarkData) {
         bookmarkService.deleteBookMark(bookmarkData.user_bookmark_id).enqueue(object : Callback<BookMarkResponse> {

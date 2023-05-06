@@ -19,7 +19,7 @@ class NewComeRecruitAdapter(private var itemList: List<RecentRecruit> = emptyLis
 
         init {
             itemView.setOnClickListener {
-                val url = itemList[adapterPosition].url // 클릭한 항목의 링크 가져오기
+                val url = itemList[adapterPosition].link // 클릭한 항목의 링크 가져오기
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url")) // 링크intent domain+
                 it.context.startActivity(intent) // 인텐트 실행
             }
