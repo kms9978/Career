@@ -53,7 +53,7 @@ class RecentRecruitAdapter(
                 if (isChecked) { // 체크됐을 경우 북마크 추가
                     addBookmark(recentRecruit)
                 } else { // 체크 해제됐을 경우 메시지 출력
-                    Toast.makeText(context, "일단 삭제 안하고 스위치 OFF!", Toast.LENGTH_SHORT).show()
+                    deleteBookmark(recentRecruit.bookmarkData)
                 }
             }
 

@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
             .addInterceptor(loggingInterceptor) // 로깅 인터셉터 추가
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2ZmZWUiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzMzgwMjIzfQ.ckCk7kTMjZKQsUNScDOmCuJmmlHGsqwFf7k77Jm8ywWhkZr4Jk1yQwSpvFO1jsjbjOFtTKbaSD7p6BeATJKZdw")
+                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2ZmZWUiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzMzkxNDM1fQ.FInMHdxKNC5yIW5ht_RrO8GK2juGBITSy4rNqyljFKB5Da5_X5zLADHerYK5GntJ5WLQCCsYpq8Lc83FGcKUzA")
                     .build()
                 chain.proceed(request)
             }

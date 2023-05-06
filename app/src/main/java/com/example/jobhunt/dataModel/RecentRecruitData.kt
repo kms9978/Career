@@ -17,6 +17,5 @@ data class RecentRecruit(
     val link: String,
     @SerializedName("img")
     val imgUrl: String,
-    @SerializedName("companyName") // "CJ제일제당㈜","이랜드월드" 등의 Key값
     val companyName: String
 )
