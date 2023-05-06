@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.BookMarkService
+import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
 import retrofit2.Call
@@ -21,11 +21,12 @@ import retrofit2.Response
 import java.util.*
 
 class RecentRecruitAdapter(
-    private var recentRecruitList: BookMarkService.Companion = emptyList(),
-    private var bookmarkService: BookMarkService
+    private var recentRecruitList: List<RecentRecruit> = emptyList(), // 최근 채용 정보 목록
+    private val context: Context, // 어댑터를 사용하는 액티비티의 컨텍스트
+    private val bookmarkService: BookMarkService // 북마크 서비스
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
-    private var filteredList = recentRecruitList
+    private var filteredList = recentRecruitList // 필터링된 최근 채용 정보 목록
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,66 +35,47 @@ class RecentRecruitAdapter(
         private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
         private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
         private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
-        private val bookmarkSwitch : Switch = itemView.findViewById(R.id.add_bookmark)
+        private val bookmarkCheckBox : CheckBox = itemView.findViewById(R.id.add_bookmark)
 
         fun bind(recentRecruit: RecentRecruit) {
-            recruitName.text = recentRecruit.companyName
-            recruitTitle.text = recentRecruit.content
-            recruitPosition.text = recentRecruit.position
-            recruitPlan.text = recentRecruit.plan
+            recruitName.text = recentRecruit.companyName // 회사 이름 설정
+            recruitTitle.text = recentRecruit.content // 채용 정보 제목 설정
+            recruitPosition.text = recentRecruit.position // 채용 포지션 설정
+            recruitPlan.text = recentRecruit.plan // 채용 마감일 설정
 
-            Glide.with(itemView.context)
+            Glide.with(itemView.context) // Glide를 사용하여 이미지 로드
                 .load(recentRecruit.imgUrl)
                 .placeholder(R.drawable.baseline_feedback_24)
                 .into(recruitImage)
 
-            bookmarkSwitch.setOnCheckedChangeListener(null)
-
-            bookmarkSwitch.isChecked = recentRecruit.bookmarked
-            bookmarkSwitch.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
+            bookmarkCheckBox.setOnCheckedChangeListener { _, isChecked -> // 북마크 체크박스 리스너
+                if (isChecked) { // 체크됐을 경우 북마크 추가
                     addBookmark(recentRecruit)
-                } else {
-                    //아닐경우
+                } else { // 체크 해제됐을 경우 메시지 출력
+                    Toast.makeText(context, "일단 삭제 안하고 스위치 OFF!", Toast.LENGTH_SHORT).show()
                 }
             }
+
             itemView.setOnClickListener {
                 val url = recentRecruit.url
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))
                 itemView.context.startActivity(intent)
             }
         }
-        private fun addBookmark(recentRecruit: RecentRecruit) {
-            val bookMarkData = BookMarkService.BookMark(recentRecruit)
-            bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
-                override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
-                    if (response.isSuccessful) {
-                        Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName}")
-                    } else {
-                        Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
-                    Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark", t)
-                }
-            })
-        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder { // 뷰홀더 생성
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recent, parent, false) // 뷰 인플레이션
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(filteredList[position])
+        holder.bind(filteredList[position]) // 뷰홀더 바인딩
     }
 
     override fun getItemCount(): Int {
-        return filteredList.size
+        return filteredList.size // 최근 채용 정보 목록의 크기를 반환합니다.
     }
-
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -125,6 +107,41 @@ class RecentRecruitAdapter(
             }
         }
     }
+
+    private fun addBookmark(recentRecruit: RecentRecruit) {
+        val bookMarkData = BookMarkService.BookMark(recentRecruit)
+        bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark", t)
+            }
+        })
+    }
+
+    private fun deleteBookmark(bookmarkData: BookMarkData) {
+        bookmarkService.deleteBookMark(bookmarkData.user_bookmark_id).enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(context, "북마크 삭제 완료!", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(ContentValues.TAG, "북마크 삭제 실패: ${response.code()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                Log.e(ContentValues.TAG, "북마크 삭제 실패", t)
+            }
+        })
+    }
+
+
     fun setRecentRecruitDataList(recentRecruitList: List<RecentRecruit>, searchQuery: String = "") {
         this.recentRecruitList = recentRecruitList
         filteredList = if (searchQuery.isEmpty()) {
@@ -136,5 +153,6 @@ class RecentRecruitAdapter(
         }
         notifyDataSetChanged()
     }
+
 
 }
