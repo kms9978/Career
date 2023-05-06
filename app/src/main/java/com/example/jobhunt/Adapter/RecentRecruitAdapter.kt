@@ -21,8 +21,8 @@ import retrofit2.Response
 import java.util.*
 
 class RecentRecruitAdapter(
-                           private var recentRecruitList: List<RecentRecruit> = emptyList(),
-                           private var bookmarkService: BookMarkService
+    private var recentRecruitList: BookMarkService.Companion = emptyList(),
+    private var bookmarkService: BookMarkService
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList
