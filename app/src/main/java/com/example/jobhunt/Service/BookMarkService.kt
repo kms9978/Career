@@ -17,7 +17,7 @@ interface BookMarkService {
 
     companion object {
         fun BookMark(recentRecruit: RecentRecruit): BookMarkData {
-            val companyName = recentRecruit.companyName
+            val bookmarkName = recentRecruit.companyName
             val company_link = recentRecruit.link // 수정된 부분
             val bookmarkImg = recentRecruit.imgUrl
             val bookmarkDates = recentRecruit.plan.split("~")
@@ -27,7 +27,7 @@ interface BookMarkService {
 
             return BookMarkData(
                 bookMarkImg = bookmarkImg,
-                bookMarkName = companyName,
+                bookMarkName = bookmarkName,
                 bookMarkStartDate = bookmarkStartDate,
                 bookMarkEndDate = bookmarkEndDate,
                 company_link = company_link,

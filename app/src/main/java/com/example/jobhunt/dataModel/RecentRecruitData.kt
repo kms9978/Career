@@ -1,6 +1,7 @@
 package com.example.jobhunt.dataModel
 
 import com.google.gson.annotations.SerializedName
+import org.json.JSONObject
 
 
 data class RecentRecruit(
@@ -15,4 +16,13 @@ data class RecentRecruit(
     val link: String,
     @SerializedName("img")
     val imgUrl: String
-)
+){
+    constructor(jsonObject: JSONObject, companyName: String) : this(
+        companyName = companyName,
+        content = jsonObject.getString("content"),
+        position = jsonObject.getString("position"),
+        plan = jsonObject.getString("plan"),
+        link = jsonObject.getString("link"),
+        imgUrl = jsonObject.getString("img") // imgUrl 변수로 변경
+    )
+}
