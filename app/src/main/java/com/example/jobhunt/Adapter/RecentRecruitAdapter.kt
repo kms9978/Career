@@ -111,6 +111,7 @@ class RecentRecruitAdapter(
 
     private fun addBookmark(recentRecruit: RecentRecruit) {
         val bookMarkData = BookMarkService.BookMark(recentRecruit)
+
         bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
             override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
                 if (response.isSuccessful) {

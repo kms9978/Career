@@ -21,6 +21,8 @@ import com.example.jobhunt.dataModel.AddBookmarkRequest
 import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -44,11 +46,28 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
+
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor) // 로깅 인터셉터 추가
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2ZmZWUiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzMzgwMjIzfQ.ckCk7kTMjZKQsUNScDOmCuJmmlHGsqwFf7k77Jm8ywWhkZr4Jk1yQwSpvFO1jsjbjOFtTKbaSD7p6BeATJKZdw")
+                    .build()
+                chain.proceed(request)
+            }
+            .build()
         val retrofit2 = Retrofit.Builder()
             .baseUrl("http://54.227.205.92:8080")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
         bookmarkService = retrofit2.create(BookMarkService::class.java)
+
+
         // Set up recent recruit recyclerview
         val recentRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
         val pagerSnapHelper = PagerSnapHelper()
@@ -95,46 +114,55 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchRecentRecruitData() {
-        recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
-            override fun onResponse(
-                call: Call<Map<String, RecentRecruit>>,
-                response: Response<Map<String, RecentRecruit>>
-            ) {
-                if (response.isSuccessful) {
-                    val recentRecruitDataList = response.body()?.values?.toList()
-                    recentRecruitDataList?.let {
-                        recentRecruitAdapter.setRecentRecruitDataList(it)
-                        recentRecruitAdapter.filter.filter(searchView.query)
+        try {
+            recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
+                override fun onResponse(
+                    call: Call<Map<String, RecentRecruit>>,
+                    response: Response<Map<String, RecentRecruit>>
+                ) {
+                    if (response.isSuccessful) {
+                        val recentRecruitDataList = response.body()?.values?.toList()
+                        recentRecruitDataList?.let {
+                            recentRecruitAdapter.setRecentRecruitDataList(it)
+                            recentRecruitAdapter.filter.filter(searchView.query)
+                        }
+                    } else {
+                        Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
                     }
-                } else {
-                    Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
                 }
-            }
 
-            override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
-                Log.e(ContentValues.TAG, "Failed to fetch recent recruit data", t)
-            }
-        })
-    }
-    private fun fetchNewComeRecruitData() {
-        recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
-            override fun onResponse(
-                call: Call<Map<String, RecentRecruit>>,
-                response: Response<Map<String, RecentRecruit>>
-            ) {
-                if (response.isSuccessful) {
-                    val newComeRecruitDataList = response.body()?.values
-                        ?.filter { it.position == "신입" }
-                    newComeRecruitDataList?.let {
-                        newComeRecruitAdapter.setNewComeRecruitDataList(it)
-                    }
-                } else {
-                    Log.e(TAG, "Failed to fetch new come recruit data: ${response.code()}")
+                override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "Failed to fetch recent recruit data", t)
                 }
-            }
-            override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
-                Log.e(TAG, "Failed to fetch new come recruit data", t)
-            }
-        })
+            })
+        } catch (e: Exception) {
+            Log.e(ContentValues.TAG, "Failed to fetch recent recruit data", e)
+        }
+    }
+
+    private fun fetchNewComeRecruitData() {
+        try {
+            recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
+                override fun onResponse(
+                    call: Call<Map<String, RecentRecruit>>,
+                    response: Response<Map<String, RecentRecruit>>
+                ) {
+                    if (response.isSuccessful) {
+                        val newComeRecruitDataList = response.body()?.values
+                            ?.filter { it.position == "신입" }
+                        newComeRecruitDataList?.let {
+                            newComeRecruitAdapter.setNewComeRecruitDataList(it)
+                        }
+                    } else {
+                        Log.e(TAG, "Failed to fetch new come recruit data: ${response.code()}")
+                    }
+                }
+                override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
+                    Log.e(TAG, "Failed to fetch new come recruit data", t)
+                }
+            })
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to fetch new come recruit data", e)
+        }
     }
 }
