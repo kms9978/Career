@@ -2,10 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="180dp"
     android:id="@+id/item_bookmark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <androidx.cardview.widget.CardView
         android:backgroundTint="#EAEAEA"
         android:layout_width="match_parent"
@@ -14,13 +13,30 @@
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/bookmark_img"
+            android:layout_width="260dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/item_img_description"
+            android:paddingBottom="10dp"
+            android:src="@drawable/baseline_feedback_24" />
+    </LinearLayout>
         <LinearLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="8dp"
             android:orientation="vertical">
-
             <LinearLayout
                 android:layout_marginTop="3dp"
                 android:baselineAligned="false"
@@ -34,8 +50,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/bookmark_name"
                         android:layout_marginTop="3dp"
-                        android:id="@+id/recruit_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/company_name"
@@ -43,7 +59,7 @@
                         android:fontFamily="@font/chosunbg"
                         />
                     <TextView
-                        android:id="@+id/recruit_title"
+                        android:id="@+id/bookmark_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/company_title"
@@ -54,37 +70,42 @@
                         android:maxWidth="270dp"
                         android:ellipsize="end"
                         android:singleLine="true" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/expire_date"
+                        android:id="@+id/bookmark_start_date"
                         android:layout_weight="1"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="6dp"
                         android:textColor="#8C8C8C"
                         android:fontFamily="@font/chosunbg"
-                        android:text="@string/expire_date"/>
+                        android:text="기간"/>
+                        <TextView
+                            android:id="@+id/bookmark_end_date"
+                            android:layout_weight="1"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="6dp"
+                            android:textColor="#8C8C8C"
+                            android:fontFamily="@font/chosunbg"
+                            android:text="기간"/>
+                    </LinearLayout>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3">
-
                     <CheckBox
+                        android:id="@+id/add_bookmark"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:button="@drawable/selector_favorite_item" />
-
-
                 </LinearLayout>
             </LinearLayout>
-
-
         </LinearLayout>
-
+</LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

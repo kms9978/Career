@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.RecentRecruit
 
-class NewComeRecruitAdapter(private var itemList: List<RecentRecruit> = emptyList()) : RecyclerView.Adapter<NewComeRecruitAdapter.ViewHolder>() {
+class NewComeRecruitAdapter(
+    private var itemList: List<RecentRecruit> = emptyList()) : RecyclerView.Adapter<NewComeRecruitAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val companyNameView: TextView = itemView.findViewById(R.id.recruit_name)

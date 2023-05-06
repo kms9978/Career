@@ -1,6 +1,7 @@
 package com.example.jobhunt.Service
 
 import com.example.jobhunt.dataModel.BookMarkData
+import com.example.jobhunt.dataModel.BookMarkListResponse
 import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
 import retrofit2.Call
@@ -14,8 +15,8 @@ interface BookMarkService {
     @DELETE("api/bookmark/delete/{user_bookmark_id}")
     fun deleteBookMark(@Path("user_bookmark_id") user_bookmark_id: Long): Call<BookMarkResponse>
 
-
-
+    @GET("api/mypage")
+    fun getBookMarks(): Call<BookMarkListResponse>
     companion object {
         fun BookMark(recentRecruit: RecentRecruit): BookMarkData {
             val bookmarkName = recentRecruit.companyName
