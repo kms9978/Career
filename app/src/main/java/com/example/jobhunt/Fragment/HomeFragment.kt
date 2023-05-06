@@ -37,7 +37,6 @@ class HomeFragment : Fragment() {
     private lateinit var bookmarkService: BookMarkService
     private lateinit var searchView: SearchView
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,23 +44,27 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-
-
+        val retrofit2 = Retrofit.Builder()
+            .baseUrl("http://54.227.205.92:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        bookmarkService = retrofit2.create(BookMarkService::class.java)
         // Set up recent recruit recyclerview
         val recentRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_recentRecruit)
         val pagerSnapHelper = PagerSnapHelper()
         pagerSnapHelper.attachToRecyclerView(recentRecruitRecyclerView)
         recentRecruitRecyclerView.layoutManager =
-            GridLayoutManager(context, 3, GridLayoutManager.HORIZONTAL, false)
-        recentRecruitAdapter = RecentRecruitAdapter()
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.HORIZONTAL, false)
+        recentRecruitAdapter = RecentRecruitAdapter(emptyList(), requireContext(), bookmarkService)
         recentRecruitRecyclerView.adapter = recentRecruitAdapter
 
         // Set up new come recruit recyclerview
         val newComeRecruitRecyclerView = view.findViewById<RecyclerView>(R.id.rv_newComeRecruit)
         newComeRecruitRecyclerView.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         newComeRecruitAdapter = NewComeRecruitAdapter()
         newComeRecruitRecyclerView.adapter = newComeRecruitAdapter
+
         // Set up retrofit to make API call and fetch data
         val retrofit = Retrofit.Builder()
             .baseUrl("https://raw.githubusercontent.com/")
@@ -69,11 +72,6 @@ class HomeFragment : Fragment() {
             .build()
         recruitService = retrofit.create(RecruitService::class.java)
 
-        val retrofit2 = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        bookmarkService = retrofit2.create(BookMarkService::class.java)
 
         // Set up search view
         searchView = view.findViewById<SearchView>(R.id.search_company)
@@ -86,15 +84,15 @@ class HomeFragment : Fragment() {
                 return true
             }
         })
+
         // Fetch recent recruit data
         fetchRecentRecruitData()
+
         // Fetch new come recruit data
         fetchNewComeRecruitData()
-        // Fetch bookmark data
+
         return view
     }
-
-
 
     private fun fetchRecentRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
@@ -112,12 +110,12 @@ class HomeFragment : Fragment() {
                     Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
                 }
             }
+
             override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {
                 Log.e(ContentValues.TAG, "Failed to fetch recent recruit data", t)
             }
         })
     }
-
     private fun fetchNewComeRecruitData() {
         recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
             override fun onResponse(
@@ -130,6 +128,8 @@ class HomeFragment : Fragment() {
                     newComeRecruitDataList?.let {
                         newComeRecruitAdapter.setNewComeRecruitDataList(it)
                     }
+                } else {
+                    Log.e(TAG, "Failed to fetch new come recruit data: ${response.code()}")
                 }
             }
             override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {

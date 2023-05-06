@@ -22,14 +22,15 @@ import java.util.*
 
 class RecentRecruitAdapter(
     private var recentRecruitList: List<RecentRecruit> = emptyList(), // 최근 채용 정보 목록
-    private val context: Context, // 어댑터를 사용하는 액티비티의 컨텍스트
-    private val bookmarkService: BookMarkService // 북마크 서비스
+    private var context: Context, // 어댑터를 사용하는 액티비티의 컨텍스트
+    private var bookmarkService: BookMarkService // 북마크 서비스
 ) : RecyclerView.Adapter<RecentRecruitAdapter.ViewHolder>(), Filterable {
 
     private var filteredList = recentRecruitList // 필터링된 최근 채용 정보 목록
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         private val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
         private val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
         private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
@@ -115,12 +116,14 @@ class RecentRecruitAdapter(
                 if (response.isSuccessful) {
                     Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 완료!", Toast.LENGTH_SHORT).show()
                 } else {
-                    Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()}")
+                    Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()} ${response.message()}")
+                    Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 실패: ${response.code()} ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark", t)
+                Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 실패: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
     }
