@@ -38,6 +38,9 @@ class NewComeRecruitAdapter(private var itemList: List<RecentRecruit> = emptyLis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = itemList[position]
+        holder.companyNameView.text = item.companyName // Key값으로 companyName을 사용하여 설정
+        holder.contentView.text = item.content
+        holder.companydate.text = item.plan
 
         if (item.position == "신입") {
             holder.companyNameView.text = item.companyName

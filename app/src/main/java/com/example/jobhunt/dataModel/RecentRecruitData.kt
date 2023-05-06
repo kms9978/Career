@@ -5,7 +5,8 @@ import org.json.JSONObject
 
 
 data class RecentRecruit(
-    val companyName: String,
+    @SerializedName("state")
+    val state: String,
     @SerializedName("content")
     val content: String,
     @SerializedName("position")
@@ -15,14 +16,7 @@ data class RecentRecruit(
     @SerializedName("link")
     val link: String,
     @SerializedName("img")
-    val imgUrl: String
-){
-    constructor(jsonObject: JSONObject, companyName: String) : this(
-        companyName = companyName,
-        content = jsonObject.getString("content"),
-        position = jsonObject.getString("position"),
-        plan = jsonObject.getString("plan"),
-        link = jsonObject.getString("link"),
-        imgUrl = jsonObject.getString("img") // imgUrl 변수로 변경
-    )
-}
+    val imgUrl: String,
+    @SerializedName("companyName") // "CJ제일제당㈜","이랜드월드" 등의 Key값
+    val companyName: String
+)

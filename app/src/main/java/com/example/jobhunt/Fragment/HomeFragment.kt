@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import com.example.jobhunt.R
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,9 +16,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
-import com.example.jobhunt.dataModel.AddBookmarkRequest
-import com.example.jobhunt.dataModel.BookMarkData
-import com.example.jobhunt.dataModel.BookMarkResponse
 import com.example.jobhunt.dataModel.RecentRecruit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -115,7 +115,7 @@ class RecentRecruitAdapter(
         bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
             override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 완료!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "${bookMarkData.bookMarkName} 즐겨찾기 추가 완료!", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark: ${response.code()} ${response.message()}")
                     Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 실패: ${response.code()} ${response.message()}", Toast.LENGTH_SHORT).show()
@@ -158,6 +158,4 @@ class RecentRecruitAdapter(
         }
         notifyDataSetChanged()
     }
-
-
 }
