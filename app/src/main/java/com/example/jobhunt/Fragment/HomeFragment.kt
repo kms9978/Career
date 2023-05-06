@@ -19,6 +19,7 @@ import com.example.jobhunt.Service.RecruitService
 import com.example.jobhunt.dataModel.RecentRecruit
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +52,7 @@ class HomeFragment : Fragment() {
             .addInterceptor(loggingInterceptor) // 로깅 인터셉터 추가
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2ZmZWUiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzMzkxNDM1fQ.FInMHdxKNC5yIW5ht_RrO8GK2juGBITSy4rNqyljFKB5Da5_X5zLADHerYK5GntJ5WLQCCsYpq8Lc83FGcKUzA")
+                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb2ZmZWUiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzNDAyODc3fQ.HSF8zKnP98QrUTI35imKBgDgMrD1OnbNAopciXJTO9mRw9ecEl2pUgYwzQS4Vr0_QYxD2t9bb3Havf4ZUpwyKw")
                     .build()
                 chain.proceed(request)
             }
@@ -109,6 +110,8 @@ class HomeFragment : Fragment() {
         return view
     }
 
+
+
     private fun fetchRecentRecruitData() {
         try {
             recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
@@ -117,11 +120,13 @@ class HomeFragment : Fragment() {
                     response: Response<Map<String, RecentRecruit>>
                 ) {
                     if (response.isSuccessful) {
-                        val recentRecruitDataList = response.body()?.values?.toList()
-                        recentRecruitDataList?.let {
-                            recentRecruitAdapter.setRecentRecruitDataList(it)
-                            recentRecruitAdapter.filter.filter(searchView.query)
+                        val recentRecruitDataList = mutableListOf<RecentRecruit>()
+                        response.body()?.forEach { (companyName, recentRecruit) ->
+                            recentRecruit.companyName = companyName
+                            recentRecruitDataList.add(recentRecruit)
                         }
+                        recentRecruitAdapter.setRecentRecruitDataList(recentRecruitDataList)
+                        recentRecruitAdapter.filter.filter(searchView.query)
                     } else {
                         Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
                     }
@@ -135,7 +140,6 @@ class HomeFragment : Fragment() {
             Log.e(ContentValues.TAG, "Failed to fetch recent recruit data", e)
         }
     }
-
     private fun fetchNewComeRecruitData() {
         try {
             recruitService.getRecruits().enqueue(object : Callback<Map<String, RecentRecruit>> {
@@ -144,13 +148,16 @@ class HomeFragment : Fragment() {
                     response: Response<Map<String, RecentRecruit>>
                 ) {
                     if (response.isSuccessful) {
-                        val newComeRecruitDataList = response.body()?.values
-                            ?.filter { it.position == "신입" }
-                        newComeRecruitDataList?.let {
-                            newComeRecruitAdapter.setNewComeRecruitDataList(it)
+                        val newComeRecruitDataList = mutableListOf<RecentRecruit>()
+                        response.body()?.forEach { (companyName, recentRecruit) ->
+                            if (recentRecruit.position == "신입") {
+                                recentRecruit.companyName = companyName
+                                newComeRecruitDataList.add(recentRecruit)
+                            }
                         }
+                        newComeRecruitAdapter.setNewComeRecruitDataList(newComeRecruitDataList)
                     } else {
-                        Log.e(TAG, "Failed to fetch new come recruit data: ${response.code()}")
+                        Log.e(ContentValues.TAG, "Failed to fetch recent recruit data: ${response.code()}")
                     }
                 }
                 override fun onFailure(call: Call<Map<String, RecentRecruit>>, t: Throwable) {

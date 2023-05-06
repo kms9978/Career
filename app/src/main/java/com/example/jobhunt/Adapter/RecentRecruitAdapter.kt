@@ -53,7 +53,7 @@ class RecentRecruitAdapter(
                 if (isChecked) { // 체크됐을 경우 북마크 추가
                     addBookmark(recentRecruit)
                 } else { // 체크 해제됐을 경우 메시지 출력
-                    deleteBookmark(recentRecruit.bookmarkData)
+                    deleteBookMark(recentRecruit.bookMarkData)
                 }
             }
 
@@ -130,20 +130,23 @@ class RecentRecruitAdapter(
     }
 
 
-    private fun deleteBookmark(bookmarkData: BookMarkData) {
-        bookmarkService.deleteBookMark(bookmarkData.user_bookmark_id).enqueue(object : Callback<BookMarkResponse> {
-            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(context, "북마크 삭제 완료!", Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.e(ContentValues.TAG, "북마크 삭제 실패: ${response.code()}")
+    private fun deleteBookMark(bookmarkData: BookMarkData?) {
+        val userBookmarkId = bookmarkData?.user_bookmark_id
+        if (userBookmarkId != null && userBookmarkId != 0L) {
+            bookmarkService.deleteBookMark(userBookmarkId).enqueue(object : Callback<BookMarkResponse> {
+                override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(context, "북마크가 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Log.e(ContentValues.TAG, "Failed to delete bookmark: ${response.code()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
-                Log.e(ContentValues.TAG, "북마크 삭제 실패", t)
-            }
-        })
+                override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
+                    Log.e(ContentValues.TAG, "Failed to delete bookmark", t)
+                }
+            })
+        }
     }
 
 

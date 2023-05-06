@@ -1,10 +1,12 @@
 package com.example.jobhunt.dataModel
 
+import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 import org.json.JSONObject
 
 
 data class RecentRecruit(
+    var companyName: String,
     @SerializedName("state")
     val state: String,
     @SerializedName("content")
@@ -17,5 +19,5 @@ data class RecentRecruit(
     val link: String,
     @SerializedName("img")
     val imgUrl: String,
-    val companyName: String
+    val bookMarkData: BookMarkData? = null // BookMarkData 클래스의 인스턴스를 포함합니다.
 )

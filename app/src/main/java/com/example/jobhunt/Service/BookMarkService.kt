@@ -15,6 +15,7 @@ interface BookMarkService {
     fun deleteBookMark(@Path("user_bookmark_id") user_bookmark_id: Long): Call<BookMarkResponse>
 
 
+
     companion object {
         fun BookMark(recentRecruit: RecentRecruit): BookMarkData {
             val bookmarkName = recentRecruit.companyName
