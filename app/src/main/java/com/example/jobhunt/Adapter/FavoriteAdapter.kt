@@ -38,7 +38,6 @@ class FavoriteAdapter(
         itemList = items
         notifyDataSetChanged()
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_bookmark, parent, false)
         return ViewHolder(view)

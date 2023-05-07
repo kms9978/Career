@@ -58,11 +58,10 @@ class FavoriteFragment : Fragment() {
             .build()
         val bookmarkService = retrofit.create(BookMarkService::class.java)
 
-        // 북마크 목록을 가져오기 위한 API 호출
-        bookmarkService.getBookmarks().enqueue(object : Callback<List<BookMarkData>> {
-            override fun onResponse(call: Call<List<BookMarkData>>, response: Response<List<BookMarkData>>) {
+        bookmarkService.getBookmarks().enqueue(object : Callback<BookMarkListResponse> {
+            override fun onResponse(call: Call<BookMarkListResponse>, response: Response<BookMarkListResponse>) {
                 if (response.isSuccessful) {
-                    val bookMarkList = response.body()
+                    val bookMarkList = response.body()?.bookmark
                     if (bookMarkList != null) {
                         favoriteAdapter.setData(bookMarkList)
                     } else {
@@ -73,11 +72,10 @@ class FavoriteFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<List<BookMarkData>>, t: Throwable) {
+            override fun onFailure(call: Call<BookMarkListResponse>, t: Throwable) {
                 Log.d("FavoriteFragment", "Error: ${t.message}")
             }
         })
-
         return view
     }
 }
