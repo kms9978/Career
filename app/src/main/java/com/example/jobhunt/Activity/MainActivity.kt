@@ -18,6 +18,7 @@ import com.example.jobhunt.Service.RefreshTokenService
 import com.example.jobhunt.dataModel.LoginRequest
 import com.example.jobhunt.dataModel.LoginResponse
 import com.example.jobhunt.dataModel.RefreshTokenRequest
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity() {
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://54.227.205.92:8080") // Retrofit baseURL 설정
         .addConverterFactory(GsonConverterFactory.create()) // JSON 파싱 설정
+        .client(
+            OkHttpClient.Builder()
+                .addInterceptor(AccessTokenInterceptor(this)) // AccessTokenInterceptor 추가
+                .build()
+        )
         .build()
 
     // API service initialization

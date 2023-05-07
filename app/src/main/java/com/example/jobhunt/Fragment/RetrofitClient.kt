@@ -1,26 +1,34 @@
 package com.example.jobhunt.Fragment
 
+import android.content.Context
 import com.example.jobhunt.Service.BookMarkService
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient {
+class RetrofitClient(context: Context) {
+    private val tokenManager: TokenManager = TokenManager(context)
+
     private val retrofit: Retrofit by lazy {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
                     .addHeader(
                         "Authorization",
-                        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYWIiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzNDUxODM5fQ.gth72nIhqiqeSM6FfhYT64WtBqampa87OcxmCsxL6phPPxxn_DdX6IHqghI5VGKX3F0Fp2LX4uSN2XdmNv1gpA"
+                        "Bearer ${tokenManager.getToken()}"
                     )
                     .build()
                 chain.proceed(request)
             }
+            .addInterceptor(loggingInterceptor) // logging interceptor 추가
             .build()
 
         Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080")
+            .baseUrl("http://54.227.205.92:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

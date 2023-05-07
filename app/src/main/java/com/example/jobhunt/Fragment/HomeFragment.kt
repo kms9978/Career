@@ -3,6 +3,7 @@ package com.example.jobhunt.Fragment
 import RecentRecruitAdapter
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -35,34 +36,28 @@ class HomeFragment : Fragment() {
     private lateinit var recruitService: RecruitService
     private lateinit var bookmarkService: BookMarkService
     private lateinit var searchView: SearchView
-
+    private lateinit var retrofitClient: RetrofitClient
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        // TokenManager 초기화
 
 
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+//        val loggingInterceptor = HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        }
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor) // 로깅 인터셉터 추가
-            .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYWIiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzNDUxODM5fQ.gth72nIhqiqeSM6FfhYT64WtBqampa87OcxmCsxL6phPPxxn_DdX6IHqghI5VGKX3F0Fp2LX4uSN2XdmNv1gpA")
-                    .build()
-                chain.proceed(request)
-            }
-            .build()
-        val retrofit2 = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-        bookmarkService = retrofit2.create(BookMarkService::class.java)
+        // TokenManager 초기화
+        val tokenManager = TokenManager(requireContext())
+
+        // RetrofitClient 초기화
+        retrofitClient = RetrofitClient(requireContext())
+
+
+        bookmarkService = retrofitClient.retrofitService
 
 
         // Set up recent recruit recyclerview

@@ -10,5 +10,4 @@ data class BookMarkData(
     @SerializedName("bookMark_End_Date") val bookMarkEndDate: String,
     @SerializedName("company_link") val company_link: String?,
     @SerializedName("user_bookmark_id") val user_bookmark_id: Long,
-
 )
