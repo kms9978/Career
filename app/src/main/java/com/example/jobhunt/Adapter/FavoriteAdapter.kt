@@ -26,6 +26,8 @@ class FavoriteAdapter(
     private var token: String? = null
 ) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
+    private val bookmarkDataList = mutableListOf<BookMarkData>()
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val bookMarkName: TextView = itemView.findViewById(R.id.bookmark_name)
         private val bookMarkStartDate: TextView = itemView.findViewById(R.id.bookmark_start_date)
@@ -48,38 +50,39 @@ class FavoriteAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val bookmark = bookmarkList[position]
+        val bookmark = bookmarkDataList[position]
         holder.bind(bookmark)
+    }
 
+    override fun getItemCount(): Int {
+        return bookmarkDataList.size
+    }
+
+    fun updateData(bookmarkList: List<BookMarkData>, token: String?) {
+        this.bookmarkList = bookmarkList
+        this.token = token
         val service = RetrofitClient(context).retrofitService
         val call = service.getBookmarks()
 
-        call.enqueue(object : Callback<BookMarkListResponse> {
-            override fun onResponse(call: Call<BookMarkListResponse>, response: Response<BookMarkListResponse>) {
+        call.enqueue(object : Callback<List<BookMarkListResponse>> {
+            override fun onResponse(call: Call<List<BookMarkListResponse>>, response: Response<List<BookMarkListResponse>>) {
                 if (response.isSuccessful) {
-                    val bookmarkResponse = response.body()
-                    val updatedBookmark = bookmarkResponse?.bookmark?.find { it.user_bookmark_id == bookmark.user_bookmark_id }
-                    if (updatedBookmark != null) {
-                        holder.bind(updatedBookmark)
+                    val bookmarkList = response.body()
+                    val bookmarkResponse = bookmarkList?.getOrNull(0)
+                    val bookmarkArray = bookmarkResponse?.bookmark
+                    if (bookmarkArray != null) {
+                        bookmarkDataList.clear()
+                        bookmarkDataList.addAll(bookmarkArray)
+                        notifyDataSetChanged()
                     }
                 } else {
                     Log.d("FavoriteFragment", "Error: ${response.message()}")
                 }
             }
 
-            override fun onFailure(call: Call<BookMarkListResponse>, t: Throwable) {
+            override fun onFailure(call: Call<List<BookMarkListResponse>>, t: Throwable) {
                 Log.d("FavoriteFragment", "Error: ${t.message}")
             }
         })
-    }
-
-    override fun getItemCount(): Int {
-        return bookmarkList.size
-    }
-
-    fun updateData(bookmarkList: List<BookMarkData>, token: String?) {
-        this.bookmarkList = bookmarkList
-        this.token = token
-        notifyDataSetChanged()
     }
 }

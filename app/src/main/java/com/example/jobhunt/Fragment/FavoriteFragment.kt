@@ -50,22 +50,24 @@ class FavoriteFragment : Fragment() {
             val call = bookmarkService.getBookmarks()
 
             // HTTP 요청을 비동기적으로 보내고 결과를 처리하는 Callback 등록
-            call.enqueue(object : Callback<BookMarkListResponse> {
+            call.enqueue(object : Callback<List<BookMarkListResponse>> {
                 override fun onResponse(
-                    call: Call<BookMarkListResponse>,
-                    response: Response<BookMarkListResponse>
+                    call: Call<List<BookMarkListResponse>>,
+                    response: Response<List<BookMarkListResponse>>
                 ) {
                     if (response.isSuccessful) {
-                        response.body()?.let {
-                            // RecyclerView에 북마크 데이터를 업데이트한다.
-                            favoriteAdapter.updateData(it.bookmark.toList(), token)
+                        response.body()?.let { bookmarks ->
+                            if (bookmarks.isNotEmpty()) {
+                                // RecyclerView에 북마크 데이터를 업데이트한다.
+                                favoriteAdapter.updateData(bookmarks[0].bookmark.toList(), token)
+                            }
                         }
                     } else {
                         Log.d("FavoriteFragment", "Error: ${response.message()}")
                     }
                 }
 
-                override fun onFailure(call: Call<BookMarkListResponse>, t: Throwable) {
+                override fun onFailure(call: Call<List<BookMarkListResponse>>, t: Throwable) {
                     Log.d("FavoriteFragment", "Error: ${t.message}")
                 }
             })
