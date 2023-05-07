@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Activity.MainActivity
 import com.example.jobhunt.Adapter.FavoriteAdapter
@@ -31,7 +32,10 @@ class FavoriteFragment : Fragment() {
         // Retrofit 및 BookMarkService 초기화
         bookmarkService = RetrofitClient(requireContext()).retrofitService
         favoriteAdapter = FavoriteAdapter(requireContext())
-        view.findViewById<RecyclerView>(R.id.rv_bookmarkView).adapter = favoriteAdapter
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_bookmarkView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = favoriteAdapter
 
         // TokenManager에서 token 값을 가져오는 부분
         val token = TokenManager(requireContext()).getToken()

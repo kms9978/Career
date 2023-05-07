@@ -77,33 +77,9 @@ class FavoriteAdapter(
         return bookmarkList.size
     }
 
-    fun updateData(jsonString: List<BookMarkData>, token: String?) {
-        try {
-            val jsonArray = JSONArray(jsonString)
-            val jsonObject = jsonArray.getJSONObject(0)
-            val bookmarkArray = jsonObject.getJSONArray("bookmark")
-
-            val bookmarks = mutableListOf<BookMarkData>()
-
-            for (i in 0 until bookmarkArray.length()) {
-                val bookmarkObject = bookmarkArray.getJSONObject(i)
-                val bookMarkImg = bookmarkObject.getString("bookMarkImg")
-                val bookMarkName = bookmarkObject.getString("bookMarkName")
-                val bookMarkStartDate = bookmarkObject.getString("bookMark_Start_Date")
-                val bookMarkEndDate = bookmarkObject.getString("bookMark_End_Date")
-                val companyLink = bookmarkObject.getString("company_link")
-                val userBookmarkId = bookmarkObject.getLong("user_bookmark_id").toLong()
-                val bookmark = BookMarkData( bookMarkImg, bookMarkName, bookMarkStartDate,bookMarkEndDate,companyLink,userBookmarkId )
-                bookmarks.add(bookmark)
-            }
-
-            bookmarkList = bookmarks
-            this.token = token
-            notifyDataSetChanged()
-
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-
+    fun updateData(bookmarkList: List<BookMarkData>, token: String?) {
+        this.bookmarkList = bookmarkList
+        this.token = token
+        notifyDataSetChanged()
     }
 }
