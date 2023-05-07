@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.BookMarkData
+import com.example.jobhunt.dataModel.BookMarkListResponse
 
 
 class FavoriteAdapter(
@@ -41,7 +42,6 @@ class FavoriteAdapter(
         itemList = items
         notifyDataSetChanged()
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_bookmark, parent, false)
         return ViewHolder(view)

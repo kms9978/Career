@@ -14,6 +14,8 @@ import com.example.jobhunt.R
 import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.BookMarkListResponse
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,28 +41,41 @@ class FavoriteFragment : Fragment() {
         favoriteAdapter = FavoriteAdapter(requireContext(), emptyList())
         recyclerView.adapter = favoriteAdapter
 
-        // Retrofit을 사용하여 서버에서 북마크 정보를 가져옵니다.
+        val layoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+
+
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYWIiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzNDUxODM5fQ.gth72nIhqiqeSM6FfhYT64WtBqampa87OcxmCsxL6phPPxxn_DdX6IHqghI5VGKX3F0Fp2LX4uSN2XdmNv1gpA")
+                    .build()
+                chain.proceed(request)
+            }
+            .build()
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080/")
+            .baseUrl("http://54.227.205.92:8080")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
             .build()
         val bookmarkService = retrofit.create(BookMarkService::class.java)
 
-        bookmarkService.getBookMarks().enqueue(object : Callback<BookMarkListResponse> {
-            override fun onResponse(call: Call<BookMarkListResponse>, response: Response<BookMarkListResponse>) {
-                if (response.isSuccessful) {
-                    val bookmarkListResponse = response.body()
-                    favoriteAdapter.setData(bookmarkListResponse?.data ?: emptyList()) // BookMarkListResponse의 data 필드에 저장된 리스트를 Adapter에 전달합니다.
-                } else {
-                    Log.e("FavoriteFragment", "Error: ${response.code()}")
+        try {
+            val response = bookmarkService.getBookMarks().execute()
+            if (response.isSuccessful) {
+                val bookMarkList = response.body()?.bookmarks
+                if (bookMarkList != null) {
+                    favoriteAdapter.setData(bookMarkList)
                 }
+            } else {
+                Log.d("FavoriteFragment", "Error: ${response.code()}")
             }
-
-            override fun onFailure(call: Call<BookMarkListResponse>, t: Throwable) {
-                Log.e("FavoriteFragment", "Error: ${t.message}")
-            }
-        })
-
+        } catch (e: Exception) {
+            Log.d("FavoriteFragment", "Error: ${e.message}")
+        }
         return view
     }
 }
+
+
