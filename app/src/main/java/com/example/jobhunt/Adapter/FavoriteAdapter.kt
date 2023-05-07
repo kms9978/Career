@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.jobhunt.Fragment.RetrofitClient
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.BookMarkListResponse
+import com.example.jobhunt.dataModel.BookMarkResponse
 import org.json.JSONArray
 import org.json.JSONException
 import retrofit2.Call
@@ -33,14 +35,19 @@ class FavoriteAdapter(
         private val bookMarkStartDate: TextView = itemView.findViewById(R.id.bookmark_start_date)
         private val bookMarkEndDate: TextView = itemView.findViewById(R.id.bookmark_end_date)
         private val bookMarkImg: ImageView = itemView.findViewById(R.id.bookmark_img)
+        private val deleteBookmark: ImageButton = itemView.findViewById(R.id.delete_bookmark)
 
-        fun bind(item: BookMarkData) {
+        fun bind(item: BookMarkData, adapter: FavoriteAdapter) {
             bookMarkName.text = item.bookMarkName
             bookMarkStartDate.text = item.bookMarkStartDate
             bookMarkEndDate.text = item.bookMarkEndDate
             Glide.with(itemView)
                 .load(item.bookMarkImg)
                 .into(bookMarkImg)
+
+            deleteBookmark.setOnClickListener {
+                adapter.deleteBookmark(item)
+            }
         }
     }
 
@@ -51,7 +58,7 @@ class FavoriteAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val bookmark = bookmarkDataList[position]
-        holder.bind(bookmark)
+        holder.bind(bookmark, this)
     }
 
     override fun getItemCount(): Int {
@@ -81,6 +88,24 @@ class FavoriteAdapter(
             }
 
             override fun onFailure(call: Call<List<BookMarkListResponse>>, t: Throwable) {
+                Log.d("FavoriteFragment", "Error: ${t.message}")
+            }
+        })
+    }
+    fun deleteBookmark(item: BookMarkData) {
+        val service = RetrofitClient(context).retrofitService
+        val call = service.deleteBookMark(item.user_bookmark_id)
+        call.enqueue(object : Callback<BookMarkResponse> {
+            override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
+                if (response.isSuccessful) {
+                    bookmarkDataList.remove(item)
+                    notifyDataSetChanged()
+                } else {
+                    Log.d("FavoriteFragment", "Error: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
                 Log.d("FavoriteFragment", "Error: ${t.message}")
             }
         })

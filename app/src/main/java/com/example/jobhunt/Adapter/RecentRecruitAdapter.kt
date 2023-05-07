@@ -49,14 +49,18 @@ class RecentRecruitAdapter(
                 .placeholder(R.drawable.baseline_feedback_24)
                 .into(recruitImage)
 
-            bookmarkCheckBox.setOnCheckedChangeListener { _, isChecked -> // 북마크 체크박스 리스너
-                if (isChecked) { // 체크됐을 경우 북마크 추가
+            bookmarkCheckBox.setOnCheckedChangeListener(null) // 리스너 제거
+
+            bookmarkCheckBox.isChecked = recentRecruit.isChecked // 저장된 체크박스 상태를 설정
+
+            bookmarkCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                recentRecruit.isChecked = isChecked // 체크박스 상태를 저장
+                if (isChecked) {
                     addBookmark(recentRecruit)
-                } else { // 체크 해제됐을 경우 메시지 출력
-                    deleteBookMark(recentRecruit.bookMarkData)
+                } else {
+                    //deleteBookMark(recentRecruit.bookMarkData)
                 }
             }
-
             itemView.setOnClickListener {
                 val url = recentRecruit.link
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.jobkorea.co.kr$url"))

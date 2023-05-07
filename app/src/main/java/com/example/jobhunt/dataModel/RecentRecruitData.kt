@@ -19,5 +19,6 @@ data class RecentRecruit(
     val link: String,
     @SerializedName("img")
     val imgUrl: String,
-    val bookMarkData: BookMarkData? = null // BookMarkData 클래스의 인스턴스를 포함합니다.
+    val bookMarkData: BookMarkData? = null, // BookMarkData 클래스의 인스턴스를 포함합니다.
+    var isChecked: Boolean = false // 체크박스 상태를 저장하는 변수
 )

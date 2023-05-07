@@ -6,7 +6,7 @@
     android:id="@+id/item_bookmark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
-        android:backgroundTint="#EAEAEA"
+        android:backgroundTint="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="MissingConstraints"
@@ -21,6 +21,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:gravity="center"
+        android:orientation="horizontal"
         android:layout_height="match_parent">
         <ImageView
             android:id="@+id/bookmark_img"
@@ -30,6 +31,11 @@
             android:contentDescription="@string/item_img_description"
             android:paddingBottom="10dp"
             android:src="@drawable/baseline_feedback_24" />
+        <ImageButton
+            android:id="@+id/delete_bookmark"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            />
     </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
@@ -81,16 +87,6 @@
                             android:fontFamily="@font/chosunbg"
                             android:text="기간"/>
                     </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3">
-                    <CheckBox
-                        android:id="@+id/add_bookmark"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:button="@drawable/selector_favorite_item" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

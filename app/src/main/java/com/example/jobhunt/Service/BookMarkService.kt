@@ -34,7 +34,7 @@ interface BookMarkService {
                 bookMarkEndDate = bookmarkEndDate,
                 company_link = company_link,
                 user_bookmark_id = 0L,
-
+                isChecked = false,
             )
         }
     }
