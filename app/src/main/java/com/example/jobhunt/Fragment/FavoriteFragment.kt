@@ -61,19 +61,26 @@ class FavoriteFragment : Fragment() {
             .build()
         val bookmarkService = retrofit.create(BookMarkService::class.java)
 
-        try {
-            val response = bookmarkService.getBookMarks().execute()
-            if (response.isSuccessful) {
-                val bookMarkList = response.body()?.bookmarks
-                if (bookMarkList != null) {
-                    favoriteAdapter.setData(bookMarkList)
+
+        bookmarkService.getBookmarks().enqueue(object : Callback<List<BookMarkData>> {
+            override fun onResponse(call: Call<List<BookMarkData>>, response: Response<List<BookMarkData>>) {
+                if (response.isSuccessful) {
+                    val bookMarkList = response.body()
+                    if (bookMarkList != null) {
+                        favoriteAdapter.setData(bookMarkList)
+                    } else {
+                        Log.d("FavoriteFragment", "Error: bookmarks are null")
+                    }
+                } else {
+                    Log.d("FavoriteFragment", "Error: ${response.code()}")
                 }
-            } else {
-                Log.d("FavoriteFragment", "Error: ${response.code()}")
             }
-        } catch (e: Exception) {
-            Log.d("FavoriteFragment", "Error: ${e.message}")
-        }
+
+            override fun onFailure(call: Call<List<BookMarkData>>, t: Throwable) {
+                Log.d("FavoriteFragment", "Error: ${t.message}")
+            }
+        })
+
         return view
     }
 }
