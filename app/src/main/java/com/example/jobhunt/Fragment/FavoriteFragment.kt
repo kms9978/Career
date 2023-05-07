@@ -32,20 +32,17 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
         // RecyclerView와 Adapter 초기화
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_bookmarkView)
+        recyclerView = view.findViewById(R.id.rv_bookmarkView)
         favoriteAdapter = FavoriteAdapter(requireContext(), emptyList())
         recyclerView.adapter = favoriteAdapter
-
-        val layoutManager = LinearLayoutManager(context)
+        layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
 
-
-
+        // Retrofit 초기화
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
@@ -61,7 +58,7 @@ class FavoriteFragment : Fragment() {
             .build()
         val bookmarkService = retrofit.create(BookMarkService::class.java)
 
-
+        // 북마크 목록을 가져오기 위한 API 호출
         bookmarkService.getBookmarks().enqueue(object : Callback<List<BookMarkData>> {
             override fun onResponse(call: Call<List<BookMarkData>>, response: Response<List<BookMarkData>>) {
                 if (response.isSuccessful) {
@@ -84,5 +81,4 @@ class FavoriteFragment : Fragment() {
         return view
     }
 }
-
 
