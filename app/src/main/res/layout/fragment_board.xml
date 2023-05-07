@@ -5,7 +5,60 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.BoardFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_view"
+            android:layout_above="@id/bottom_layout"
+            />
+
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="지피티 지피티"
+            android:textSize="28dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:padding="8dp"
+            android:id="@+id/bottom_layout">
+
+            <EditText
+                android:id="@+id/message_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@id/send_btn"
+                android:background="@drawable/rounded_corner"
+                android:hint="작성하세요..."
+                android:padding="16dp" />
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:id="@+id/send_btn"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_baseline_send_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                />
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
 
 </FrameLayout>
 

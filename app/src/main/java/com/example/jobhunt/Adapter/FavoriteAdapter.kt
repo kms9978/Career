@@ -14,8 +14,8 @@ import com.example.jobhunt.dataModel.BookMarkListResponse
 
 
 class FavoriteAdapter(
-    private var context: Context,
-    private var itemList: List<BookMarkData>? = null
+    private val context: Context,
+    private var bookmarkList: List<BookMarkData> = emptyList()
 ) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -34,22 +34,21 @@ class FavoriteAdapter(
         }
     }
 
-    fun setData(items: List<BookMarkData>) {
-        itemList = items
+    fun updateData(bookmarks: List<BookMarkData>) {
+        bookmarkList = bookmarks
         notifyDataSetChanged()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_bookmark, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        itemList?.getOrNull(position)?.let { item ->
-            holder.bind(item)
-        }
+        holder.bind(bookmarkList[position])
     }
 
     override fun getItemCount(): Int {
-        return itemList?.size ?: 0
+        return bookmarkList.size
     }
 }

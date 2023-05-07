@@ -24,51 +24,38 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class FavoriteFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var favoriteAdapter: FavoriteAdapter
-    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_favorite, container, false)
 
-        // RecyclerView와 Adapter 초기화
-        recyclerView = view.findViewById(R.id.rv_bookmarkView)
-        favoriteAdapter = FavoriteAdapter(requireContext(), emptyList())
-        recyclerView.adapter = favoriteAdapter
-        layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
+        favoriteAdapter = FavoriteAdapter(requireContext())
+        view.findViewById<RecyclerView>(R.id.rv_bookmarkView).adapter = favoriteAdapter
 
-        // Retrofit 초기화
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYWIiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjgzNDUxODM5fQ.gth72nIhqiqeSM6FfhYT64WtBqampa87OcxmCsxL6phPPxxn_DdX6IHqghI5VGKX3F0Fp2LX4uSN2XdmNv1gpA")
-                    .build()
-                chain.proceed(request)
-            }
-            .build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(okHttpClient)
-            .build()
-        val bookmarkService = retrofit.create(BookMarkService::class.java)
+        getBookmarks()
 
-        bookmarkService.getBookmarks().enqueue(object : Callback<BookMarkListResponse> {
-            override fun onResponse(call: Call<BookMarkListResponse>, response: Response<BookMarkListResponse>) {
+        return view
+    }
+
+    private fun getBookmarks() {
+        val service = RetrofitClient.retrofitService
+        val call = service.getBookmarks()
+
+        call.enqueue(object : Callback<BookMarkListResponse> {
+            override fun onResponse(
+                call: Call<BookMarkListResponse>,
+                response: Response<BookMarkListResponse>
+            ) {
                 if (response.isSuccessful) {
-                    val bookMarkList = response.body()?.bookmark
-                    if (bookMarkList != null) {
-                        favoriteAdapter.setData(bookMarkList)
-                    } else {
-                        Log.d("FavoriteFragment", "Error: bookmarks are null")
+                    response.body()?.let {
+                        favoriteAdapter.updateData(it.bookmark)
                     }
                 } else {
-                    Log.d("FavoriteFragment", "Error: ${response.code()}")
+                    Log.d("FavoriteFragment", "Error: ${response.message()}")
                 }
             }
 
@@ -76,7 +63,5 @@ class FavoriteFragment : Fragment() {
                 Log.d("FavoriteFragment", "Error: ${t.message}")
             }
         })
-        return view
     }
 }
-
