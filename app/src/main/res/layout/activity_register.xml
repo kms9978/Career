@@ -138,13 +138,42 @@
                             android:inputType="text"
                             android:background="@drawable/edit_radius_round"/>
                             <Button
+                                android:id="@+id/send_email"
                                 android:layout_weight="3"
                                 android:layout_width="match_parent"
                                 android:layout_height="56dp"
                                 android:layout_marginHorizontal="3dp"
                                 android:fontFamily="@font/chosunbg"
                                 android:textColor="@color/white"
+                                android:backgroundTint="#6B66FF"
                                 android:text="인증"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                        <EditText
+                            android:layout_weight="1"
+                            android:id="@+id/auth_email"
+                            tools:ignore="SpeakableTextPresentCheck"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginStart="5dp"
+                            android:importantForAutofill="no"
+                            android:textColor="@color/black"
+                            android:hint="인증번호를 입력하세요."
+                            android:inputType="number"
+                            android:background="@drawable/edit_radius_round"/>
+                            <Button
+                                android:id="@+id/auth_btn"
+                                android:layout_weight="3"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:layout_marginHorizontal="3dp"
+                                android:fontFamily="@font/chosunbg"
+                                android:textColor="@color/white"
+                                android:backgroundTint="#6B66FF"
+                                android:text="확인"/>
                         </LinearLayout>
                     </LinearLayout>
 
