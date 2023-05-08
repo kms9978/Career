@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="180dp"
+    android:layout_height="140dp"
     android:id="@+id/item_bookmark"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.cardview.widget.CardView
@@ -24,6 +24,7 @@
         android:orientation="horizontal"
         android:layout_height="match_parent">
         <ImageView
+            android:layout_weight="3"
             android:id="@+id/bookmark_img"
             android:layout_width="260dp"
             android:layout_height="60dp"
@@ -32,6 +33,10 @@
             android:paddingBottom="10dp"
             android:src="@drawable/baseline_feedback_24" />
         <ImageButton
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:background="@null"
+            android:src="@drawable/baseline_keyboard_backspace_24"
             android:id="@+id/delete_bookmark"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -70,17 +75,23 @@
                         android:orientation="horizontal">
                     <TextView
                         android:id="@+id/bookmark_start_date"
-                        android:layout_weight="1"
-                        android:layout_width="100dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginTop="6dp"
                         android:textColor="#8C8C8C"
                         android:fontFamily="@font/chosunbg"
                         android:text="기간"/>
                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:textColor="#8C8C8C"
+                            android:fontFamily="@font/chosunbg"
+                            android:text="~"/>
+                        <TextView
                             android:id="@+id/bookmark_end_date"
-                            android:layout_weight="1"
-                            android:layout_width="100dp"
+                            android:layout_weight="8"
+                            android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginTop="6dp"
                             android:textColor="#8C8C8C"

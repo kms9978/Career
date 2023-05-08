@@ -87,20 +87,16 @@ class MainActivity : AppCompatActivity() {
                         val loginResponse = response.body() // 서버로부터 받은 LoginResponse 객체
                         val token = loginResponse?.token ?: "" // LoginResponse 객체에서 토큰 가져오기
                         val refreshToken = loginResponse?.refreshToken ?: "" // LoginResponse 객체에서 RefreshToken 가져오기
-
                         // SharedPreferences에 토큰과 Refresh Token 저장하기
                         val prefs = getSharedPreferences("auth", Context.MODE_PRIVATE)
                         prefs.edit {
                             putString("token", token)
                             putString("refreshToken", refreshToken)
                         }
-
                         Log.d("TOKEN", "Token: $token")
                         Log.d("REFRESHTOKEN", "RefreshToken: $refreshToken")
-
                         // HomeActivity로 이동하기
                         moveToHomePage()
-
                     } else { // 로그인 실패
                         Toast.makeText(this@MainActivity, "Login failed", Toast.LENGTH_SHORT).show()
                     }

@@ -115,11 +115,9 @@ class HomeFragment : Fragment() {
                     response: Response<Map<String, RecentRecruit>>
                 ) {
                     if (response.isSuccessful) {
-                        val recentRecruitDataList = mutableListOf<RecentRecruit>()
-                        response.body()?.forEach { (companyName, recentRecruit) ->
-                            recentRecruit.companyName = companyName
-                            recentRecruitDataList.add(recentRecruit)
-                        }
+                        val recentRecruitDataList = response.body()?.map { entry ->
+                            entry.value.apply { companyName = entry.key }
+                        }?.toMutableList() ?: mutableListOf()
                         recentRecruitAdapter.setRecentRecruitDataList(recentRecruitDataList)
                         recentRecruitAdapter.filter.filter(searchView.query)
                     } else {

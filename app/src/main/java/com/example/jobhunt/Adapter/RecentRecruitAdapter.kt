@@ -30,20 +30,17 @@ class RecentRecruitAdapter(
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val recruitName: TextView = itemView.findViewById(R.id.recruit_name)
         private val recruitTitle: TextView = itemView.findViewById(R.id.recruit_title)
         private val recruitImage: ImageView = itemView.findViewById(R.id.recruit_img)
         private val recruitPosition: TextView = itemView.findViewById(R.id.ability)
         private val recruitPlan : TextView = itemView.findViewById(R.id.expire_date)
         private val bookmarkCheckBox : CheckBox = itemView.findViewById(R.id.add_bookmark)
-
         fun bind(recentRecruit: RecentRecruit) {
             recruitName.text = recentRecruit.companyName // 회사 이름 설정
             recruitTitle.text = recentRecruit.content // 채용 정보 제목 설정
             recruitPosition.text = recentRecruit.position // 채용 포지션 설정
             recruitPlan.text = recentRecruit.plan // 채용 마감일 설정
-
             Glide.with(itemView.context) // Glide를 사용하여 이미지 로드
                 .load(recentRecruit.imgUrl)
                 .placeholder(R.drawable.baseline_feedback_24)
@@ -86,7 +83,6 @@ class RecentRecruitAdapter(
             override fun performFiltering(constraint: CharSequence?): FilterResults {
                 val filteredResults = mutableListOf<RecentRecruit>()
                 val searchQuery = constraint.toString().lowercase(Locale.getDefault())
-
                 if (searchQuery.isEmpty()) {
                     filteredResults.addAll(recentRecruitList)
                 } else {
@@ -102,7 +98,6 @@ class RecentRecruitAdapter(
                 filterResults.count = filteredResults.size
                 return filterResults
             }
-
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 results?.let {
                     @Suppress("UNCHECKED_CAST")
@@ -115,7 +110,6 @@ class RecentRecruitAdapter(
 
     private fun addBookmark(recentRecruit: RecentRecruit) {
         val bookMarkData = BookMarkService.BookMark(recentRecruit)
-
         bookmarkService.saveBookMark(bookMarkData).enqueue(object : Callback<BookMarkResponse> {
             override fun onResponse(call: Call<BookMarkResponse>, response: Response<BookMarkResponse>) {
                 if (response.isSuccessful) {
@@ -125,7 +119,6 @@ class RecentRecruitAdapter(
                     Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 실패: ${response.code()} ${response.message()}", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<BookMarkResponse>, t: Throwable) {
                 Log.e(ContentValues.TAG, "Failed to add ${recentRecruit.companyName} to bookmark", t)
                 Toast.makeText(context, "${recentRecruit.companyName} 즐겨찾기 추가 실패: ${t.message}", Toast.LENGTH_SHORT).show()
