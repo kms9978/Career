@@ -27,7 +27,7 @@
 
                     <ImageView
                         android:id="@+id/recruit_img"
-                        android:layout_width="260dp"
+                        android:layout_width="220dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:contentDescription="@string/item_img_description"

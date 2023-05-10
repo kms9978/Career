@@ -29,7 +29,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     // Retrofit configuration
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://54.227.205.92:8080") // Retrofit baseURL 설정
+        .baseUrl("http://www.knu-carrer.org:8080") // Retrofit baseURL 설정
         .addConverterFactory(GsonConverterFactory.create()) // JSON 파싱 설정
         .client(
             OkHttpClient.Builder()
@@ -149,21 +149,21 @@ class MainActivity : AppCompatActivity() {
                             }
                         } else {
                             // Refresh Token 실패
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Refresh Token 실패",
-                                Toast.LENGTH_SHORT
-                            ).show()
+//                            Toast.makeText(
+//                                this@MainActivity,
+//                                "Refresh Token 실패",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
                         }
                     }
 
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                         // Refresh Token 실패
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Token Refresh 실패",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this@MainActivity,
+//                            "Token Refresh 실패",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                 })
         }

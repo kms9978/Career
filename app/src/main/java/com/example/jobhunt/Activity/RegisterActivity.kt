@@ -106,6 +106,7 @@ class RegisterActivity : AppCompatActivity() {
                 countDownTimer?.start()
                 val email = edt_email.text.toString()
                 // Retrofit을 이용하여 서버에 이메일 전송
+
                 emailService.sendEmail(email).enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         if (response.isSuccessful) {
