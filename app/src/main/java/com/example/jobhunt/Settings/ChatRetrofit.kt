@@ -1,7 +1,7 @@
-package com.example.jobhunt.Service
+package com.example.jobhunt.Settings
 
 import android.content.Context
-import com.example.jobhunt.Fragment.TokenManager
+import com.example.jobhunt.Service.ChatService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

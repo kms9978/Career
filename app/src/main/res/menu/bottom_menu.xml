@@ -12,6 +12,10 @@
         android:id="@+id/favorite"
         android:icon="@drawable/baseline_star_outline_24"/>
     <item android:title="GPT"
-        android:id="@+id/board"
+        android:id="@+id/gpt"
         android:icon="@drawable/board_icon"/>
+    <item android:title="게시판"
+        android:id="@+id/mento"
+        android:icon="@drawable/mento"/>
+
 </menu>

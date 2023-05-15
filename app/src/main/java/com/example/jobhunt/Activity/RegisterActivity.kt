@@ -13,16 +13,12 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
-import com.example.jobhunt.Fragment.RetrofitClient
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.ApiService
-import com.example.jobhunt.Service.EmailRetrofit
+import com.example.jobhunt.Settings.EmailRetrofit
 import com.example.jobhunt.Service.EmailService
-import com.example.jobhunt.dataModel.EmailResponse
 import com.example.jobhunt.dataModel.UserJsonData
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -30,7 +26,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 
 // RegisterActivity 클래스 선언, AppCompatActivity 상속

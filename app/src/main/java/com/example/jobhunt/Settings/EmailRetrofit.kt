@@ -1,5 +1,6 @@
-package com.example.jobhunt.Service
+package com.example.jobhunt.Settings
 
+import com.example.jobhunt.Service.EmailService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

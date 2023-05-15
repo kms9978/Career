@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.Chat
 
-class BoardAdapter : RecyclerView.Adapter<BoardAdapter.ViewHolder>() {
+class GptAdapter : RecyclerView.Adapter<GptAdapter.ViewHolder>() {
 
     private val chatList = mutableListOf<Chat>()
 

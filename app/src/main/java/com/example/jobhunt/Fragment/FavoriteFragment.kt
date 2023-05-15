@@ -13,6 +13,8 @@ import com.example.jobhunt.Activity.MainActivity
 import com.example.jobhunt.Adapter.FavoriteAdapter
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.BookMarkService
+import com.example.jobhunt.Settings.RetrofitClient
+import com.example.jobhunt.Settings.TokenManager
 import com.example.jobhunt.dataModel.BookMarkListResponse
 import retrofit2.Call
 import retrofit2.Callback

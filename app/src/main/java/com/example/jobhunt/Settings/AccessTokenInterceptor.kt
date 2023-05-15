@@ -1,4 +1,4 @@
-package com.example.jobhunt.Activity
+package com.example.jobhunt.Settings
 
 import android.content.Context
 import okhttp3.Interceptor

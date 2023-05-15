@@ -15,6 +15,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.LoginService
 import com.example.jobhunt.Service.RefreshTokenService
+import com.example.jobhunt.Settings.AccessTokenInterceptor
 import com.example.jobhunt.dataModel.LoginRequest
 import com.example.jobhunt.dataModel.LoginResponse
 import com.example.jobhunt.dataModel.RefreshTokenRequest

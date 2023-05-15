@@ -1,10 +1,6 @@
 package com.example.jobhunt.dataModel
 
-import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
-import org.json.JSONObject
-
-
 data class RecentRecruit(
     var companyName: String,
     @SerializedName("state")

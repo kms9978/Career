@@ -1,4 +1,4 @@
-package com.example.jobhunt.Fragment
+package com.example.jobhunt.Settings
 
 import android.content.Context
 import android.content.SharedPreferences

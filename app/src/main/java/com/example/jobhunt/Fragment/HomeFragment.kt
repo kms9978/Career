@@ -3,7 +3,6 @@ package com.example.jobhunt.Fragment
 import RecentRecruitAdapter
 import android.content.ContentValues
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -17,10 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
+import com.example.jobhunt.Settings.RetrofitClient
+import com.example.jobhunt.Settings.TokenManager
 import com.example.jobhunt.dataModel.RecentRecruit
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

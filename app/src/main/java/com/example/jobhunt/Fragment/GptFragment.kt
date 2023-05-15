@@ -11,9 +11,9 @@ import android.widget.EditText
 import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.jobhunt.Adapter.BoardAdapter
+import com.example.jobhunt.Adapter.GptAdapter
 import com.example.jobhunt.R
-import com.example.jobhunt.Service.ChatRetrofit
+import com.example.jobhunt.Settings.ChatRetrofit
 import com.example.jobhunt.Service.ChatService
 import com.example.jobhunt.dataModel.Chat
 import com.google.gson.Gson
@@ -21,12 +21,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BoardFragment : Fragment() {
+class GptFragment : Fragment() {
 
     private lateinit var messageEditText: EditText
     private lateinit var sendButton: ImageButton
 
-    private val boardAdapter = BoardAdapter()
+    private val gptAdapter = GptAdapter()
 
     private lateinit var chatService: ChatService
     private lateinit var chatRetrofit: ChatRetrofit
@@ -38,14 +38,14 @@ class BoardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_board, container, false)
+        val view = inflater.inflate(R.layout.fragment_gpt, container, false)
 
         messageEditText = view.findViewById(R.id.message_edit_text)
         sendButton = view.findViewById(R.id.send_btn)
 
         recyclerView = view.findViewById(R.id.chat_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.adapter = boardAdapter
+        recyclerView.adapter = gptAdapter
 
 
         return view
@@ -54,7 +54,7 @@ class BoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        recyclerView.adapter = boardAdapter
+        recyclerView.adapter = gptAdapter
 
         chatRetrofit = ChatRetrofit(requireContext())
         chatService = chatRetrofit.chatService
@@ -87,10 +87,10 @@ class BoardFragment : Fragment() {
                         editor?.apply()
                         Log.d("SharedPreferences", "Saved response: $responseBodyString")
                         // 화면에 새로운 채팅 추가
-                        boardAdapter.addChat(userChat)
+                        gptAdapter.addChat(userChat)
                         val botChat = Chat(responseBodyString, false)
-                        boardAdapter.addChat(botChat)
-                        recyclerView.scrollToPosition(boardAdapter.itemCount - 1)
+                        gptAdapter.addChat(botChat)
+                        recyclerView.scrollToPosition(gptAdapter.itemCount - 1)
                     }
                 } else {
                     // handle error response

@@ -10,13 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.jobhunt.Fragment.RetrofitClient
+import com.example.jobhunt.Settings.RetrofitClient
 import com.example.jobhunt.R
 import com.example.jobhunt.dataModel.BookMarkData
 import com.example.jobhunt.dataModel.BookMarkListResponse
 import com.example.jobhunt.dataModel.BookMarkResponse
-import org.json.JSONArray
-import org.json.JSONException
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
