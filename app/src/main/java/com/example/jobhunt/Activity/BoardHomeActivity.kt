@@ -1,22 +1,34 @@
 package com.example.jobhunt.Activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import androidx.viewpager2.widget.ViewPager2
 import com.example.jobhunt.Adapter.ViewPagerAdapter
+import com.example.jobhunt.R
 import com.example.jobhunt.databinding.ActivityBoardHomeBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class BoardHomeActivity : AppCompatActivity() {
     private val binding: ActivityBoardHomeBinding by lazy { ActivityBoardHomeBinding.inflate(layoutInflater) }
 
-    private val tabTextList = listOf("Profile", "Search")
+    private val tabTextList = listOf("홈", "프로필")
     //private val tabIconList = listOf(R.drawable.icon_profile, R.drawable.icon_search, R.drawable.icon_setting)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.viewPager01.adapter = ViewPagerAdapter(this)
+
+        val goHome_Btn : ImageButton = findViewById(R.id.goHome_Btn)
+
+        goHome_Btn.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
 
         TabLayoutMediator(binding.tabLayout01, binding.viewPager01) { tab, pos ->
             tab.text = tabTextList[pos]

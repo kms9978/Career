@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.jobhunt.Activity.BoardHomeActivity
 import com.example.jobhunt.Adapter.NewComeRecruitAdapter
 import com.example.jobhunt.Service.BookMarkService
 import com.example.jobhunt.Service.RecruitService
@@ -88,7 +89,7 @@ class HomeFragment : Fragment() {
         val fab: ExtendedFloatingActionButton = view.findViewById(R.id.fab)
         fab.setOnClickListener {
             // FAB 클릭시 수행될 코드 작성
-            val intent = Intent(requireContext(), BoardHomeFragment::class.java)
+            val intent = Intent(requireContext(), BoardHomeActivity::class.java)
             startActivity(intent)
         }
 

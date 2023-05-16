@@ -15,6 +15,6 @@
     <color name="bottom_nav_selected_text_color">#FFB2F5</color>
     <color name="bottom_nav_unselected_text_color">#000000</color>
 
-    <color name="select">#DF3A3A</color>
+    <color name="select">#6B66FF</color>
     <color name="unselect">#60605F</color>
 </resources>
