@@ -3,6 +3,7 @@ package com.example.jobhunt.Fragment
 import RecentRecruitAdapter
 import android.content.ContentValues
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -19,6 +20,7 @@ import com.example.jobhunt.Service.RecruitService
 import com.example.jobhunt.Settings.RetrofitClient
 import com.example.jobhunt.Settings.TokenManager
 import com.example.jobhunt.dataModel.RecentRecruit
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,6 +53,7 @@ class HomeFragment : Fragment() {
         // TokenManager 초기화
         val tokenManager = TokenManager(requireContext())
 
+
         // RetrofitClient 초기화
         retrofitClient = RetrofitClient(requireContext())
 
@@ -80,6 +83,14 @@ class HomeFragment : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         recruitService = retrofit.create(RecruitService::class.java)
+
+        // Set up floating button and click event
+        val fab: ExtendedFloatingActionButton = view.findViewById(R.id.fab)
+        fab.setOnClickListener {
+            // FAB 클릭시 수행될 코드 작성
+            val intent = Intent(requireContext(), BoardHomeFragment::class.java)
+            startActivity(intent)
+        }
 
 
         // Set up search view

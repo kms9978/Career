@@ -1,16 +1,16 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -53,7 +53,6 @@
                         android:textColor="@color/black"
                         android:textColorHint="#5D5D5D"
                         android:textSize="14sp" />
-
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -62,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:orientation="vertical">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_recentRecruit"
                     android:layout_width="match_parent"
@@ -92,7 +92,22 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     tools:listitem="@layout/item_newcom"/>
+
             </LinearLayout>
         </LinearLayout>
-    </FrameLayout>
 </ScrollView>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|right"
+        android:backgroundTint="#6B66FF"
+        android:contentDescription="멘토멘티 게시판 GO"
+        android:text="멘토멘티"
+        android:fontFamily="@font/chosunbg"
+        android:textColor="@color/white"
+        app:icon="@drawable/group"
+        app:iconSize="24dp"
+        app:iconTint="@color/white"/>
+    </FrameLayout>
