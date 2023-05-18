@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 class BoardHomeActivity : AppCompatActivity() {
     private val binding: ActivityBoardHomeBinding by lazy { ActivityBoardHomeBinding.inflate(layoutInflater) }
 
-    private val tabTextList = listOf("홈", "프로필")
+    private val tabTextList = listOf("홈", "나의 글")
     //private val tabIconList = listOf(R.drawable.icon_profile, R.drawable.icon_search, R.drawable.icon_setting)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,9 +24,7 @@ class BoardHomeActivity : AppCompatActivity() {
         val goHome_Btn : ImageButton = findViewById(R.id.goHome_Btn)
 
         goHome_Btn.setOnClickListener {
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressedDispatcher.onBackPressed()
         }
 
 
