@@ -38,7 +38,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <EditText
-            android:id="@+id/edt_id"
+            android:id="@+id/edt_name"
             tools:ignore="SpeakableTextPresentCheck"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -50,7 +50,7 @@
             android:background="@drawable/edit_radius_rec"
             android:layout_margin="5dp"/>
         <EditText
-            android:id="@+id/edt_pass"
+            android:id="@+id/edt_topic"
             tools:ignore="SpeakableTextPresentCheck"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -63,7 +63,7 @@
             android:layout_margin="5dp"/>
 
         <EditText
-            android:id="@+id/edt_nick"
+            android:id="@+id/edt_title"
             tools:ignore="SpeakableTextPresentCheck"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -77,7 +77,7 @@
 
             <EditText
                 android:layout_weight="1"
-                android:id="@+id/edt_email"
+                android:id="@+id/edt_content"
                 tools:ignore="SpeakableTextPresentCheck"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
@@ -90,9 +90,8 @@
                 android:layout_margin="5dp"/>
 
         <Button
-            android:id="@+id/Register_Btn"
+            android:id="@+id/add_board"
             android:layout_marginHorizontal="14dp"
-
             android:padding="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

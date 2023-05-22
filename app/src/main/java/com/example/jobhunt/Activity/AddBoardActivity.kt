@@ -4,19 +4,90 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.jobhunt.R
+import com.example.jobhunt.Service.BoardService
+import com.example.jobhunt.dataModel.BoardData
+import com.example.jobhunt.dataModel.BoardResponse
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class AddBoardActivity : AppCompatActivity() {
+    private lateinit var edtName: EditText
+    private lateinit var edtTopic: EditText
+    private lateinit var edtTitle: EditText
+    private lateinit var edtContent: EditText
+    private lateinit var btnAddBoard: Button
+
+    private lateinit var boardService: BoardService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addboard)
 
         val back_btn : ImageButton = findViewById(R.id.back_btn)
+        // Initialize views
+        edtName = findViewById(R.id.edt_name)
+        edtTopic = findViewById(R.id.edt_topic)
+        edtTitle = findViewById(R.id.edt_title)
+        edtContent = findViewById(R.id.edt_content)
+        btnAddBoard = findViewById(R.id.add_board)
 
         back_btn.setOnClickListener{
             onBackPressedDispatcher.onBackPressed()
+        }
+
+        // Set up OkHttp client with logging interceptor
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val client = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+        // Set up Retrofit with OkHttp client
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://54.227.205.92:8080/") // Replace with your base URL
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        boardService = retrofit.create(BoardService::class.java)
+
+        // Handle button click event
+        btnAddBoard.setOnClickListener {
+            val name = edtName.text.toString()
+            val subject = edtTopic.text.toString()
+            val title = edtTitle.text.toString()
+            val content = edtContent.text.toString()
+
+            // Create BoardData object
+            val boardData = BoardData(0, content, "", subject, title, name)
+
+            // Call the API to add board
+            val call = boardService.addBoard(boardData)
+            call.enqueue(object : Callback<BoardResponse> {
+                override fun onResponse(call: Call<BoardResponse>, response: Response<BoardResponse>) {
+                    if (response.isSuccessful) {
+                        // Board added successfully
+                        val boardResponse = response.body()
+                        // Handle the response as needed
+                    } else {
+                        // API call failed
+                        // Handle the error response
+                    }
+                }
+
+                override fun onFailure(call: Call<BoardResponse>, t: Throwable) {
+                    // API call failed
+                    // Handle the error
+                }
+            })
         }
     }
 }
