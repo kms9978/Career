@@ -30,7 +30,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     // Retrofit configuration
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://www.knu-carrer.org:8080") // Retrofit baseURL 설정
+        .baseUrl("https://knu-carrer.org") // Retrofit baseURL 설정
         .addConverterFactory(GsonConverterFactory.create()) // JSON 파싱 설정
         .client(
             OkHttpClient.Builder()

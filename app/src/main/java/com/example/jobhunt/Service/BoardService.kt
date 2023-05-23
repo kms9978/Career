@@ -14,5 +14,5 @@ interface BoardService {
     fun addBoard(@Body boardData: BoardData) : Call<BoardResponse>
 
     @GET("api/board/list")
-    fun getBoard() : Call<BoardListResponse>
+    fun getBoard() : Call<List<BoardListResponse>>
 }

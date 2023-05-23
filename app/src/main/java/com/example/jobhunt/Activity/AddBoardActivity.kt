@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.BoardService
+import com.example.jobhunt.Settings.BoardRetrofit
 import com.example.jobhunt.dataModel.BoardData
 import com.example.jobhunt.dataModel.BoardResponse
 import okhttp3.OkHttpClient
@@ -27,6 +28,7 @@ class AddBoardActivity : AppCompatActivity() {
     private lateinit var btnAddBoard: Button
 
     private lateinit var boardService: BoardService
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_addboard)
@@ -43,21 +45,9 @@ class AddBoardActivity : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Set up OkHttp client with logging interceptor
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        val client = OkHttpClient.Builder()
-            .addInterceptor(interceptor)
-            .build()
-
-        // Set up Retrofit with OkHttp client
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080/") // Replace with your base URL
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        boardService = retrofit.create(BoardService::class.java)
+        // Create an instance of BoardRetrofit and access the boardService
+        val boardRetrofit = BoardRetrofit(this)
+        boardService = boardRetrofit.boardService
 
         // Handle button click event
         btnAddBoard.setOnClickListener {

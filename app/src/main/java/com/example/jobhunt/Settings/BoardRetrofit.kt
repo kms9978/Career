@@ -1,13 +1,13 @@
 package com.example.jobhunt.Settings
 
 import android.content.Context
-import com.example.jobhunt.Service.ChatService
+import com.example.jobhunt.Service.BoardService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ChatRetrofit(context: Context) {
+class BoardRetrofit (context: Context) {
     private val tokenManager: TokenManager = TokenManager(context)
 
     private val retrofit: Retrofit by lazy {
@@ -34,7 +34,7 @@ class ChatRetrofit(context: Context) {
             .build()
     }
 
-    val chatService: ChatService by lazy {
-        retrofit.create(ChatService::class.java)
+    val boardService: BoardService by lazy {
+        retrofit.create(BoardService::class.java)
     }
 }

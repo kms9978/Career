@@ -22,7 +22,7 @@ import retrofit2.Response
 
 class FavoriteAdapter(
     private val context: Context,
-    private var bookmarkList: List<BookMarkData> = emptyList(),
+        private var bookmarkList: List<BookMarkData> = emptyList(),
     private var token: String? = null
 ) : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 

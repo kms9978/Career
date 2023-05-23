@@ -28,7 +28,7 @@ class RetrofitClient(context: Context) {
             .build()
 
         Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080/")
+            .baseUrl("https://knu-carrer.org")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

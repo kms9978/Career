@@ -12,8 +12,11 @@ import com.example.jobhunt.Activity.AddBoardActivity
 import com.example.jobhunt.Adapter.AddBoardAdapter
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.BoardService
+import com.example.jobhunt.Settings.BoardRetrofit
 import com.example.jobhunt.dataModel.BoardListResponse
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,31 +38,30 @@ class BoardHomeFragment : Fragment() {
         adapter = AddBoardAdapter()
         recyclerView.adapter = adapter
 
-        val go_write_board : FloatingActionButton
-        go_write_board = view.findViewById(R.id.go_write_board)
-        go_write_board.setOnClickListener{
+        val goWriteBoard: FloatingActionButton = view.findViewById(R.id.go_write_board)
+        goWriteBoard.setOnClickListener{
             val intent = Intent(requireContext(), AddBoardActivity::class.java)
             startActivity(intent)
         }
 
+        // Create an instance of BoardRetrofit passing the context
+        val boardRetrofit = BoardRetrofit(requireContext())
 
-        // Set up Retrofit
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://54.227.205.92:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        boardService = retrofit.create(BoardService::class.java)
+        // Access the boardService from BoardRetrofit
+        boardService = boardRetrofit.boardService
 
         // Call the API to get board list
         val call = boardService.getBoard()
-        call.enqueue(object : Callback<BoardListResponse> {
-            override fun onResponse(call: Call<BoardListResponse>, response: Response<BoardListResponse>) {
+        call.enqueue(object : Callback<List<BoardListResponse>> {
+            override fun onResponse(call: Call<List<BoardListResponse>>, response: Response<List<BoardListResponse>>) {
                 if (response.isSuccessful) {
                     val boardListResponse = response.body()
-                    boardListResponse?.let {
+                    boardListResponse?.let { boardListResponse ->
                         // Update adapter data
-                        adapter.setBoardList(it.bookmark)
+                        if (boardListResponse.isNotEmpty()) {
+                            val boardList = boardListResponse[0].boardList
+                            adapter.setBoardList(boardList)
+                        }
                     }
                 } else {
                     // API call failed
@@ -67,7 +69,7 @@ class BoardHomeFragment : Fragment() {
                 }
             }
 
-            override fun onFailure(call: Call<BoardListResponse>, t: Throwable) {
+            override fun onFailure(call: Call<List<BoardListResponse>>, t: Throwable) {
                 // API call failed
                 // Handle the error
             }
