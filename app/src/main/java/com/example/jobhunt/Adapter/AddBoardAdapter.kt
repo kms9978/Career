@@ -28,11 +28,11 @@ class AddBoardAdapter : RecyclerView.Adapter<AddBoardAdapter.ViewHolder>() {
     }
 
     fun setBoardList(list: List<BoardData>) {
-        Log.d("AddBoardAdapter", "setBoardList: Size=${list.size}")
         boardList.clear()
         boardList.addAll(list)
         notifyDataSetChanged()
     }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtWriter: TextView = itemView.findViewById(R.id.board_writer)
         private val txtSubject: TextView = itemView.findViewById(R.id.board_subject)
@@ -45,6 +45,5 @@ class AddBoardAdapter : RecyclerView.Adapter<AddBoardAdapter.ViewHolder>() {
             txtTitle.text = board.title
             txtContent.text = board.content
         }
-
     }
 }

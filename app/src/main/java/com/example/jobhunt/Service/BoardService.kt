@@ -11,8 +11,8 @@ import retrofit2.http.POST
 
 interface BoardService {
     @POST("api/board/write")
-    fun addBoard(@Body boardData: BoardData) : Call<BoardResponse>
+    fun addBoard(@Body boardData: BoardData): Call<BoardResponse>
 
     @GET("api/board/list")
-    fun getBoard() : Call<List<BoardListResponse>>
+    fun getBoard(): Call<BoardListResponse>
 }

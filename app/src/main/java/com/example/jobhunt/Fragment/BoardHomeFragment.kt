@@ -2,6 +2,7 @@ package com.example.jobhunt.Fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,30 +52,34 @@ class BoardHomeFragment : Fragment() {
         boardService = boardRetrofit.boardService
 
         // Call the API to get board list
-        val call = boardService.getBoard()
-        call.enqueue(object : Callback<List<BoardListResponse>> {
-            override fun onResponse(call: Call<List<BoardListResponse>>, response: Response<List<BoardListResponse>>) {
+        boardService.getBoard().enqueue(object : Callback<BoardListResponse> {
+            override fun onResponse(call: Call<BoardListResponse>, response: Response<BoardListResponse>) {
                 if (response.isSuccessful) {
                     val boardListResponse = response.body()
                     boardListResponse?.let { boardListResponse ->
                         // Update adapter data
-                        if (boardListResponse.isNotEmpty()) {
-                            val boardList = boardListResponse[0].boardList
-                            adapter.setBoardList(boardList)
-                        }
+                        val boardList = boardListResponse.boardList
+                        adapter.setBoardList(boardList)
                     }
                 } else {
                     // API call failed
                     // Handle the error response
+                    val errorMessage = response.errorBody()?.string()
+                    Log.e("BoardHomeFragment", "API call failed: $errorMessage")
                 }
             }
 
-            override fun onFailure(call: Call<List<BoardListResponse>>, t: Throwable) {
+            override fun onFailure(call: Call<BoardListResponse>, t: Throwable) {
                 // API call failed
                 // Handle the error
+                Log.e("BoardHomeFragment", "API call failed: ${t.message}")
             }
         })
 
         return view
     }
 }
+
+
+
+
