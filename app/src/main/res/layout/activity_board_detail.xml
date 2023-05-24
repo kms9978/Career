@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/Linene"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.BoardDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <ImageButton
+            android:id="@+id/detail_back_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:background="@null"
+            android:src="@drawable/baseline_arrow_back_24"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/board_writer"
+            android:background="@drawable/board_name_radius"
+            android:padding="8dp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:textColor="@color/black"
+            android:fontFamily="@font/chosunbg"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/board_subject"
+            android:background="@drawable/board_name_radius"
+            android:padding="8dp"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="주제"
+            android:textColor="@color/black"
+            android:fontFamily="@font/chosunbg"
+            android:gravity="center"/>
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/board_title"
+                android:background="@drawable/board_bottom_line"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:fontFamily="@font/chosunbg"
+                android:text="TITLE"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                app:cardUseCompatPadding="true">
+                <TextView
+                    android:id="@+id/board_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:text="content"/>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

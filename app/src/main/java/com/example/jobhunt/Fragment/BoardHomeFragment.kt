@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jobhunt.Activity.AddBoardActivity
+import com.example.jobhunt.Activity.DetailcodenaryActivity
 import com.example.jobhunt.Adapter.AddBoardAdapter
+import com.example.jobhunt.Adapter.CodenaryAdapter
 import com.example.jobhunt.R
 import com.example.jobhunt.Service.BoardService
 import com.example.jobhunt.Settings.BoardRetrofit
@@ -75,6 +77,8 @@ class BoardHomeFragment : Fragment() {
                 Log.e("BoardHomeFragment", "API call failed: ${t.message}")
             }
         })
+
+
 
         return view
     }
