@@ -1,14 +1,8 @@
-<div style="display: flex;">
-  <div style="flex: 1;">
-    <h3>1. Initial Screen</h3>
-    <img src="https://user-images.githubusercontent.com/85223787/235450227-bda748fa-f293-486f-9050-75354b385d28.png" width="350" height="500">
-  </div>
-  <div style="flex: 1;">
-    <h3>2. Login Screen</h3>
-    <img src="https://github.com/kms9978/Career/assets/85223787/c73d86e8-54fd-4044-8ca0-95095e0d549d.png" width="350" height="500">
-  </div>
-</div>
+### 1. Initial Screen
+![Initial Screen](https://user-images.githubusercontent.com/85223787/235450227-bda748fa-f293-486f-9050-75354b385d28.png)
 
+### 2. Login Screen
+![Login Screen](https://github.com/kms9978/Career/assets/85223787/c73d86e8-54fd-4044-8ca0-95095e0d549d.png)
 
 
 #2023-04-16 기업 SEARCH 기능, Img Click 시 Link이동 추가. SEARCH기능은 추후 수정 요망.
