@@ -1,5 +1,6 @@
 ### 1. Initial Screen
 <img src="https://user-images.githubusercontent.com/85223787/235450227-bda748fa-f293-486f-9050-75354b385d28.png" width="350" height="500"/>
+
 ### 2. Login Screen
 <img src="https://github.com/kms9978/Career/assets/85223787/c73d86e8-54fd-4044-8ca0-95095e0d549d.png" width="350" height="500"/>
 
