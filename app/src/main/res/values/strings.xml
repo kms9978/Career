@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">CAREER</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="back">back</string>
+    <string name="register">회원가입</string>
+    <string name="login">로그인</string>
+    <string name="input_id">이름*</string>
+    <string name="pass">비밀번호</string>
+    <string name="input_pass">비밀번호*</string>
+    <string name="input_nick">닉네임*</string>
+    <string name="search_id">아이디 찾기</string>
+    <string name="search_pass">비밀번호 찾기</string>
+    <string name="edit_id">아이디를 입력하세요</string>
+    <string name="edit_pass">비밀번호를 입력하세요</string>
+    <string name="edit_nick">닉네임을 입력하세요</string>
+    <string name="Register_OK">회원가입 완료</string>
+    <string name="star">마이페이지</string>
+    <string name="item_img_description">아이템 이미지</string>
+    <string name="company_name">기업명</string>
+    <string name="company_title">공고 TItle</string>
+    <string name="mypage">마이페이지</string>
+    <string name="open_nav">네비바 열기</string>
+    <string name="close_nav">네비바 닫기</string>
+    <string name="logo_main">로고 이미지</string>
+    <string name="input_company">기업명 입력</string>
+    <string name="certificate">학력무관</string>
+    <string name="expire_date">만료기간</string>
+</resources>

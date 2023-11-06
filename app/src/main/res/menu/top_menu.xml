@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="홈"
+        android:id="@+id/board_home" />
+    <item android:title="취업"
+        android:id="@+id/board_recruit" />
+
+</menu>

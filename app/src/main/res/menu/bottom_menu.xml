@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="홈"
+        android:id="@+id/home"
+        android:icon="@drawable/baseline_home_24"/>
+    <item android:title="정보"
+        android:id="@+id/recruit"
+        android:icon="@drawable/compass"/>
+
+    <item android:title="마이페이지"
+        android:id="@+id/favorite"
+        android:icon="@drawable/baseline_star_outline_24"/>
+    <item android:title="GPT"
+        android:id="@+id/gpt"
+        android:icon="@drawable/board_icon"/>
+
+</menu>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.BoardHomeFragment">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_boardList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_board" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/go_write_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#6B66FF"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:src="@drawable/pencil"
+            app:borderWidth="0dp"
+            android:contentDescription="멘토멘티 게시판 GO" />
+
+</FrameLayout>

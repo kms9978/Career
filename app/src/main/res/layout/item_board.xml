@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:id="@+id/item_recent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="MissingConstraints"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/board_writer"
+                android:background="@drawable/board_name_radius"
+                android:padding="8dp"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="이름"
+                android:textColor="@color/black"
+                android:fontFamily="@font/chosunbg"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/board_subject"
+                android:background="@drawable/board_name_radius"
+                android:padding="8dp"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:text="주제"
+                android:textColor="@color/black"
+                android:fontFamily="@font/chosunbg"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/board_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="게시글 명"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/chosunbg" />
+                    <TextView
+                        android:id="@+id/board_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="게시글 내용"
+                        android:textSize="14sp"
+                        android:layout_gravity="bottom"
+                        android:fontFamily="@font/chosunbg"
+                        android:layout_marginTop="16dp"
+                        android:maxWidth="270dp"
+                        android:ellipsize="end"
+                        android:singleLine="true" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
